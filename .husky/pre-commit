@@ -1,0 +1,4 @@
+pnpm test
+pnpm lint
+git update-index --again
+# exit 1
