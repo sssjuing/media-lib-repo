@@ -3,4 +3,10 @@ mysql:
   port: 3306
   username: mysqladmin
   password: mysqlpassword
-  dbname: testdb
+  dbname: media_lib
+
+minio:
+  endpoint: 127.0.0.1:9000
+  username: minioadmin
+  password: miniopassword
+  bucketName: media-lib

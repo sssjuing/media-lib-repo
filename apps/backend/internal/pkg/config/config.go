@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"log"
+	"media-lib/internal/pkg/util"
 
 	"github.com/spf13/viper"
 )
@@ -12,17 +13,19 @@ var config *viper.Viper
 // Init is an exported method that takes the environment starts the viper
 // (external lib) and returns the configuration struct.
 func init() {
-	var err error
 	config = viper.New()
 	config.SetConfigType("yaml")
 	config.SetConfigName("config")
 	config.AddConfigPath("$CONFIG_PATH")
 	config.AddConfigPath("/etc/webcamera")
 
-	if err = config.ReadInConfig(); err != nil {
-		log.Fatal("Error on parsing default configuration file. ", err)
+	if err := config.ReadInConfig(); err != nil {
+		configsDirPath := util.GetRootPath() + "/configs"
+		config.AddConfigPath(configsDirPath)
+		if err := config.ReadInConfig(); err != nil {
+			log.Fatal("Error on parsing default configuration file. ", err)
+		}
 	}
-
 }
 
 func GetConfig() *viper.Viper {
