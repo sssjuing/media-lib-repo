@@ -1,0 +1,38 @@
+{
+  "name": "@repo/service",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/main.js",
+  "module": "./dist/main.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/main.js",
+    "require": "./dist/main.cjs"
+  },
+  "scripts": {
+    "build": "tsc && vite build",
+    "lint": "eslint . && tsc -b",
+    "test": "vitest run",
+    "prepublish": "pnpm build",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2",
+    "typescript": "~5.7.2",
+    "vite": "^6.0.3",
+    "vite-plugin-dts": "^4.3.0",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dayjs": "^1.11.13"
+  }
+}

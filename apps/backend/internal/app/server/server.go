@@ -18,7 +18,7 @@ func Run() {
 
 	dsn := config.GetMysqlDsn()
 	d := db.New(dsn)
-	// db.AutoMigrate(d)
+	db.AutoMigrate(d)
 
 	as := store.NewActressStore(d)
 	vs := store.NewVedioStore(d)
