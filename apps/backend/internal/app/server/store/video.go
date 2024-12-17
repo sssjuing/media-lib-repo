@@ -18,8 +18,8 @@ func NewVedioStore(db *gorm.DB) *VideoStore {
 	}
 }
 
-func (vs *VideoStore) GetList() ([]model.Video, error) {
-	var videos []model.Video
+func (vs *VideoStore) GetList() ([]*model.Video, error) {
+	var videos []*model.Video
 	if err := vs.db.Preload("Actresses").Order("created_at desc").Find(&videos).Error; err != nil {
 		return nil, err
 	}

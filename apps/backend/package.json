@@ -4,5 +4,8 @@
   "description": "",
   "keywords": [],
   "author": "sujing.su",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "dev": "air"
+  }
 }

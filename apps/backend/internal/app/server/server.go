@@ -17,7 +17,7 @@ func Run() {
 	v1 := r.Group("/api")
 
 	dsn := config.GetMysqlDsn()
-	d := db.New(dsn)
+	d := db.NewDB(dsn)
 	db.AutoMigrate(d)
 
 	as := store.NewActressStore(d)

@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func New(dsn string) *gorm.DB {
+func NewDB(dsn string) *gorm.DB {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {

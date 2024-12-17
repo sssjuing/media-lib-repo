@@ -6,7 +6,6 @@ import (
 	"log"
 	"media-lib/internal/pkg/config"
 	"mime/multipart"
-	"path/filepath"
 	"sort"
 	"time"
 
@@ -19,11 +18,13 @@ var bucketName string
 
 func init() {
 	config := config.GetConfig()
-	minioEndpoint := config.GetString("minio.endpoint")
+	host := config.GetString("minio.host")
+	port := config.GetString("minio.port")
+	endpoint := fmt.Sprintf("%s:%s", host, port)
 	username := config.GetString("minio.username")
 	password := config.GetString("minio.password")
 	// Initialize minio client object.
-	client, err := minio.New(minioEndpoint, &minio.Options{
+	client, err := minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(username, password, ""),
 		Secure: false,
 	})
@@ -31,7 +32,7 @@ func init() {
 		log.Fatal(err)
 	}
 	minioClient = client
-	bucketName = config.GetString("minio.bucketName")
+	bucketName = config.GetString("minio.bucket_name")
 }
 
 func GetFiles(folderName string) (*[]minio.ObjectInfo, error) {
@@ -59,16 +60,18 @@ func GetFiles(folderName string) (*[]minio.ObjectInfo, error) {
 }
 
 type UploadInfo struct {
-	Path string
-	Size int64
+	Path string `json:"path"`
+	Size int64  `json:"size"`
+	Url  string `json:"url"`
 }
 
 func UploadFile(file *multipart.File, objectPath string) (*UploadInfo, error) {
 	ctx, cancel := context.WithCancel(context.Background())
+	publicUrl := config.GetMinioPublicUrl()
 	defer cancel()
 	info, err := minioClient.PutObject(ctx, bucketName, objectPath, *file, -1, minio.PutObjectOptions{ContentType: "application/octet-stream"})
 	if err != nil {
 		return nil, err
 	}
-	return &UploadInfo{Path: filepath.Join("/", bucketName, objectPath), Size: info.Size}, nil
+	return &UploadInfo{Path: objectPath, Size: info.Size, Url: publicUrl + objectPath}, nil
 }

@@ -48,12 +48,14 @@ export interface VideoDTO {
   chinese_title: string | null;
   actresses: ActressDTO[] | null;
   release_date: string | null;
-  bucket_path: string | null;
+  video_path: string | null;
   mosaic: boolean | null;
   tags: string[] | null;
   synopsis: string | null;
   created_at: string;
   updated_at: string;
+  cover_url: string;
+  video_url: string | null;
 }
 
 export interface SubmitVideoDTO {
@@ -63,7 +65,7 @@ export interface SubmitVideoDTO {
   chinese_title?: string;
   actresses?: Array<Pick<ActressDTO, 'id'>>;
   release_date?: string;
-  bucket_path?: string;
+  video_path?: string;
   mosaic?: boolean;
   tags?: string[];
   synopsis?: string;

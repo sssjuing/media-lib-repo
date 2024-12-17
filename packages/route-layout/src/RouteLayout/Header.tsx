@@ -18,6 +18,7 @@ const Header: FC<HeaderProps> = (props) => {
         css`
           padding: 0;
           box-shadow: #aaa 0 2px 4px;
+          z-index: 1;
           &.light {
             background-color: #fff;
           }

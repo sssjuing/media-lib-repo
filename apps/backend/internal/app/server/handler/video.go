@@ -14,7 +14,11 @@ func (h *Handler) ListVideos(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.NewError(err))
 	}
-	return c.JSON(http.StatusOK, videos)
+	output := make([]*model.VideoDTO, len(videos))
+	for i, video := range videos {
+		output[i] = util.VideoMapper(video)
+	}
+	return c.JSON(http.StatusOK, output)
 }
 
 func (h *Handler) CreateVideo(c echo.Context) error {
@@ -31,7 +35,7 @@ func (h *Handler) CreateVideo(c echo.Context) error {
 	if err := h.videoStore.Create(&v); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, util.NewError(err))
 	}
-	return c.JSON(http.StatusCreated, v)
+	return c.JSON(http.StatusCreated, util.VideoMapper(&v))
 }
 
 func (h *Handler) GetVideoById(c echo.Context) error {
@@ -42,7 +46,7 @@ func (h *Handler) GetVideoById(c echo.Context) error {
 	if v == nil {
 		return c.JSON(http.StatusNotFound, util.NotFound())
 	}
-	return c.JSON(http.StatusOK, v)
+	return c.JSON(http.StatusOK, util.VideoMapper(v))
 }
 
 func (h *Handler) UpdateVideo(c echo.Context) error {
@@ -59,7 +63,7 @@ func (h *Handler) UpdateVideo(c echo.Context) error {
 	if err := h.videoStore.Update(v); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, util.NewError(err))
 	}
-	return c.JSON(http.StatusOK, v)
+	return c.JSON(http.StatusOK, util.VideoMapper(v))
 }
 
 func (h *Handler) RemoveVideo(c echo.Context) error {

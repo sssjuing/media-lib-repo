@@ -15,7 +15,7 @@ export class ActressService {
       id: dto.id,
       unique_name: dto.unique_name,
       chinese_name: dto.chinese_name,
-      englist_name: dto.english_name ?? undefined,
+      english_name: dto.english_name ?? undefined,
       names: dto.names ?? undefined,
       birth_date: dto.birth_date ?? undefined,
       birth_place: dto.birth_place ?? undefined,

@@ -13,12 +13,18 @@ type Video struct {
 	Title        *string         `gorm:"size:512" json:"title"`
 	ChineseTitle *string         `gorm:"size:512" json:"chinese_title"`
 	Actresses    []*Actress      `gorm:"many2many:actress_video" json:"actresses"`
-	ReleaseDate  *time.Time      `json:"release_date"`                 // 发行日期
-	BucketPath   *string         `gorm:"size:1024" json:"bucket_path"` // 视频在对象存储中桶内的路径
+	ReleaseDate  *time.Time      `json:"release_date"`                // 发行日期
+	VideoPath    *string         `gorm:"size:1024" json:"video_path"` // 视频在对象存储中桶内的路径
 	Mosaic       *bool           `json:"mosaic"`
 	Tags         *datatypes.JSON `json:"tags"`
 	Synopsis     *string         `json:"synopsis"` // 概要
 	CreatedAt    *time.Time      `json:"created_at"`
 	UpdatedAt    *time.Time      `json:"updated_at"`
 	DeletedAt    *time.Time      `json:"-"`
+}
+
+type VideoDTO struct {
+	Video
+	CoverUrl string  `json:"cover_url"`
+	VideoUrl *string `json:"video_url"`
 }

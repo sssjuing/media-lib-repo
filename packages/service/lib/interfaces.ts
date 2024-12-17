@@ -4,7 +4,7 @@ export interface Actress {
   id: number;
   unique_name: string;
   chinese_name: string;
-  englist_name?: string;
+  english_name?: string;
   names?: string[];
   birth_date?: string;
   birth_place?: string;
@@ -28,10 +28,12 @@ export interface Video {
   chinese_title?: string;
   actresses?: Actress[];
   release_date?: string;
-  bucket_path?: string;
+  video_path?: string;
   mosaic?: boolean;
   tags?: string[];
   synopsis?: string;
   created_at: string;
   updated_at: string;
+  cover_url: string;
+  video_url?: string;
 }

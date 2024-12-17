@@ -1,7 +1,9 @@
+import { PageHeaderWrapper } from '@repo/route-layout';
+
 export default function IndexPage() {
   return (
-    <div>
+    <PageHeaderWrapper title="Home">
       <div>Home Page</div>
-    </div>
+    </PageHeaderWrapper>
   );
 }

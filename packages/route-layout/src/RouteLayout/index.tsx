@@ -25,20 +25,14 @@ const RouteLayout: FC<PropsWithChildren<RouteLayoutProps>> = (props) => {
       {!topMenu && (
         <SiderMenu
           className={css`
-            z-index: 10;
-            box-shadow: 1px 0 4px rgba(0, 21, 41, 0.2);
+            z-index: 2;
+            box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
           `}
         />
       )}
       <Layout>
         <Header {...props} />
-        <Content
-          className={css`
-            padding: calc(var(--ant-layout-header-height) * 3 / 8);
-          `}
-        >
-          {children}
-        </Content>
+        <Content>{children}</Content>
       </Layout>
     </Layout>
   );

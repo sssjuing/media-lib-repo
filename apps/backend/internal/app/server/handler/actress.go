@@ -81,5 +81,9 @@ func (h *Handler) GetVideosByActressId(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, util.NewError(err))
 	}
-	return c.JSON(http.StatusOK, videos)
+	output := make([]*model.VideoDTO, len(videos))
+	for i, video := range videos {
+		output[i] = util.VideoMapper(video)
+	}
+	return c.JSON(http.StatusOK, output)
 }

@@ -6,8 +6,12 @@ export class Services {
   public video: VideoService;
   public actress: ActressService;
 
-  constructor({ a }: { a: AxiosInstance }) {
-    this.video = new VideoService(a);
-    this.actress = new ActressService(a);
+  constructor({ axiosInstance }: { axiosInstance: AxiosInstance }) {
+    this.video = new VideoService(axiosInstance);
+    this.actress = new ActressService(axiosInstance);
   }
 }
+
+export * from './dtos';
+export * from './interfaces';
+export * from './utils';

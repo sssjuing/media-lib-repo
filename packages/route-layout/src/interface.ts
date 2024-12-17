@@ -37,3 +37,5 @@ export type WithMeta<T> = { metadata?: RouteMeta } & {
   // [K in keyof T]: K extends 'children' ? WithMeta<T>[K] : T[K];
   [K in keyof T]: K extends 'children' ? WithMeta<ElementOf<T[K]>>[] : T[K];
 };
+
+export type WithFalse<T> = T | false;

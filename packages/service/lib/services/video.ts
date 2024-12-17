@@ -19,12 +19,14 @@ export class VideoService {
       chinese_title: dto.chinese_title ?? undefined,
       actresses: dto.actresses?.map(ActressService.converter),
       release_date: dto.release_date ?? undefined,
-      bucket_path: dto.bucket_path ?? undefined,
+      video_path: dto.video_path ?? undefined,
       mosaic: dto.mosaic ?? undefined,
       tags: dto.tags ?? undefined,
       synopsis: dto.synopsis ?? undefined,
       created_at: dto.created_at,
       updated_at: dto.updated_at,
+      cover_url: dto.cover_url,
+      video_url: dto.video_url ?? undefined,
     };
   }
 

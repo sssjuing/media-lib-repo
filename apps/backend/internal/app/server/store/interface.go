@@ -11,7 +11,7 @@ type IActressStore interface {
 }
 
 type IVideoStore interface {
-	GetList() ([]model.Video, error)
+	GetList() ([]*model.Video, error)
 	GetListByActressId(uint) ([]*model.Video, error)
 	GetById(string) (*model.Video, error)
 	Create(*model.Video) error

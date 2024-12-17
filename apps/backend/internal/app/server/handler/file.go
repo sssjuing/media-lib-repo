@@ -27,10 +27,10 @@ func (h *Handler) UploadImage(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, util.NewError(err))
 	}
-	objectPath := filepath.Join("/pictures/covers", file.Filename)
+	objectPath := filepath.Join("pictures/covers", file.Filename)
 	info, err := oss.UploadFile(&fileObj, objectPath)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.NewError(err))
 	}
-	return c.JSON(http.StatusOK, echo.Map{"path": info.Path, "size": info.Size})
+	return c.JSON(http.StatusOK, info)
 }

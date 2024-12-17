@@ -16,8 +16,8 @@ func init() {
 	config = viper.New()
 	config.SetConfigType("yaml")
 	config.SetConfigName("config")
-	config.AddConfigPath("$CONFIG_PATH")
-	config.AddConfigPath("/etc/webcamera")
+	// config.AddConfigPath("$MEDIA_LIB_CONFIG_PATH")
+	config.AddConfigPath("/etc/media-lib")
 
 	if err := config.ReadInConfig(); err != nil {
 		configsDirPath := util.GetRootPath() + "/configs"
@@ -41,4 +41,10 @@ func GetMysqlDsn() string {
 	// dsn := "<user>:<password>@tcp(<ip>:<port>)/<database_name>?charset=utf8&parseTime=True&loc=Local"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbname)
 	return dsn
+}
+
+func GetMinioPublicUrl() string {
+	endpoint := config.GetString("minio.public_endpoint")
+	bucketName := config.GetString("minio.bucket_name")
+	return fmt.Sprintf("//%s/%s/", endpoint, bucketName)
 }

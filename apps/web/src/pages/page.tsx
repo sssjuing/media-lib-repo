@@ -1,14 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { Breadcrumb } from '@repo/route-layout';
+import { Breadcrumb, PageHeaderWrapper, usePageTitle } from '@repo/route-layout';
 
 export default function () {
   const navigate = useNavigate();
+  const title = usePageTitle();
 
   return (
-    <div>
-      <div>
-        <Breadcrumb onClick={(key) => navigate(key)} />
-      </div>
-    </div>
+    <PageHeaderWrapper
+      title="任务列表"
+      breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}
+    >
+      <div>{title}</div>
+    </PageHeaderWrapper>
   );
 }
