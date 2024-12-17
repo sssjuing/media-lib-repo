@@ -13,18 +13,18 @@ export class VideoService {
   static converter(dto: VideoDTO): Video {
     return {
       id: dto.id,
-      serialNumber: dto.serial_number,
-      coverPath: dto.cover_path,
+      serial_number: dto.serial_number,
+      cover_path: dto.cover_path,
       title: dto.title ?? undefined,
-      chineseTitle: dto.chinese_title ?? undefined,
+      chinese_title: dto.chinese_title ?? undefined,
       actresses: dto.actresses?.map(ActressService.converter),
-      releaseDate: dto.release_date ?? undefined,
-      bucketPath: dto.bucket_path ?? undefined,
+      release_date: dto.release_date ?? undefined,
+      bucket_path: dto.bucket_path ?? undefined,
       mosaic: dto.mosaic ?? undefined,
       tags: dto.tags ?? undefined,
       synopsis: dto.synopsis ?? undefined,
-      createdAt: dto.created_at,
-      updatedAt: dto.updated_at,
+      created_at: dto.created_at,
+      updated_at: dto.updated_at,
     };
   }
 

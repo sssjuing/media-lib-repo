@@ -2,36 +2,36 @@ import { Measurements } from './dtos';
 
 export interface Actress {
   id: number;
-  uniqueName: string;
-  chineseName: string;
-  englistName?: string;
+  unique_name: string;
+  chinese_name: string;
+  englist_name?: string;
   names?: string[];
-  birthDate?: string;
-  birthPlace?: string;
+  birth_date?: string;
+  birth_place?: string;
   height?: number;
   weight?: number;
   measurements?: Measurements;
   cup?: string;
-  bloodGroup?: string;
-  debutDate?: string;
+  blood_group?: string;
+  debut_date?: string;
   hobbies?: string;
   notes?: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Video {
   id: number;
-  serialNumber: string;
-  coverPath: string;
+  serial_number: string;
+  cover_path: string;
   title?: string;
-  chineseTitle?: string;
+  chinese_title?: string;
   actresses?: Actress[];
-  releaseDate?: string;
-  bucketPath?: string;
+  release_date?: string;
+  bucket_path?: string;
   mosaic?: boolean;
   tags?: string[];
   synopsis?: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }

@@ -13,22 +13,22 @@ export class ActressService {
   static converter(dto: ActressDTO): Actress {
     return {
       id: dto.id,
-      uniqueName: dto.unique_name,
-      chineseName: dto.chinese_name,
-      englistName: dto.english_name ?? undefined,
+      unique_name: dto.unique_name,
+      chinese_name: dto.chinese_name,
+      englist_name: dto.english_name ?? undefined,
       names: dto.names ?? undefined,
-      birthDate: dto.birth_date ?? undefined,
-      birthPlace: dto.birth_place ?? undefined,
+      birth_date: dto.birth_date ?? undefined,
+      birth_place: dto.birth_place ?? undefined,
       height: dto.height ?? undefined,
       weight: dto.weight ?? undefined,
       measurements: dto.measurements ?? undefined,
       cup: dto.cup ?? undefined,
-      bloodGroup: dto.blood_group ?? undefined,
-      debutDate: dto.debut_date ?? undefined,
+      blood_group: dto.blood_group ?? undefined,
+      debut_date: dto.debut_date ?? undefined,
       hobbies: dto.hobbies ?? undefined,
       notes: dto.notes ?? undefined,
-      createdAt: dto.created_at,
-      updatedAt: dto.updated_at,
+      created_at: dto.created_at,
+      updated_at: dto.updated_at,
     };
   }
 
