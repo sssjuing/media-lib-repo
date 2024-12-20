@@ -126,67 +126,6 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@20.14.14)
 
-  apps/web:
-    dependencies:
-      '@ant-design/icons':
-        specifier: ^5.5.2
-        version: 5.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@emotion/css':
-        specifier: ^11.13.5
-        version: 11.13.5
-      '@repo/route-layout':
-        specifier: workspace:*
-        version: link:../../packages/route-layout
-      antd:
-        specifier: ^5.22.5
-        version: 5.22.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      normalize.css:
-        specifier: ^8.0.1
-        version: 8.0.1
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-      react-helmet-async:
-        specifier: ^2.0.5
-        version: 2.0.5(react@18.3.1)
-      react-router-dom:
-        specifier: ^6.26.0
-        version: 6.26.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
-      '@types/react':
-        specifier: ^18.3.12
-        version: 18.3.16
-      '@types/react-dom':
-        specifier: ^18.3.1
-        version: 18.3.5(@types/react@18.3.16)
-      '@vitejs/plugin-react-swc':
-        specifier: ^3.7.2
-        version: 3.7.2(vite@6.0.3(@types/node@20.14.14)(jiti@1.21.6))
-      eslint:
-        specifier: ^8.57.1
-        version: 8.57.1
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.2
-      vite:
-        specifier: ^6.0.3
-        version: 6.0.3(@types/node@20.14.14)(jiti@1.21.6)
-      vitest:
-        specifier: ^2.1.8
-        version: 2.1.8(@types/node@20.14.14)
-
   packages/components:
     dependencies:
       '@ant-design/icons':
