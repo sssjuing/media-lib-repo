@@ -1,6 +1,6 @@
 import { FC, memo, useMemo, useState } from 'react';
 import { Menu, MenuProps } from 'antd';
-import { MenuItem } from '../interface';
+import { MenuItem } from '../../interface';
 import { getFlatMenuKeys, getInitOpenKeys, getSelectedKeys, isMainMenu } from './utils';
 
 export interface BaseMenuProps extends Pick<MenuProps, 'mode' | 'theme' | 'onClick' | 'className' | 'style'> {

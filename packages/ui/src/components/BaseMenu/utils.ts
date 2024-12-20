@@ -1,6 +1,6 @@
 import { pathToRegexp } from 'path-to-regexp';
-import { urlToList } from '../utils/utils';
-import { MenuItem } from '../interface';
+import { urlToList } from '../../utils/utils';
+import { MenuItem } from '../../interface';
 
 export function isMainMenu(items: MenuItem[], key: string): boolean {
   return items.some((item) => {

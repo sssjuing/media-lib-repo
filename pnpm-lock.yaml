@@ -52,12 +52,6 @@ importers:
       '@emotion/css':
         specifier: ^11.13.5
         version: 11.13.5
-      '@emotion/react':
-        specifier: ^11.14.0
-        version: 11.14.0(@types/react@18.3.16)(react@18.3.1)
-      '@emotion/styled':
-        specifier: ^11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.16)(react@18.3.1))(@types/react@18.3.16)(react@18.3.1)
       '@repo/route-layout':
         specifier: workspace:*
         version: link:../../packages/route-layout
@@ -126,94 +120,6 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@20.14.14)
 
-  packages/components:
-    dependencies:
-      '@ant-design/icons':
-        specifier: ^5.5.2
-        version: 5.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@emotion/css':
-        specifier: ^11.13.5
-        version: 11.13.5
-      antd:
-        specifier: ^5.22.5
-        version: 5.22.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      normalize.css:
-        specifier: ^8.0.1
-        version: 8.0.1
-      path-to-regexp:
-        specifier: ^7.2.0
-        version: 7.2.0
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@chromatic-com/storybook':
-        specifier: ^3.2.2
-        version: 3.2.2(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@storybook/addon-essentials':
-        specifier: ^8.4.7
-        version: 8.4.7(@types/react@18.3.16)(storybook@8.4.7(prettier@3.4.2))
-      '@storybook/addon-interactions':
-        specifier: ^8.4.7
-        version: 8.4.7(storybook@8.4.7(prettier@3.4.2))
-      '@storybook/addon-links':
-        specifier: ^8.4.7
-        version: 8.4.7(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
-      '@storybook/addon-onboarding':
-        specifier: ^8.4.7
-        version: 8.4.7(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
-      '@storybook/blocks':
-        specifier: ^8.4.7
-        version: 8.4.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
-      '@storybook/react':
-        specifier: ^8.4.7
-        version: 8.4.7(@storybook/test@8.4.7(storybook@8.4.7(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))(typescript@5.7.2)
-      '@storybook/react-vite':
-        specifier: ^8.4.7
-        version: 8.4.7(@storybook/test@8.4.7(storybook@8.4.7(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.28.1)(storybook@8.4.7(prettier@3.4.2))(typescript@5.7.2)(vite@6.0.3(@types/node@20.14.14)(jiti@1.21.6))
-      '@storybook/test':
-        specifier: ^8.4.7
-        version: 8.4.7(storybook@8.4.7(prettier@3.4.2))
-      '@types/react':
-        specifier: ^18.3.12
-        version: 18.3.16
-      '@types/react-dom':
-        specifier: ^18.3.5
-        version: 18.3.5(@types/react@18.3.16)
-      '@vitejs/plugin-react-swc':
-        specifier: ^3.7.2
-        version: 3.7.2(vite@6.0.3(@types/node@20.14.14)(jiti@1.21.6))
-      eslint:
-        specifier: ^8.57.1
-        version: 8.57.1
-      eslint-plugin-storybook:
-        specifier: ^0.11.1
-        version: 0.11.1(eslint@8.57.1)(typescript@5.7.2)
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      storybook:
-        specifier: ^8.4.7
-        version: 8.4.7(prettier@3.4.2)
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.2
-      vite:
-        specifier: ^6.0.3
-        version: 6.0.3(@types/node@20.14.14)(jiti@1.21.6)
-      vitest:
-        specifier: ^2.1.8
-        version: 2.1.8(@types/node@20.14.14)
-
   packages/eslint-config:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -270,9 +176,9 @@ importers:
       '@emotion/css':
         specifier: ^11.13.5
         version: 11.13.5
-      '@repo/components':
+      '@repo/ui':
         specifier: workspace:*
-        version: link:../components
+        version: link:../ui
       antd:
         specifier: ^5.22.5
         version: 5.22.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -388,6 +294,100 @@ importers:
         version: 2.1.8(@types/node@20.14.14)
 
   packages/typescript-config: {}
+
+  packages/ui:
+    dependencies:
+      '@ant-design/icons':
+        specifier: ^5.5.2
+        version: 5.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@emotion/css':
+        specifier: ^11.13.5
+        version: 11.13.5
+      '@emotion/react':
+        specifier: ^11.14.0
+        version: 11.14.0(@types/react@18.3.16)(react@18.3.1)
+      '@emotion/styled':
+        specifier: ^11.14.0
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.16)(react@18.3.1))(@types/react@18.3.16)(react@18.3.1)
+      antd:
+        specifier: ^5.22.5
+        version: 5.22.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      normalize.css:
+        specifier: ^8.0.1
+        version: 8.0.1
+      path-to-regexp:
+        specifier: ^7.2.0
+        version: 7.2.0
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@chromatic-com/storybook':
+        specifier: ^3.2.2
+        version: 3.2.2(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@storybook/addon-essentials':
+        specifier: ^8.4.7
+        version: 8.4.7(@types/react@18.3.16)(storybook@8.4.7(prettier@3.4.2))
+      '@storybook/addon-interactions':
+        specifier: ^8.4.7
+        version: 8.4.7(storybook@8.4.7(prettier@3.4.2))
+      '@storybook/addon-links':
+        specifier: ^8.4.7
+        version: 8.4.7(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
+      '@storybook/addon-onboarding':
+        specifier: ^8.4.7
+        version: 8.4.7(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
+      '@storybook/blocks':
+        specifier: ^8.4.7
+        version: 8.4.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))
+      '@storybook/react':
+        specifier: ^8.4.7
+        version: 8.4.7(@storybook/test@8.4.7(storybook@8.4.7(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))(typescript@5.7.2)
+      '@storybook/react-vite':
+        specifier: ^8.4.7
+        version: 8.4.7(@storybook/test@8.4.7(storybook@8.4.7(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.28.1)(storybook@8.4.7(prettier@3.4.2))(typescript@5.7.2)(vite@6.0.3(@types/node@20.14.14)(jiti@1.21.6))
+      '@storybook/test':
+        specifier: ^8.4.7
+        version: 8.4.7(storybook@8.4.7(prettier@3.4.2))
+      '@types/react':
+        specifier: ^18.3.12
+        version: 18.3.16
+      '@types/react-dom':
+        specifier: ^18.3.5
+        version: 18.3.5(@types/react@18.3.16)
+      '@vitejs/plugin-react-swc':
+        specifier: ^3.7.2
+        version: 3.7.2(vite@6.0.3(@types/node@20.14.14)(jiti@1.21.6))
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-plugin-storybook:
+        specifier: ^0.11.1
+        version: 0.11.1(eslint@8.57.1)(typescript@5.7.2)
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      storybook:
+        specifier: ^8.4.7
+        version: 8.4.7(prettier@3.4.2)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+      vite:
+        specifier: ^6.0.3
+        version: 6.0.3(@types/node@20.14.14)(jiti@1.21.6)
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@20.14.14)
 
 packages:
 

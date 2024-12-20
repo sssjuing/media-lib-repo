@@ -1,5 +1,5 @@
 import { resolve } from 'path-browserify';
-import { MenuItem } from '@repo/components';
+import { MenuItem } from '@repo/ui';
 import { RouteItem } from '../interface';
 import { checkPermissions } from '../hooks/useAuth/utils';
 

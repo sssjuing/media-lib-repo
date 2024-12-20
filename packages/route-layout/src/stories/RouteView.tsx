@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { css } from '@emotion/css';
 import { MenuProps } from 'antd';
-import { BaseMenu } from '@repo/components';
+import { BaseMenu } from '@repo/ui';
 import { RouteProvider, useRoute } from '../RouteProvider';
 import { usePageTitle } from '../hooks';
 import { Breadcrumb } from '../components';

@@ -14,8 +14,6 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@emotion/css": "^11.13.5",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
     "@repo/route-layout": "workspace:*",
     "@repo/service": "workspace:*",
     "ahooks": "^3.8.4",

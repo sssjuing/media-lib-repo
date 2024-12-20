@@ -1,6 +1,6 @@
 import { BreadcrumbProps as AntdBreadcrumbProps } from 'antd';
 import { pathToRegexp } from 'path-to-regexp';
-import { urlToList } from '@repo/components/utils';
+import { urlToList } from '@repo/ui/utils';
 import { RouteItem } from '../../interface';
 
 export default function getBreadcrumbItems(

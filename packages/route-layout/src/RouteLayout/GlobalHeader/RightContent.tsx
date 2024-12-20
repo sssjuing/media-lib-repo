@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 import { css, cx } from '@emotion/css';
 import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { isValidUrl } from '@repo/components/utils';
+import { isValidUrl } from '@repo/ui/utils';
 // import SelectLang from '../SelectLang';
 import { useLayout } from '../useLayout';
 import AvatarDropdown, { AvatarDropdownProps } from './AvatarDropdown';

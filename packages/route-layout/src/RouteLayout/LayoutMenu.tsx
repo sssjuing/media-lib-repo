@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { MenuProps } from 'antd';
-import { BaseMenu } from '@repo/components';
+import { BaseMenu } from '@repo/ui';
 import { useRoute } from '../RouteProvider';
 import { useLayout } from './useLayout';
 

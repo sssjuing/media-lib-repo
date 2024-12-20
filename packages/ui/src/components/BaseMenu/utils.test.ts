@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest';
-import { MenuItem } from '../interface';
+import { MenuItem } from '../../interface';
 import { isMainMenu, getFlatMenuKeys, getInitOpenKeys, getMenuMatches } from './utils';
 
 test('测试 isMainMenu', () => {

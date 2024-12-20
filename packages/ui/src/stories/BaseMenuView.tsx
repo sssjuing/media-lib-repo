@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { css } from '@emotion/css';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
-import { BaseMenu, BaseMenuProps } from '../BaseMenu';
+import { BaseMenu, BaseMenuProps } from '../components/BaseMenu';
 
 const menuItems = [
   {
