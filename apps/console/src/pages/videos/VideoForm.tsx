@@ -45,7 +45,7 @@ const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
       ...values,
       actresses: values.actresses?.map((i) => ({ id: i })),
       cover_path: getSubstringAfter(values.cover_path, '/media-lib/'),
-      video_path: getSubstringAfter(values.cover_path, '/media-lib/') ?? values.video_path,
+      video_path: values.video_path && getSubstringAfter(values.video_path, '/media-lib/'),
       // video_path: values.bucket_path?.replace(/^https?:\/\/.*?\//, '/'),
     });
   };

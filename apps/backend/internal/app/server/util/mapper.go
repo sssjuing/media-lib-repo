@@ -13,7 +13,7 @@ func init() {
 
 func VideoMapper(video *model.Video) *model.VideoDTO {
 	var videoUrl *string
-	if video.VideoPath != nil {
+	if video.VideoPath != nil && *video.VideoPath != "" {
 		tmp := publicUrl + *video.VideoPath
 		videoUrl = &tmp
 	}
