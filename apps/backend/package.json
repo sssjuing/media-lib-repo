@@ -6,6 +6,8 @@
   "author": "sujing.su",
   "license": "ISC",
   "scripts": {
-    "dev": "air"
+    "clean": "echo \"cleaning up build artifacts\" && rm -rf build/dist",
+    "dev": "air",
+    "dockerbuild": "sh build/docker_build.sh"
   }
 }

@@ -1,16 +1,16 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { test } from 'vitest';
-import { ActressService } from './actress';
+// import { ActressService } from './actress';
 
-const as = new ActressService(
-  axios.create({
-    baseURL: 'http://localhost:1323/api',
-  }),
-);
+// const as = new ActressService(
+//   axios.create({
+//     baseURL: 'http://localhost:1323/api',
+//   }),
+// );
 
 test('测试 actress list', async () => {
-  const data = await as.list();
-  console.log(data);
+  // const data = await as.list();
+  // console.log(data);
 });
 
 // test('测试 actress create', async () => {

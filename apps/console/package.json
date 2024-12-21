@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:docker": "tsc -b && vite build --outDir docker/dist",
+    "dockerbuild": "tsc -b && vite build --outDir ../backend/build/dist/console",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0 && tsc -b",
     "preview": "vite preview",
     "test": "vitest run"

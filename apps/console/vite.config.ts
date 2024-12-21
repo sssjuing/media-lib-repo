@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: { '@': resolve(__dirname, 'src') },
     },
+    base: '/console',
     server: {
       port: 8091,
       proxy: {

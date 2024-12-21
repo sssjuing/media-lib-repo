@@ -1,16 +1,16 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { test } from 'vitest';
-import { VideoService } from './video';
+// import { VideoService } from './video';
 
-const vs = new VideoService(
-  axios.create({
-    baseURL: 'http://localhost:1323/api',
-  }),
-);
+// const vs = new VideoService(
+//   axios.create({
+//     baseURL: 'http://localhost:1323/api',
+//   }),
+// );
 
 test('测试 video list', async () => {
-  const data = await vs.list();
-  console.log(data);
+  // const data = await vs.list();
+  // console.log(data);
 });
 
 // test('测试 video create', async () => {

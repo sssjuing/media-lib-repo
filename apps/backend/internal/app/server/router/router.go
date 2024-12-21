@@ -16,14 +16,14 @@ func New() *echo.Echo {
 	e.Use(middleware.Gzip())
 
 	e.Group("/h5").Use(middleware.StaticWithConfig(middleware.StaticConfig{
-		Root:   "dist/h5",
+		Root:   "h5",
 		Index:  "index.html",
 		Browse: false,
 		HTML5:  true,
 	}))
 
 	e.Group("/console").Use(middleware.StaticWithConfig(middleware.StaticConfig{
-		Root:   "dist/console",
+		Root:   "console",
 		Index:  "index.html",
 		Browse: false,
 		HTML5:  true,
