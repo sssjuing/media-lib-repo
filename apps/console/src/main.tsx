@@ -6,7 +6,9 @@ import { HelmetProvider } from 'react-helmet-async';
 import routes from './routes';
 import 'normalize.css';
 
-const router = createBrowserRouter(routes as RouteObject[]);
+const router = createBrowserRouter(routes as RouteObject[], {
+  basename: '/console',
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -5,5 +5,6 @@ export default defineWorkspace([
   "./packages/ui/vite.config.ts",
   "./packages/route-layout/vite.config.ts",
   "./packages/service/vite.config.ts",
+  "./apps/h5/vite.config.ts",
   "./apps/console/vite.config.ts",
 ]);

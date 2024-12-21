@@ -3,7 +3,7 @@ package store
 import "media-lib/internal/app/server/model"
 
 type IActressStore interface {
-	GetList() ([]model.Actress, error)
+	GetList() ([]*model.Actress, error)
 	GetById(string) (*model.Actress, error)
 	Create(*model.Actress) error
 	Update(*model.Actress) error

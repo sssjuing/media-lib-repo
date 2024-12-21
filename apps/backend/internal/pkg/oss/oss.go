@@ -35,17 +35,41 @@ func init() {
 	bucketName = config.GetString("minio.bucket_name")
 }
 
-func GetFiles(folderName string) (*[]minio.ObjectInfo, error) {
+type File struct {
+	Key          string    `json:"key"`
+	Name         string    `json:"name"`
+	Ftype        string    `json:"ftype"`
+	Size         int64     `json:"size"`
+	Url          *string   `json:"url"`
+	LastModified time.Time `json:"last_modified"`
+}
+
+func GetFiles(folderName string) ([]*File, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	result := []minio.ObjectInfo{}
+	publicUrl := config.GetMinioPublicUrl()
+	result := make([]*File, 0, 10)
 	objectCh := minioClient.ListObjects(ctx, bucketName, minio.ListObjectsOptions{Prefix: folderName, Recursive: false})
 	for object := range objectCh {
 		if object.Err != nil {
 			fmt.Println(object.Err)
 			return nil, object.Err
 		}
-		result = append(result, object)
+		ftype := "directory"
+		var urlPtr *string
+		if object.StorageClass == "STANDARD" {
+			ftype = "file"
+			urlPtr = new(string)
+			*urlPtr = publicUrl + object.Key
+		}
+		result = append(result, &File{
+			Key:          object.Key,
+			Name:         object.Key,
+			Ftype:        ftype,
+			Size:         object.Size,
+			Url:          urlPtr,
+			LastModified: object.LastModified,
+		})
 	}
 	sort.Slice(result, func(i, j int) bool {
 		if result[i].LastModified.Equal(time.Time{}) {
@@ -56,7 +80,7 @@ func GetFiles(folderName string) (*[]minio.ObjectInfo, error) {
 		}
 		return result[i].LastModified.After(result[j].LastModified)
 	})
-	return &result, nil
+	return result, nil
 }
 
 type UploadInfo struct {

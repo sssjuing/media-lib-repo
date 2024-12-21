@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
       alias: { '@': resolve(__dirname, 'src') },
     },
     server: {
-      port: 8091,
+      port: 8090,
       proxy: {
         '/api': {
           target: 'http://localhost:1323',

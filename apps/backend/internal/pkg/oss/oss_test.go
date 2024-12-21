@@ -6,8 +6,8 @@ import (
 )
 
 func TestGetMysqlDsn(t *testing.T) {
-	result, _ := GetFiles("/pictures/covers")
-	for _, item := range *result {
-		fmt.Println(item)
+	result, _ := GetFiles("pictures/covers")
+	for _, item := range result {
+		fmt.Println(*item)
 	}
 }
