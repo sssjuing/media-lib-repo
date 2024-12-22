@@ -76,13 +76,8 @@ const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
       <Form.Item label="英文名字" name="english_name">
         <Input />
       </Form.Item>
-      <Form.Item label="其他名字" name="names">
-        <Select
-          mode="tags"
-          // onChange={handleChange}
-          // options={options}
-          placeholder="逗号或顿号分隔不同名字"
-        />
+      <Form.Item label="其他名字" name="other_names">
+        <Select mode="tags" placeholder="逗号或顿号分隔不同名字" />
       </Form.Item>
       <Form.Item
         label="出生日期"

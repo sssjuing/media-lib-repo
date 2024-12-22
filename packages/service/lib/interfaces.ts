@@ -5,7 +5,7 @@ export interface Actress {
   unique_name: string;
   chinese_name: string;
   english_name?: string;
-  names?: string[];
+  other_names?: string[];
   birth_date?: string;
   birth_place?: string;
   height?: number;

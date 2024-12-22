@@ -9,6 +9,7 @@ export const sleep = async (ms: number) =>
     }, ms);
   });
 
+// eslint-disable-next-line no-unused-vars
 export function getList<T>({ byId, allIds }: { byId: { [id in Key]?: T }; allIds: Key[] }): Array<NonNullable<T>> {
   return allIds.map((id) => byId[id]).filter((item) => item) as Array<NonNullable<T>>;
 }

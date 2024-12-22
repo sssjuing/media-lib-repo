@@ -8,7 +8,11 @@ import (
 )
 
 type Video struct {
-	ID           uint            `json:"id"`
+	ID        uint           `json:"id"`
+	CreatedAt *time.Time     `json:"created_at"`
+	UpdatedAt *time.Time     `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+
 	SerialNumber string          `gorm:"type:varchar(128);uniqueIndex;not null" json:"serial_number"`
 	CoverPath    string          `gorm:"size:1024;not null" json:"cover_path"` // 封面在对象存储中桶内的路径
 	Title        *string         `gorm:"size:512" json:"title"`
@@ -19,9 +23,6 @@ type Video struct {
 	Mosaic       *bool           `json:"mosaic"`
 	Tags         *datatypes.JSON `json:"tags"`
 	Synopsis     *string         `json:"synopsis"` // 概要
-	CreatedAt    *time.Time      `json:"created_at"`
-	UpdatedAt    *time.Time      `json:"updated_at"`
-	DeletedAt    gorm.DeletedAt  `gorm:"index" json:"-"`
 }
 
 type VideoDTO struct {

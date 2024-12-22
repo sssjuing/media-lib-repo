@@ -9,7 +9,7 @@ export interface ActressDTO {
   unique_name: string;
   chinese_name: string;
   english_name: string | null;
-  names: string[] | null;
+  other_names: string[] | null;
   birth_date: string | null;
   birth_place: string | null;
   height: number | null;
@@ -27,7 +27,7 @@ export interface ActressDTO {
 export interface SubmitActressDTO {
   unique_name: string;
   chinese_name: string;
-  names?: string;
+  other_names?: string;
   birth_date?: string;
   birth_place?: string;
   height?: number;
