@@ -8,7 +8,7 @@ import { Actress, Measurements, getAge, getAgeColor } from '@repo/service';
 
 const ActressCard: FC<{ actress: Actress }> = ({ actress }) => {
   const navigate = useNavigate();
-  const age = actress.birth_date && getAge(actress.birth_date);
+  const age = getAge(actress.birth_date);
 
   const renderMeasurements = ({ bust, waist, hips }: Measurements) =>
     `B${bust || '--'}/W${waist || '--'}/H${hips || '--'}`;
@@ -74,7 +74,7 @@ const ActressCard: FC<{ actress: Actress }> = ({ actress }) => {
       >
         <Grid.Item>
           <span className="label">年龄</span>
-          {age && (
+          {age !== undefined && (
             <Tag color={getAgeColor(age)} fill="outline">
               {age}
             </Tag>

@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { Button } from 'antd-mobile';
 import useSWR from 'swr';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import ActressCard from '@/components/ActressCard';
 import { services } from '@/services';
-import ActressCard from './ActressCard';
 
 export default function () {
   // const { data = [] } = useSWR('/actresses', queryActresses);

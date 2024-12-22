@@ -24,7 +24,7 @@ export async function convertFileToBase64(file: File): Promise<string> {
 }
 
 export function getAge(birthDate?: number | string | null, targetDate?: number | string) {
-  return dayjs(targetDate).diff(birthDate, 'year');
+  return birthDate ? dayjs(targetDate).diff(birthDate, 'year') : undefined;
 }
 
 export function getAgeColor(age: number) {

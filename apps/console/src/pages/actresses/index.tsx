@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Card, Input, Space, Table } from 'antd';
+import { Button, Card, Input, Popconfirm, Space, Table } from 'antd';
 import useSWR from 'swr';
 import dayjs from 'dayjs';
+import { AnchorBtn } from '@repo/ui';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/route-layout';
 import { getAge, Actress } from '@repo/service';
 import configs from '@/configs';
@@ -13,7 +14,7 @@ const { CUP_TYPE } = configs;
 export default function () {
   const navigate = useNavigate();
 
-  const { data } = useSWR('/actresses', services.actress.list);
+  const { data, mutate } = useSWR('/actresses', services.actress.list);
 
   const [searchStr, setSearchStr] = useState('');
 
@@ -71,7 +72,16 @@ export default function () {
               render: (a: Actress) => (
                 <Space>
                   <Link to={`/actresses/${a.id}/edit`}>编辑</Link>
-                  <a>删除</a>
+                  <Popconfirm
+                    title={`确认删除演员 ${a.unique_name} 吗？`}
+                    onConfirm={async () => {
+                      await services.actress.delete(a.id);
+                      mutate();
+                    }}
+                    okButtonProps={{ danger: true }}
+                  >
+                    <AnchorBtn danger>删除</AnchorBtn>
+                  </Popconfirm>
                 </Space>
               ),
             },

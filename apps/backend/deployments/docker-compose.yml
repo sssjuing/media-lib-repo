@@ -1,0 +1,10 @@
+services:
+  server:
+    hostname: media-lib-server
+    image: sujingclg/media-lib:0.0.1
+    restart: unless-stopped
+    ports:
+      - 1323:1323
+    container_name: media-lib-server
+    volumes:
+      - ./config.yaml:/etc/media-lib/config.yaml

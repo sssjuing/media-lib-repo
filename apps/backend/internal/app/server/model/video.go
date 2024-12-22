@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"gorm.io/datatypes"
+	"gorm.io/gorm"
 )
 
 type Video struct {
@@ -20,7 +21,7 @@ type Video struct {
 	Synopsis     *string         `json:"synopsis"` // 概要
 	CreatedAt    *time.Time      `json:"created_at"`
 	UpdatedAt    *time.Time      `json:"updated_at"`
-	DeletedAt    *time.Time      `json:"-"`
+	DeletedAt    gorm.DeletedAt  `gorm:"index" json:"-"`
 }
 
 type VideoDTO struct {

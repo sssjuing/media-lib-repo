@@ -16,6 +16,7 @@
     "@emotion/css": "^11.13.5",
     "@repo/route-layout": "workspace:*",
     "@repo/service": "workspace:*",
+    "@repo/ui": "workspace:*",
     "ahooks": "^3.8.4",
     "antd": "^5.22.5",
     "axios": "^1.7.9",
@@ -36,7 +37,7 @@
     "eslint": "^8.57.1",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2",
-    "vite": "^6.0.3",
+    "vite": "^6.0.5",
     "vitest": "^2.1.8"
   }
 }

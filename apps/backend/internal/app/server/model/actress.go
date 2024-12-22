@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"gorm.io/datatypes"
+	"gorm.io/gorm"
 )
 
 type Actress struct {
@@ -25,5 +26,5 @@ type Actress struct {
 	Videos       []*Video        `gorm:"many2many:actress_video" json:"videos"`
 	CreatedAt    *time.Time      `json:"created_at"`
 	UpdatedAt    *time.Time      `json:"updated_at"`
-	DeletedAt    *time.Time      `json:"-"`
+	DeletedAt    gorm.DeletedAt  `gorm:"index" json:"-"`
 }
