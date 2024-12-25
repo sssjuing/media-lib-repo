@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "dockerbuild": "tsc -b && vite build --outDir ../backend/build/dist/h5",
+    "build": "tsc -b && vite build --outDir ../backend/web/h5",
+    "dockerbuild": "tsc -b && vite build --outDir ../backend/build/dist/web/h5",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0 && tsc -b",
     "preview": "vite preview",
     "test": "vitest run"

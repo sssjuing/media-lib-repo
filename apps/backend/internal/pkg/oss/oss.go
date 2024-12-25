@@ -89,11 +89,11 @@ type UploadInfo struct {
 	Url  string `json:"url"`
 }
 
-func UploadFile(file *multipart.File, objectPath string) (*UploadInfo, error) {
+func UploadFile(file *multipart.File, objectPath, contentType string) (*UploadInfo, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	publicUrl := config.GetMinioPublicUrl()
 	defer cancel()
-	info, err := minioClient.PutObject(ctx, bucketName, objectPath, *file, -1, minio.PutObjectOptions{ContentType: "application/octet-stream"})
+	info, err := minioClient.PutObject(ctx, bucketName, objectPath, *file, -1, minio.PutObjectOptions{ContentType: contentType})
 	if err != nil {
 		return nil, err
 	}

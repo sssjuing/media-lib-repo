@@ -117,7 +117,7 @@ const ActressCard: FC<{ actress: Actress }> = ({ actress }) => {
             color: #666;
           `}
         >
-          {actress.names?.join('、')}
+          {actress.other_names?.join('、')}
         </div>
       </div>
     </Card>

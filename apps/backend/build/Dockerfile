@@ -1,8 +1,7 @@
 FROM scratch
 
 WORKDIR /app
-COPY dist/h5 ./h5/
-COPY dist/console ./console/
+COPY dist/web ./web/
 COPY dist/server ./server
 COPY dist/config.yaml /etc/media-lib/
 
