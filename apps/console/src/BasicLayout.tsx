@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useMemo } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { RouteLayout, useAuth, usePageTitle } from '@repo/route-layout';
+import { AntdLayout, useAuth, usePageTitle } from '@repo/antd-layout';
 import logo from '@/assets/logo.svg';
 import getRouteData from './utils/getRouteData';
 import routes from './routes';
@@ -27,7 +27,7 @@ const BasicLayout = () => {
   const routeData = useMemo(() => getRouteData(routes), [routes]);
 
   return (
-    <RouteLayout
+    <AntdLayout
       rootPath="/"
       theme="dark"
       logo={logo}
@@ -51,7 +51,7 @@ const BasicLayout = () => {
       <Wrapper>
         <Outlet />
       </Wrapper>
-    </RouteLayout>
+    </AntdLayout>
   );
 };
 

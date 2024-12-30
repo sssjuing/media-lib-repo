@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { Button, List } from 'antd';
 import useSWR from 'swr';
-import { Breadcrumb, PageHeaderWrapper } from '@repo/route-layout';
+import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
 

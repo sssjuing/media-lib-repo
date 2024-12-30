@@ -1,6 +1,6 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { ElementOf, RouteMeta, WithMeta } from '@repo/route-layout';
+import { ElementOf, RouteMeta, WithMeta } from '@repo/antd-layout';
 import BasicLayout from '@/BasicLayout';
 import NotFound from '@/components/NotFound';
 import HomePage from '@/pages/home';

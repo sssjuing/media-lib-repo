@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card } from 'antd';
-import { Breadcrumb, PageHeaderWrapper } from '@repo/route-layout';
+import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitActressDTO } from '@repo/service';
 import { services } from '@/services';
 import ActressForm from './ActressForm';

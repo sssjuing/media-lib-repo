@@ -52,9 +52,9 @@ importers:
       '@emotion/css':
         specifier: ^11.13.5
         version: 11.13.5
-      '@repo/route-layout':
+      '@repo/antd-layout':
         specifier: workspace:*
-        version: link:../../packages/route-layout
+        version: link:../../packages/antd-layout
       '@repo/service':
         specifier: workspace:*
         version: link:../../packages/service
@@ -199,55 +199,7 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@22.10.2)
 
-  packages/eslint-config:
-    devDependencies:
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^8.18.1
-        version: 8.18.1(@typescript-eslint/parser@8.18.1(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2)
-      '@typescript-eslint/parser':
-        specifier: ^8.18.1
-        version: 8.18.1(eslint@8.57.1)(typescript@5.7.2)
-      '@vercel/style-guide':
-        specifier: ^6.0.0
-        version: 6.0.0(@next/eslint-plugin-next@14.2.5)(eslint@8.57.1)(prettier@3.4.2)(typescript@5.7.2)(vitest@2.1.8(@types/node@22.10.2))
-      eslint:
-        specifier: ^8.57.1
-        version: 8.57.1
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@8.57.1)
-      eslint-config-turbo:
-        specifier: ^2.3.3
-        version: 2.3.3(eslint@8.57.1)
-      eslint-import-resolver-typescript:
-        specifier: ^3.7.0
-        version: 3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
-      eslint-plugin-import:
-        specifier: ^2.31.0
-        version: 2.31.0(@typescript-eslint/parser@8.18.1(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
-      eslint-plugin-only-warn:
-        specifier: ^1.1.0
-        version: 1.1.0
-      eslint-plugin-prettier:
-        specifier: ^5.2.1
-        version: 5.2.1(@types/eslint@8.56.11)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.4.2)
-      eslint-plugin-react:
-        specifier: ^7.37.2
-        version: 7.37.2(eslint@8.57.1)
-      eslint-plugin-react-hooks:
-        specifier: ^5.1.0
-        version: 5.1.0(eslint@8.57.1)
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.16
-        version: 0.4.16(eslint@8.57.1)
-      prettier:
-        specifier: 3.4.2
-        version: 3.4.2
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.2
-
-  packages/route-layout:
+  packages/antd-layout:
     dependencies:
       '@ant-design/icons':
         specifier: ^5.5.2
@@ -344,6 +296,54 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@22.10.2)
 
+  packages/eslint-config:
+    devDependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.18.1
+        version: 8.18.1(@typescript-eslint/parser@8.18.1(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2)
+      '@typescript-eslint/parser':
+        specifier: ^8.18.1
+        version: 8.18.1(eslint@8.57.1)(typescript@5.7.2)
+      '@vercel/style-guide':
+        specifier: ^6.0.0
+        version: 6.0.0(@next/eslint-plugin-next@14.2.5)(eslint@8.57.1)(prettier@3.4.2)(typescript@5.7.2)(vitest@2.1.8(@types/node@22.10.2))
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.57.1)
+      eslint-config-turbo:
+        specifier: ^2.3.3
+        version: 2.3.3(eslint@8.57.1)
+      eslint-import-resolver-typescript:
+        specifier: ^3.7.0
+        version: 3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-plugin-import:
+        specifier: ^2.31.0
+        version: 2.31.0(@typescript-eslint/parser@8.18.1(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
+      eslint-plugin-only-warn:
+        specifier: ^1.1.0
+        version: 1.1.0
+      eslint-plugin-prettier:
+        specifier: ^5.2.1
+        version: 5.2.1(@types/eslint@8.56.11)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.4.2)
+      eslint-plugin-react:
+        specifier: ^7.37.2
+        version: 7.37.2(eslint@8.57.1)
+      eslint-plugin-react-hooks:
+        specifier: ^5.1.0
+        version: 5.1.0(eslint@8.57.1)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.16
+        version: 0.4.16(eslint@8.57.1)
+      prettier:
+        specifier: 3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+
   packages/service:
     dependencies:
       axios:
@@ -376,9 +376,6 @@ importers:
 
   packages/ui:
     dependencies:
-      '@ant-design/icons':
-        specifier: ^5.5.2
-        version: 5.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@emotion/css':
         specifier: ^11.13.5
         version: 11.13.5
@@ -388,15 +385,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.0
         version: 11.14.0(@emotion/react@11.14.0(@types/react@18.3.16)(react@18.3.1))(@types/react@18.3.16)(react@18.3.1)
-      antd:
-        specifier: ^5.22.5
-        version: 5.22.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
-      path-to-regexp:
-        specifier: ^7.2.0
-        version: 7.2.0
       react:
         specifier: ^18.3.1
         version: 18.3.1

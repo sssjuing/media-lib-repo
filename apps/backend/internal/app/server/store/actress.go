@@ -46,9 +46,9 @@ func (as *ActressStore) Create(a *model.Actress) (err error) {
 }
 
 func (as *ActressStore) Update(a *model.Actress) error {
-	return as.db.Model(&a).Updates(a).Error
+	return as.db.Model(a).Updates(a).Error
 }
 
 func (as *ActressStore) Delete(a *model.Actress) error {
-	return as.db.Select("Videos").Delete(&a).Error
+	return as.db.Select("Videos").Delete(a).Error
 }

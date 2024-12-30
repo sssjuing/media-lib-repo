@@ -1,4 +1,4 @@
-import { GridContent } from '@repo/route-layout';
+import { GridContent } from '@repo/antd-layout';
 
 export default function IndexPage() {
   return (

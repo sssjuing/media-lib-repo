@@ -4,7 +4,7 @@ import { Button, Card, Input, Popconfirm, Space, Table } from 'antd';
 import useSWR from 'swr';
 import dayjs from 'dayjs';
 import { AnchorBtn } from '@repo/ui';
-import { Breadcrumb, PageHeaderWrapper } from '@repo/route-layout';
+import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { getAge, Actress } from '@repo/service';
 import configs from '@/configs';
 import { services } from '@/services';

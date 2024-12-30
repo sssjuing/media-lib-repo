@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, List, Space } from 'antd';
 import useSWR from 'swr';
 import { useSetState } from 'ahooks';
-import { Breadcrumb, PageHeaderWrapper } from '@repo/route-layout';
+import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
 

@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { Button, Card, message, Popconfirm } from 'antd';
 import useSWR from 'swr';
-import { Breadcrumb, PageHeaderWrapper } from '@repo/route-layout';
+import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitVideoDTO } from '@repo/service';
 import { services } from '@/services';
 import VideoForm from './VideoForm';

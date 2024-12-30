@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import { WithMeta } from '@repo/route-layout';
+import { WithMeta } from '@repo/antd-layout';
 import CreatePage from './create';
 import EditPage from './edit';
 import Index from './index';

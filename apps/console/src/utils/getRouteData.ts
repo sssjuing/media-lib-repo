@@ -1,4 +1,4 @@
-import { RouteItem } from '@repo/route-layout';
+import { RouteItem } from '@repo/antd-layout';
 import { RouteObjectWithMeta } from '../routes';
 
 export default function getRouteData(routes: RouteObjectWithMeta[]): RouteItem[] {

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Card, message, Popconfirm } from 'antd';
 import useSWR from 'swr';
-import { Breadcrumb, PageHeaderWrapper } from '@repo/route-layout';
+import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitActressDTO } from '@repo/service';
 import { services } from '@/services';
 import ActressForm from './ActressForm';
