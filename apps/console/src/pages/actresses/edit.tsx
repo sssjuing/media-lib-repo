@@ -10,7 +10,7 @@ export default function () {
   const navigate = useNavigate();
   const { actress_id } = useParams();
 
-  const { data } = useSWR('/actresses/:actress_id', () =>
+  const { data } = useSWR(`/actresses/${actress_id}`, () =>
     services.actress.getById(Number(actress_id)),
   );
 

@@ -11,7 +11,7 @@ export default function () {
   const navigate = useNavigate();
   const { video_id } = useParams();
 
-  const { data } = useSWR('/videos/:video_id', () => services.video.getById(Number(video_id)));
+  const { data } = useSWR(`/videos/${video_id}`, () => services.video.getById(Number(video_id)));
 
   const handleSubmit = async (values: SubmitVideoDTO) => {
     const v = await services.video.update(Number(video_id), values);
