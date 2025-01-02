@@ -6,5 +6,6 @@
   ],
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "go.testFlags": ["-count=1"]
 }
