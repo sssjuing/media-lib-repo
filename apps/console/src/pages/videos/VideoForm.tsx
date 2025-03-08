@@ -33,6 +33,7 @@ const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
         ...video,
         actresses: video.actresses?.map((i) => i.id),
         cover_path: video.cover_url,
+        video_path: video.video_path && 'media-lib/' + video.video_path,
       });
     }
     return () => {
@@ -44,8 +45,8 @@ const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
     onSubmit?.({
       ...values,
       actresses: values.actresses?.map((i) => ({ id: i })),
-      cover_path: getSubstringAfter(values.cover_path, '/media-lib/'),
-      video_path: values.video_path && getSubstringAfter(values.video_path, '/media-lib/'),
+      cover_path: getSubstringAfter(values.cover_path, 'media-lib/'),
+      video_path: values.video_path && getSubstringAfter(values.video_path, 'media-lib/'),
       // video_path: values.bucket_path?.replace(/^https?:\/\/.*?\//, '/'),
     });
   };

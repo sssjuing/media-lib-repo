@@ -3,7 +3,7 @@ mysql:
   port: 3306
   username: mysqladmin
   password: mysqlpassword
-  dbname: media_lib
+  dbname: medialib_db
 
 minio:
   host: 127.0.0.1
