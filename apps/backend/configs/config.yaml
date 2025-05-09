@@ -1,9 +1,9 @@
-mysql:
+postgres:
   host: 127.0.0.1
-  port: 3306
-  username: mysqladmin
-  password: mysqlpassword
-  dbname: medialib_db
+  port: 5432
+  username: postgresadmin
+  password: postgrespassword
+  dbname: testdb
 
 minio:
   host: 127.0.0.1

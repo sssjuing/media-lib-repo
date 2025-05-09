@@ -1,9 +1,9 @@
-mysql:
+postgres:
   host: host.docker.internal
-  port: 3306
-  username: mysqladmin
-  password: mysqlpassword
-  dbname: media_lib
+  port: 5432
+  username: medialibadmin
+  password: medialibpassword
+  dbname: medialib_db
 
 minio:
   host: host.docker.internal

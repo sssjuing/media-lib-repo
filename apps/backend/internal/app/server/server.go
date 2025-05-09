@@ -16,9 +16,8 @@ func Run() {
 	// r.GET("/swagger/*", echoSwagger.WrapHandler)
 	v1 := r.Group("/api")
 
-	dsn := config.GetMysqlDsn()
+	dsn := config.GetPostgresDsn()
 	d := db.NewDB(dsn)
-	// db.AutoMigrate(d)
 
 	as := store.NewActressStore(d)
 	vs := store.NewVedioStore(d)

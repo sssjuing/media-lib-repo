@@ -20,7 +20,7 @@ func NewActressStore(db *gorm.DB) *ActressStore {
 
 func (as *ActressStore) GetList() ([]*model.Actress, error) {
 	var actresses []*model.Actress
-	if err := as.db.Order("CONVERT(chinese_name USING gbk)").Find(&actresses).Error; err != nil {
+	if err := as.db.Order("CONVERT_TO(chinese_name, 'GBK')").Find(&actresses).Error; err != nil {
 		return nil, err
 	}
 	return actresses, nil

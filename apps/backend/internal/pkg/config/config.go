@@ -32,14 +32,14 @@ func GetConfig() *viper.Viper {
 	return config
 }
 
-func GetMysqlDsn() string {
-	host := config.GetString("mysql.host")
-	port := config.GetString("mysql.port")
-	username := config.GetString("mysql.username")
-	password := config.GetString("mysql.password")
-	dbname := config.GetString("mysql.dbname")
-	// dsn := "<user>:<password>@tcp(<ip>:<port>)/<database_name>?charset=utf8&parseTime=True&loc=Local"
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbname)
+func GetPostgresDsn() string {
+	host := config.GetString("postgres.host")
+	port := config.GetString("postgres.port")
+	username := config.GetString("postgres.username")
+	password := config.GetString("postgres.password")
+	dbname := config.GetString("postgres.dbname")
+	// host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, username, password, dbname, port)
 	return dsn
 }
 

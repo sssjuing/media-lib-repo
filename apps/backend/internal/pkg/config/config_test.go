@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestGetMysqlDsn(t *testing.T) {
-	dsn := GetMysqlDsn()
+func TestGetPostgresDsn(t *testing.T) {
+	dsn := GetPostgresDsn()
 	fmt.Println(dsn)
 }
 
