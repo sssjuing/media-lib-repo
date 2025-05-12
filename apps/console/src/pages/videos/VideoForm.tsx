@@ -33,7 +33,7 @@ const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
         ...video,
         actresses: video.actresses?.map((i) => i.id),
         cover_path: video.cover_url,
-        video_path: video.video_path && 'media-lib/' + video.video_path,
+        video_path: video.video_url,
       });
     }
     return () => {

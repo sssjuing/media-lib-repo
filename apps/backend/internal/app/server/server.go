@@ -3,8 +3,8 @@ package server
 import (
 	"media-lib/internal/app/server/db"
 	"media-lib/internal/app/server/handler"
+	"media-lib/internal/app/server/repository"
 	"media-lib/internal/app/server/router"
-	"media-lib/internal/app/server/store"
 	"media-lib/internal/pkg/config"
 	"net/http"
 
@@ -14,15 +14,15 @@ import (
 func Run() {
 	r := router.New()
 	// r.GET("/swagger/*", echoSwagger.WrapHandler)
-	v1 := r.Group("/api")
 
 	dsn := config.GetPostgresDsn()
 	d := db.NewDB(dsn)
 
-	as := store.NewActressStore(d)
-	vs := store.NewVedioStore(d)
+	ar := repository.NewActressRepository(d)
+	vr := repository.NewVideoRepository(d)
 
-	h := handler.NewHandler(as, vs)
+	h := handler.NewHandler(ar, vr)
+	v1 := r.Group("/api")
 	h.Register(v1)
 
 	r.GET("/", func(c echo.Context) error {

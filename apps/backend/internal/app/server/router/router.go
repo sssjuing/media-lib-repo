@@ -29,5 +29,6 @@ func New() *echo.Echo {
 		HTML5:  true,
 	}))
 
+	e.Validator = NewValidator()
 	return e
 }

@@ -1,7 +1,7 @@
 services:
   server:
     hostname: media-lib-server
-    image: sujingclg/media-lib:0.0.1
+    image: sujingclg/media-lib
     restart: unless-stopped
     ports:
       - 1323:1323

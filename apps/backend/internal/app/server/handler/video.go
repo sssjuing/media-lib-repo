@@ -1,81 +1,56 @@
 package handler
 
 import (
-	"errors"
+	"media-lib/internal/app/server/dto"
 	"media-lib/internal/app/server/model"
-	"media-lib/internal/app/server/util"
+	"media-lib/internal/app/server/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
 func (h *Handler) ListVideos(c echo.Context) error {
-	videos, err := h.videoStore.GetList()
+	list, err := h.videoSvc.GetList()
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, util.NewError(err))
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
-	output := make([]*model.VideoDTO, len(videos))
-	for i, video := range videos {
-		output[i] = util.VideoMapper(video)
-	}
-	return c.JSON(http.StatusOK, output)
+	return c.JSON(http.StatusOK, list)
 }
 
 func (h *Handler) CreateVideo(c echo.Context) error {
-	var v model.Video
-	if err := c.Bind(&v); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, util.NewError(err))
+	var cvd dto.CreateVideoDTO
+	if code, err := validateRequest(c, &cvd); err != nil {
+		return c.JSON(code, utils.NewError(err))
 	}
-	if v.SerialNumber == "" {
-		return c.JSON(http.StatusBadRequest, util.NewError(errors.New("番号不能为空")))
+	vd, err := h.videoSvc.Create(&cvd)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	if v.CoverPath == "" {
-		return c.JSON(http.StatusBadRequest, util.NewError(errors.New("封面不能为空")))
-	}
-	if err := h.videoStore.Create(&v); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, util.NewError(err))
-	}
-	return c.JSON(http.StatusCreated, util.VideoMapper(&v))
+	return c.JSON(http.StatusCreated, vd)
 }
 
 func (h *Handler) GetVideoById(c echo.Context) error {
-	v, err := h.videoStore.GetById(c.Param("video_id"))
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, util.NewError(err))
-	}
-	if v == nil {
-		return c.JSON(http.StatusNotFound, util.NotFound())
-	}
-	return c.JSON(http.StatusOK, util.VideoMapper(v))
+	v := c.Get("video").(*model.Video)
+	return c.JSON(http.StatusOK, v.DTO())
 }
 
 func (h *Handler) UpdateVideo(c echo.Context) error {
-	v, err := h.videoStore.GetById(c.Param("video_id"))
+	v := c.Get("video").(*model.Video)
+	var uvd dto.UpdateVideoDTO
+	if code, err := validateRequest(c, &uvd); err != nil {
+		return c.JSON(code, utils.NewError(err))
+	}
+	vd, err := h.videoSvc.Update(v, &uvd)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, util.NewError(err))
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	if v == nil {
-		return c.JSON(http.StatusNotFound, util.NotFound())
-	}
-	if err := c.Bind(&v); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, util.NewError(err))
-	}
-	if err := h.videoStore.Update(v); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, util.NewError(err))
-	}
-	return c.JSON(http.StatusOK, util.VideoMapper(v))
+	return c.JSON(http.StatusOK, vd)
 }
 
 func (h *Handler) RemoveVideo(c echo.Context) error {
-	v, err := h.videoStore.GetById(c.Param("video_id"))
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, util.NewError(err))
-	}
-	if v == nil {
-		return c.JSON(http.StatusNotFound, util.NotFound())
-	}
-	if err := h.videoStore.Delete(v); err != nil {
-		return c.JSON(http.StatusInternalServerError, util.NewError(err))
+	v := c.Get("video").(*model.Video)
+	if err := h.videoRepo.Delete(v); err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
 	return c.NoContent(http.StatusNoContent)
 }

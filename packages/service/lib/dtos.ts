@@ -43,19 +43,17 @@ export interface SubmitActressDTO {
 export interface VideoDTO {
   id: number;
   serial_number: string;
-  cover_path: string;
+  cover_url: string;
   title: string | null;
   chinese_title: string | null;
   actresses: ActressDTO[] | null;
   release_date: string | null;
-  video_path: string | null;
+  video_url: string | null;
   mosaic: boolean | null;
   tags: string[] | null;
   synopsis: string | null;
   created_at: string;
   updated_at: string;
-  cover_url: string;
-  video_url: string | null;
 }
 
 export interface SubmitVideoDTO {

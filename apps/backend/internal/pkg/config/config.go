@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"log"
-	"media-lib/internal/pkg/util"
+	"media-lib/internal/pkg/utils"
 
 	"github.com/spf13/viper"
 )
@@ -20,7 +20,7 @@ func init() {
 	config.AddConfigPath("/etc/media-lib")
 
 	if err := config.ReadInConfig(); err != nil {
-		configsDirPath := util.GetRootPath() + "/configs"
+		configsDirPath := utils.GetRootPath() + "/configs"
 		config.AddConfigPath(configsDirPath)
 		if err := config.ReadInConfig(); err != nil {
 			log.Fatal("Error on parsing default configuration file. ", err)

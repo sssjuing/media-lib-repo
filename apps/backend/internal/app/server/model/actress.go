@@ -1,6 +1,8 @@
 package model
 
 import (
+	"encoding/json"
+	"media-lib/internal/app/server/dto"
 	"time"
 
 	"gorm.io/datatypes"
@@ -28,4 +30,29 @@ type Actress struct {
 	Hobbies      *string         `gorm:"size:255" json:"hobbies"`
 	Notes        *string         `json:"notes"`
 	Videos       []*Video        `gorm:"many2many:actress_video" json:"videos"`
+}
+
+func (a *Actress) DTO() *dto.ActressDTO {
+	if a == nil {
+		return nil
+	}
+	return &dto.ActressDTO{
+		ID:           a.ID,
+		UniqueName:   a.UniqueName,
+		ChineseName:  a.ChineseName,
+		EnglishName:  a.EnglishName,
+		OtherNames:   (*json.RawMessage)(a.OtherNames),
+		BirthDate:    a.BirthDate,
+		BirthPlace:   a.BirthPlace,
+		Height:       a.Height,
+		Weight:       a.Weight,
+		Measurements: (*json.RawMessage)(a.Measurements),
+		Cup:          a.Cup,
+		BloodGroup:   a.BloodGroup,
+		DebutDate:    a.DebutDate,
+		Hobbies:      a.Hobbies,
+		Notes:        a.Notes,
+		CreatedAt:    a.CreatedAt,
+		UpdatedAt:    a.UpdatedAt,
+	}
 }

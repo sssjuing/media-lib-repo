@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"media-lib/internal/app/server/middleware"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -12,20 +13,20 @@ func (h *Handler) Register(g *echo.Group) {
 	files.GET("/:folder_name", h.ListFiles)
 	files.POST("/upload_image", h.UploadImage)
 
-	actresses := g.Group("/actresses")
-	actresses.GET("", h.ListActresses)
-	actresses.POST("", h.CreateActress)
-	actresses.GET("/:actress_id", h.GetActressById)
-	actresses.PUT("/:actress_id", h.UpdateActress)
-	actresses.DELETE("/:actress_id", h.RemoveActress)
-	actresses.GET("/:actress_id/videos", h.GetVideosByActressId)
+	g.GET("/actresses", h.ListActresses)
+	g.POST("/actresses", h.CreateActress)
+	actress := g.Group("/actresses/:actress_id", middleware.ActressChecker(h.actressRepo))
+	actress.GET("", h.GetActressById)
+	actress.PUT("", h.UpdateActress)
+	actress.DELETE("", h.RemoveActress)
+	actress.GET("/videos", h.GetVideosByActressId)
 
-	videos := g.Group("/videos")
-	videos.GET("", h.ListVideos)
-	videos.POST("", h.CreateVideo)
-	videos.GET("/:video_id", h.GetVideoById)
-	videos.PUT("/:video_id", h.UpdateVideo)
-	videos.DELETE("/:video_id", h.RemoveVideo)
+	g.GET("/videos", h.ListVideos)
+	g.POST("/videos", h.CreateVideo)
+	video := g.Group("/videos/:video_id", middleware.VideoChecker(h.videoRepo))
+	video.GET("", h.GetVideoById)
+	video.PUT("", h.UpdateVideo)
+	video.DELETE("", h.RemoveVideo)
 
 	g.GET("/*", func(c echo.Context) error {
 		return c.String(http.StatusNotFound, "not found")

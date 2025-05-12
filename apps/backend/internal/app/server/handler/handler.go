@@ -1,18 +1,24 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/store"
+	"media-lib/internal/app/server/repository"
+	"media-lib/internal/app/server/service"
 )
 
 type Handler struct {
-	actressStore store.IActressStore
-	videoStore   store.IVideoStore
+	actressRepo repository.ActressRepository
+	actressSvc  service.ActressService
+	videoRepo   repository.VideoRepository
+	videoSvc    service.VideoService
 }
 
-func NewHandler(as store.IActressStore, vs store.IVideoStore) *Handler {
-
+func NewHandler(ar repository.ActressRepository, vr repository.VideoRepository) *Handler {
+	as := service.NewActressService(ar)
+	vs := service.NewVideoService(vr)
 	return &Handler{
-		actressStore: as,
-		videoStore:   vs,
+		actressRepo: ar,
+		actressSvc:  as,
+		videoRepo:   vr,
+		videoSvc:    vs,
 	}
 }

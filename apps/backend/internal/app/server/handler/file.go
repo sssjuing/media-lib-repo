@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"media-lib/internal/app/server/util"
+	"media-lib/internal/app/server/utils"
 	"media-lib/internal/pkg/oss"
 	"net/http"
 	"path/filepath"
@@ -28,12 +28,12 @@ func (h *Handler) UploadImage(c echo.Context) error {
 	contentType := file.Header.Get("content-type")
 	fmt.Println("content-type", contentType)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, util.NewError(err))
+		return c.JSON(http.StatusBadRequest, utils.NewError(err))
 	}
 	objectPath := filepath.Join("pictures/covers", file.Filename)
 	info, err := oss.UploadFile(&fileObj, objectPath, contentType)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, util.NewError(err))
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
 	return c.JSON(http.StatusOK, info)
 }

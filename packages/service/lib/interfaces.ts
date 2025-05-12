@@ -23,17 +23,15 @@ export interface Actress {
 export interface Video {
   id: number;
   serial_number: string;
-  cover_path: string;
+  cover_url: string;
   title?: string;
   chinese_title?: string;
   actresses?: Actress[];
   release_date?: string;
-  video_path?: string;
+  video_url?: string;
   mosaic?: boolean;
   tags?: string[];
   synopsis?: string;
   created_at: string;
   updated_at: string;
-  cover_url: string;
-  video_url?: string;
 }
