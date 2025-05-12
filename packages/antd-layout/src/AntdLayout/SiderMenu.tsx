@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { css, cx } from '@emotion/css';
 import { Layout } from 'antd';
-import LayoutMenu from './LayoutMenu';
 import HeaderLogo from './HeaderLogo';
+import LayoutMenu from './LayoutMenu';
 import { useLayout } from './useLayout';
 
 const { Sider } = Layout;
@@ -16,7 +16,13 @@ const SiderMenu: FC<SiderMenuProps> = (props) => {
   const { theme, logo, title, siderWidth, collapsed } = useLayout();
 
   return (
-    <Sider width={siderWidth} collapsed={collapsed} theme={theme} breakpoint="md" className={className}>
+    <Sider
+      width={siderWidth}
+      collapsed={collapsed}
+      theme={theme}
+      breakpoint="md"
+      className={className}
+    >
       {(logo || title) && (
         <div
           className={cx(

@@ -1,16 +1,13 @@
 import { FC, RefObject, useEffect } from 'react';
 import { Button, Form, Input, Radio, Space, TextArea } from 'antd-mobile';
 import { Actress, SubmitActressDTO } from '@repo/service';
-import InputMeasurements from '@/components/InputMeasurements';
 import CupPicker, { CupPickerRef } from '@/components/CupPicker';
+import InputMeasurements from '@/components/InputMeasurements';
 
 interface ActressFormProps {
   actress?: Actress;
   onSubmit?: (
-    values: Pick<
-      SubmitActressDTO,
-      'unique_name' | 'chinese_name' | 'measurements' | 'cup' | 'blood_group' | 'notes'
-    >,
+    values: Pick<SubmitActressDTO, 'unique_name' | 'chinese_name' | 'measurements' | 'cup' | 'blood_group' | 'notes'>,
   ) => void;
 }
 
@@ -39,7 +36,7 @@ const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
         label="罩杯"
         name="cup"
         trigger="onConfirm"
-        onClick={(e, datePickerRef: RefObject<CupPickerRef>) => {
+        onClick={(_, datePickerRef: RefObject<CupPickerRef>) => {
           datePickerRef.current?.open();
         }}
       >

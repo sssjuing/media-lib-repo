@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Default",
   "compilerOptions": {
     "composite": false,
     "declaration": true,
@@ -13,7 +12,7 @@
     "lib": ["es2022", "DOM", "DOM.Iterable"],
     "module": "NodeNext",
     "moduleDetection": "force",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "noUnusedLocals": true,
     "noUncheckedIndexedAccess": true,
@@ -22,6 +21,5 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022"
-  },
-  "exclude": ["node_modules"]
+  }
 }

@@ -1,16 +1,16 @@
-import { Navigate, RouteObject } from 'react-router-dom';
-import BasicLayout from '@/layouts/BasicLayout';
+import { Navigate, RouteObject } from 'react-router';
+import MainLayout from '@/layouts/MainLayout';
 import NotFound from '@/pages/404';
+import ActressesLayout from '@/pages/actresses/_layout';
+import Files from '@/pages/files';
 import Home from '@/pages/home';
 import Music from '@/pages/music';
-import ActressesLayout from '@/pages/actresses/_layout';
 import Videos from '@/pages/videos';
-import Files from '@/pages/files';
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <BasicLayout />,
+    element: <MainLayout />,
     children: [
       { path: '/', element: <Navigate to="/home" replace /> },
       { path: '/home', element: <Home /> },

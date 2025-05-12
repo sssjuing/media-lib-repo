@@ -1,14 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 import { ConfigProvider } from 'antd';
 import { HelmetProvider } from 'react-helmet-async';
-import routes from './routes';
+import router from '@/router';
 import 'normalize.css';
-
-const router = createBrowserRouter(routes as RouteObject[], {
-  basename: '/console',
-});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

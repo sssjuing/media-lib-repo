@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([

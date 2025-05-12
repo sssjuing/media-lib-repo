@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { css, cx } from '@emotion/css';
 import { Layout } from 'antd';
-import TopNavHeader, { TopNavHeaderProps } from './TopNavHeader';
 import GlobalHeader from './GlobalHeader';
+import TopNavHeader, { TopNavHeaderProps } from './TopNavHeader';
 import { useLayout } from './useLayout';
 
 const { Header: AntdHeader } = Layout;

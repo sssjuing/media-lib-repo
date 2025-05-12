@@ -1,11 +1,10 @@
-import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Toast } from 'antd-mobile';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { services } from '@/services';
 import ActressForm from './ActressForm';
 
-const CreateActress: FC = () => {
+export default function CreateActressPage() {
   const navigate = useNavigate();
 
   return (
@@ -23,6 +22,4 @@ const CreateActress: FC = () => {
       />
     </PageHeaderWrapper>
   );
-};
-
-export default CreateActress;
+}

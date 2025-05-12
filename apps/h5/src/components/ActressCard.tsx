@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { css } from '@emotion/css';
 import { Card, Grid, Tag } from 'antd-mobile';
 import { SearchOutline } from 'antd-mobile-icons';
@@ -43,11 +43,7 @@ const ActressCard: FC<{ actress: Actress }> = ({ actress }) => {
           <a
             onClick={(e) => {
               e.stopPropagation();
-              open(
-                `https://thisav.com/cn/search/${actress.unique_name}`,
-                '_blank',
-                'noopener=yes,noreferrer=yes',
-              );
+              open(`https://thisav.com/cn/search/${actress.unique_name}`, '_blank', 'noopener=yes,noreferrer=yes');
             }}
           >
             <SearchOutline />

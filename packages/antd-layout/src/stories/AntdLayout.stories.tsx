@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
 // import { fn } from '@storybook/test';
 import { ConfigProvider } from 'antd';
+import type { Meta, StoryObj } from '@storybook/react';
 import { AntdLayoutView, AntdLayoutViewProps } from './AntdLayoutView';
-import logo from './assets/logo.svg';
 import { routeData } from './data';
+import logo from './assets/logo.svg';
 
 const meta: Meta<typeof AntdLayoutView> = {
   title: 'Layouts/AntdLayout',

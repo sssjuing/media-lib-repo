@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { Button, Input, List, Space } from 'antd';
-import useSWR from 'swr';
 import { useSetState } from 'ahooks';
+import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
 
-export default function () {
+export default function VideosIndexPage() {
   const navigate = useNavigate();
   const { data } = useSWR('/videos', services.video.list);
   const [state, setState] = useSetState({ searchStr: '', pageSize: 24 });

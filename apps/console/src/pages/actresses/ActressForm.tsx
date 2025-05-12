@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, DatePicker, Form, Input, InputNumber, Radio, Select, Space } from 'antd';
 import dayjs from 'dayjs';
@@ -79,11 +79,7 @@ const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
       <Form.Item label="其他名字" name="other_names">
         <Select mode="tags" placeholder="逗号或顿号分隔不同名字" />
       </Form.Item>
-      <Form.Item
-        label="出生日期"
-        name="birth_date"
-        getValueProps={(value) => ({ value: value && dayjs(value) })}
-      >
+      <Form.Item label="出生日期" name="birth_date" getValueProps={(value) => ({ value: value && dayjs(value) })}>
         <DatePicker />
       </Form.Item>
       <Form.Item label="出生地" name="birth_place">
@@ -104,11 +100,7 @@ const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
       <Form.Item label="血型" name="blood_group">
         <Radio.Group options={['A', 'B', 'AB', 'O']} />
       </Form.Item>
-      <Form.Item
-        label="出道日期"
-        name="debut_date"
-        getValueProps={(value) => ({ value: value && dayjs(value) })}
-      >
+      <Form.Item label="出道日期" name="debut_date" getValueProps={(value) => ({ value: value && dayjs(value) })}>
         <DatePicker />
       </Form.Item>
       <Form.Item label="爱好" name="hobbies">

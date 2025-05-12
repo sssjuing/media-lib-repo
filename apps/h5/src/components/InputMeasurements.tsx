@@ -24,10 +24,7 @@ const InputMeasurements: FC<InputMeasurementsProps> = ({ value, onChange }) => {
       </Space>
       <Space>
         <div>腰围</div>
-        <InputNumber
-          value={value?.waist}
-          onChange={(val) => onChange?.({ ...value!, waist: val })}
-        />
+        <InputNumber value={value?.waist} onChange={(val) => onChange?.({ ...value!, waist: val })} />
       </Space>
       <Space>
         <div>臀围</div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import 'normalize.css';
+import { RouterProvider, createBrowserRouter } from 'react-router';
 import routes from './routes';
+import 'normalize.css';
 
 document.documentElement.setAttribute('data-prefers-color-scheme', 'dark');
 

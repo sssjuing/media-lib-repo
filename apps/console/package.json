@@ -5,39 +5,40 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build --outDir ../backend/web/console",
+    "build": "tsc -b && vite build --outDir ../backend/web/console --emptyOutDir",
     "dockerbuild": "tsc -b && vite build --outDir ../backend/build/dist/web/console",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0 && tsc -b",
     "preview": "vite preview",
     "test": "vitest run"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.5.2",
+    "@ant-design/icons": "^5.6.1",
     "@emotion/css": "^11.13.5",
     "@repo/antd-layout": "workspace:*",
     "@repo/service": "workspace:*",
     "@repo/ui": "workspace:*",
     "ahooks": "^3.8.4",
-    "antd": "^5.22.5",
-    "axios": "^1.7.9",
+    "antd": "^5.25.1",
+    "axios": "^1.9.0",
     "dayjs": "^1.11.13",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^6.26.0",
-    "swr": "^2.2.5"
+    "react-router": "^7.6.0",
+    "swr": "^2.3.3"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react-swc": "^3.7.2",
-    "eslint": "^8.57.1",
-    "prettier": "^3.4.2",
-    "typescript": "^5.7.2",
-    "vite": "^6.0.5",
-    "vitest": "^2.1.8"
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/react": "^18.3.21",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react-swc": "^3.9.0",
+    "eslint": "^9.26.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.3"
   }
 }

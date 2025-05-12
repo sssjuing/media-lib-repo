@@ -1,4 +1,4 @@
-import { forwardRef, ForwardRefRenderFunction } from 'react';
+import { ForwardRefRenderFunction, forwardRef } from 'react';
 import { Picker } from 'antd-mobile';
 import { PickerRef, PickerValue } from 'antd-mobile/es/components/picker';
 
@@ -11,10 +11,7 @@ interface CupPickerProps {
   onConfirm?: (val?: PickerValue) => void;
 }
 
-const CupPicker: ForwardRefRenderFunction<CupPickerRef, CupPickerProps> = (
-  { value, onConfirm },
-  ref,
-) => {
+const CupPicker: ForwardRefRenderFunction<CupPickerRef, CupPickerProps> = ({ value, onConfirm }, ref) => {
   const handleConfirm = (val: PickerValue[]) => {
     onConfirm?.(val[0] || undefined);
   };

@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 import NotFound from '@/pages/404';
-import CreatePage from './create';
 import ContentPage from './content';
+import CreatePage from './create';
 import EditPage from './edit';
-import VideosPage from './videos';
 import Index from './index';
+import VideosPage from './videos';
 
 const ActressesLayout: FC = () => {
   return (

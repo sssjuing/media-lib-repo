@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Card } from 'antd';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitVideoDTO } from '@repo/service';
 import { services } from '@/services';
 import VideoForm from './VideoForm';
 
-export default function () {
+export default function CreateVideoPage() {
   const navigate = useNavigate();
 
   const handleSubmit = async (values: SubmitVideoDTO) => {

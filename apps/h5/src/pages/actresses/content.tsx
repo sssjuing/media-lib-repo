@@ -1,21 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import useSWR from 'swr';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import ActressCard from '@/components/ActressCard';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { services } from '@/services';
 
-export default function () {
+export default function ActressContentPage() {
   const { actress_id } = useParams();
   const navigate = useNavigate();
-  const { data: actress } = useSWR(`/actresses/${actress_id}`, () =>
-    services.actress.getById(Number(actress_id)),
-  );
+  const { data: actress } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
 
   return (
-    <PageHeaderWrapper
-      title={`${actress?.unique_name}的详情`}
-      onBack={() => navigate('/actresses')}
-    >
+    <PageHeaderWrapper title={`${actress?.unique_name}的详情`} onBack={() => navigate('/actresses')}>
       {actress && <ActressCard actress={actress} />}
     </PageHeaderWrapper>
   );

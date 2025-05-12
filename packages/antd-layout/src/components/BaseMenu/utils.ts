@@ -53,7 +53,7 @@ export function getMenuMatches(flatMenuKeys: string[], path: string): string[] {
   // test方法为 JavaScript 的正则表达式对象的内建方法, 用于检测一个字符串是否匹配某个模式
   return flatMenuKeys.filter((item) => {
     if (item) {
-      return pathToRegexp(item).test(path);
+      return pathToRegexp(item)['regexp'].test(path);
     }
     return false;
   });

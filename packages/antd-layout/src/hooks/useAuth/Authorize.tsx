@@ -1,24 +1,6 @@
 import { FC, PropsWithChildren, ReactNode } from 'react';
-import { pathToRegexp } from 'path-to-regexp';
-import { RouteItem } from '../../interface';
 import { useRoute } from '../../LayoutRouteProvider';
-import { checkPermissions } from './utils';
-
-export function getRouteAuth(routes: readonly RouteItem[] = [], pathname: string = ''): string[] {
-  let authorities: string[] = [];
-  const callback = (list: readonly RouteItem[]) => {
-    list.forEach((item) => {
-      if (pathToRegexp(`${item.path}(.*)`).test(pathname)) {
-        authorities = item.auth || authorities;
-        if (item.children) {
-          callback(item.children);
-        }
-      }
-    });
-  };
-  callback(routes);
-  return authorities;
-}
+import { checkPermissions, getRouteAuth } from './utils';
 
 export interface AuthorizeProps {
   noMatch: ReactNode;

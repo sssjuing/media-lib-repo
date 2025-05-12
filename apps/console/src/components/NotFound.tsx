@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, Result } from 'antd';
 

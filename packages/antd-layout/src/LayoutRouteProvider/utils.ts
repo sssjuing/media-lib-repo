@@ -1,7 +1,7 @@
 import { resolve } from 'path-browserify';
 import { MenuItem } from '../components/BaseMenu/interface';
-import { RouteItem } from '../interface';
 import { checkPermissions } from '../hooks/useAuth/utils';
+import { RouteItem } from '../interface';
 
 export function joinRoutesPath(routes?: RouteItem[], parentPath = '/'): RouteItem[] {
   const result: RouteItem[] = [];

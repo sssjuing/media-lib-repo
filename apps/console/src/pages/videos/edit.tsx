@@ -1,13 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
-import { Button, Card, message, Popconfirm } from 'antd';
+import { Button, Card, Popconfirm, message } from 'antd';
 import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitVideoDTO } from '@repo/service';
 import { services } from '@/services';
 import VideoForm from './VideoForm';
 
-export default function () {
+export default function EditVideoPage() {
   const navigate = useNavigate();
   const { video_id } = useParams();
 

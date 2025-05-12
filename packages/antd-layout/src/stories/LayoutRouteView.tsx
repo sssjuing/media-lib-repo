@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
 import { css } from '@emotion/css';
 import { MenuProps } from 'antd';
-import { BaseMenu } from '../components/BaseMenu';
 import { LayoutRouteProvider, useRoute } from '../LayoutRouteProvider';
-import { usePageTitle } from '../hooks';
 import { Breadcrumb } from '../components';
+import { BaseMenu } from '../components/BaseMenu';
+import { usePageTitle } from '../hooks';
 import { routeData } from './data';
 
 const InnerComp: FC<Pick<MenuProps, 'onClick'>> = ({ onClick }) => {

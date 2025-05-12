@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import { css, cx } from '@emotion/css';
 import { TabBar } from 'antd-mobile';
-import { MdFolder, MdMusicNote, MdPerson, MdVideoLibrary } from 'react-icons/md';
 import { throttle } from 'lodash-es';
+import { MdFolder, MdMusicNote, MdPerson, MdVideoLibrary } from 'react-icons/md';
 
 const tabs = [
   {
@@ -28,7 +28,7 @@ const tabs = [
   },
 ];
 
-const BasicLayout: FC = () => {
+const MainLayout: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -87,4 +87,4 @@ const BasicLayout: FC = () => {
   );
 };
 
-export default BasicLayout;
+export default MainLayout;

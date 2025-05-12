@@ -1,19 +1,16 @@
-import { FC } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, Dialog, Result, Toast } from 'antd-mobile';
 import useSWR from 'swr';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Loading from '@/components/Loading';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { services } from '@/services';
 import ActressForm from './ActressForm';
 
-const EditActress: FC = () => {
+export default function EditActressPage() {
   const { actress_id } = useParams();
   const navigate = useNavigate();
-  const { data: actress } = useSWR(`/actresses/${actress_id}`, () =>
-    services.actress.getById(Number(actress_id)),
-  );
+  const { data: actress } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
 
   const back = () => navigate('/actresses');
 
@@ -84,6 +81,4 @@ const EditActress: FC = () => {
       )}
     </PageHeaderWrapper>
   );
-};
-
-export default EditActress;
+}

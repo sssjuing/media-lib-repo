@@ -1,66 +1,37 @@
-const { resolve } = require("node:path");
+import pluginReact from 'eslint-plugin-react';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReactRefresh from 'eslint-plugin-react-refresh';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import { config as baseConfig } from './base.js';
 
-const project = resolve(process.cwd(), "tsconfig.json");
-
-/** @type {import("eslint").Linter.Config} */
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-    // node: true,
-  },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-  ],
-  overrides: [],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-  },
-  plugins: [
-    "react",
-    "react-hooks",
-    "@typescript-eslint",
-    "prettier",
-    "import",
-    "react-refresh",
-  ],
-  ignorePatterns: ["dist", "vite-env.d.ts"],
-  rules: {
-    "import/order": [
-      "error",
-      {
-        groups: [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index",
-        ],
-        pathGroups: [{ pattern: "@/**", group: "internal" }],
-      },
-    ],
-    "react/react-in-jsx-scope": "off",
-    "spaced-comment": "error",
-    quotes: ["warn", "single"],
-    "no-duplicate-imports": "error",
-    "react/display-name": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-  },
-  settings: {
-    typescript: {},
-    react: {
-      version: "detect",
-    },
-    "import/resolver": {
-      typescript: {
-        project,
+/**
+ * A custom ESLint configuration for React App.
+ *
+ * @type {import("eslint").Linter.Config}
+ */
+export const config = tseslint.config(
+  ...baseConfig,
+  {
+    ...pluginReact.configs.flat.recommended,
+    languageOptions: {
+      ...pluginReact.configs.flat.recommended.languageOptions,
+      globals: {
+        ...globals.serviceworker,
       },
     },
   },
-};
+  {
+    plugins: { 'react-hooks': pluginReactHooks },
+    settings: { react: { version: 'detect' } },
+    rules: {
+      ...pluginReactHooks.configs.recommended.rules,
+      // React scope no longer necessary with new JSX transform.
+      'react/react-in-jsx-scope': 'off',
+    },
+  },
+  {
+    plugins: { 'react-refresh': pluginReactRefresh },
+    rules: { 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }] },
+  },
+);

@@ -1,4 +1,4 @@
-import { FC, memo, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, memo } from 'react';
 
 const verticalPadding = 'calc(var(--ant-layout-header-height) * 3 / 8)';
 

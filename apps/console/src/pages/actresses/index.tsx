@@ -1,17 +1,17 @@
 import { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { Button, Card, Input, Popconfirm, Space, Table } from 'antd';
-import useSWR from 'swr';
 import dayjs from 'dayjs';
-import { AnchorBtn } from '@repo/ui';
+import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
-import { getAge, Actress } from '@repo/service';
+import { Actress, getAge } from '@repo/service';
+import { AnchorBtn } from '@repo/ui';
 import configs from '@/configs';
 import { services } from '@/services';
 
 const { CUP_TYPE } = configs;
 
-export default function () {
+export default function ActressesIndexPage() {
   const navigate = useNavigate();
 
   const { data, mutate } = useSWR('/actresses', services.actress.list);
@@ -19,8 +19,7 @@ export default function () {
   const [searchStr, setSearchStr] = useState('');
 
   const list = useMemo(
-    () =>
-      data?.filter((i) => i.unique_name.includes(searchStr) || i.chinese_name.includes(searchStr)),
+    () => data?.filter((i) => i.unique_name.includes(searchStr) || i.chinese_name.includes(searchStr)),
     [data, searchStr],
   );
 

@@ -10,3 +10,10 @@ export function isValidUrl(str: string): boolean {
   ); // fragment locator
   return pattern.test(str);
 }
+
+export const sleep = (time: number) =>
+  new Promise((res) => {
+    setTimeout(() => {
+      res('awake');
+    }, time);
+  });

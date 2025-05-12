@@ -1,8 +1,9 @@
+import { RouteObject } from 'react-router';
 import { expect, test } from 'vitest';
-import { RouteObjectWithMeta } from '../routes';
+import { WithMeta } from '@repo/antd-layout';
 import getRouteData from './getRouteData';
 
-const routes: RouteObjectWithMeta[] = [
+const routes: WithMeta<RouteObject>[] = [
   {
     path: '/',
     metadata: { name: '首页' },

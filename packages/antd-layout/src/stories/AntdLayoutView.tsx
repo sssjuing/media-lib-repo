@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Breadcrumb, PageHeaderWrapper, AntdLayout, AntdLayoutProps, usePageTitle } from '../main';
+import { AntdLayout, AntdLayoutProps, Breadcrumb, PageHeaderWrapper, usePageTitle } from '../main';
 
 export type AntdLayoutViewProps = Omit<AntdLayoutProps, 'children' | 'rootPath' | 'pathname' | 'onMenuClick'>;
 

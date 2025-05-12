@@ -13,7 +13,7 @@ export const usePageTitle = () => {
       return;
     }
     for (const path in pathRouteMap) {
-      if (pathToRegexp(path).test(pathname)) {
+      if (pathToRegexp(path)['regexp'].test(pathname)) {
         return pathRouteMap[path]?.name;
       }
     }

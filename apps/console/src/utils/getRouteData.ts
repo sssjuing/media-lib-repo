@@ -1,7 +1,7 @@
-import { RouteItem } from '@repo/antd-layout';
-import { RouteObjectWithMeta } from '../routes';
+import { RouteObject } from 'react-router';
+import { RouteItem, WithMeta } from '@repo/antd-layout';
 
-export default function getRouteData(routes: RouteObjectWithMeta[]): RouteItem[] {
+export default function getRouteData(routes: WithMeta<RouteObject>[]): RouteItem[] {
   const routeData: RouteItem[] = [];
   routes.forEach(({ path, metadata, element, children }) => {
     if (!path) {

@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Card } from 'antd';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitActressDTO } from '@repo/service';
 import { services } from '@/services';
 import ActressForm from './ActressForm';
 
-export default function () {
+export default function CreateActressPage() {
   const navigate = useNavigate();
 
   const handleSubmit = async (values: SubmitActressDTO) => {

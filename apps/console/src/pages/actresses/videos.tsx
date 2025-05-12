@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, List } from 'antd';
 import useSWR from 'swr';
@@ -6,12 +6,10 @@ import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
 
-export default function () {
+export default function ActressVideosPage() {
   const navigate = useNavigate();
   const { actress_id } = useParams();
-  const { data: actress } = useSWR(`/actresses/${actress_id}`, () =>
-    services.actress.getById(Number(actress_id)),
-  );
+  const { data: actress } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
   const { data = [] } = useSWR(`/actresses/${actress_id}/videos`, () =>
     services.actress.listVideos(Number(actress_id)),
   );

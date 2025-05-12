@@ -1,18 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Card, message, Popconfirm } from 'antd';
+import { useNavigate, useParams } from 'react-router';
+import { Button, Card, Popconfirm, message } from 'antd';
 import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitActressDTO } from '@repo/service';
 import { services } from '@/services';
 import ActressForm from './ActressForm';
 
-export default function () {
+export default function EditActressPage() {
   const navigate = useNavigate();
   const { actress_id } = useParams();
 
-  const { data } = useSWR(`/actresses/${actress_id}`, () =>
-    services.actress.getById(Number(actress_id)),
-  );
+  const { data } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
 
   const handleSubmit = async (values: SubmitActressDTO) => {
     const a = await services.actress.update(Number(actress_id), values);

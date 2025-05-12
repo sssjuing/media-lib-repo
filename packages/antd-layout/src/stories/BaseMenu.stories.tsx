@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
 import { ConfigProvider } from 'antd';
+import type { Meta, StoryObj } from '@storybook/react';
 import { BaseMenuView } from './BaseMenuView';
 
 const meta: Meta<typeof BaseMenuView> = {

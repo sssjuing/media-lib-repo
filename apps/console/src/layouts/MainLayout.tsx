@@ -1,10 +1,9 @@
 import { FC, PropsWithChildren, useMemo } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, RouteObject, useLocation, useNavigate } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import { AntdLayout, useAuth, usePageTitle } from '@repo/antd-layout';
+import { AntdLayout, WithMeta, useAuth, usePageTitle } from '@repo/antd-layout';
+import getRouteData from '@/utils/getRouteData';
 import logo from '@/assets/logo.svg';
-import getRouteData from './utils/getRouteData';
-import routes from './routes';
 
 const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   const { Authorize, Forbidden } = useAuth();
@@ -20,15 +19,24 @@ const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-const BasicLayout = () => {
+export interface MainLayoutProps {
+  routes: WithMeta<RouteObject>[];
+}
+
+const MainLayout: FC<MainLayoutProps> = ({ routes }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const routeData = useMemo(() => getRouteData(routes), [routes]);
+  // 如果 MainLayout 上一级有动态路由, 这里 rootPath 应写入 useParams 中获取的动态路由值
+  const rootPath = '/';
+
+  const routeData = useMemo(() => {
+    return getRouteData([{ path: rootPath, metadata: { name: '首页' }, children: routes }]);
+  }, [rootPath, routes]);
 
   return (
     <AntdLayout
-      rootPath="/"
+      rootPath={rootPath}
       theme="dark"
       logo={logo}
       siderWidth={230}
@@ -40,11 +48,7 @@ const BasicLayout = () => {
       currentUser={{
         id: 12,
         name: 'Serati Ma',
-        auth: [
-          //
-          'admin',
-          'user',
-        ],
+        auth: ['admin', 'user'],
       }}
       // accordion
     >
@@ -55,4 +59,4 @@ const BasicLayout = () => {
   );
 };
 
-export default BasicLayout;
+export default MainLayout;

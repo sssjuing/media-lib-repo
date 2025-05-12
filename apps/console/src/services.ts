@@ -1,5 +1,5 @@
-import { Services } from '@repo/service';
 import axios from 'axios';
+import { Services } from '@repo/service';
 
 const axiosInstance = axios.create({
   baseURL: '/api',

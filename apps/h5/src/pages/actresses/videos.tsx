@@ -1,16 +1,14 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import useSWR from 'swr';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
 
-export default function () {
+export default function ActressVideosPage() {
   const { actress_id } = useParams();
   const navigate = useNavigate();
 
-  const { data: actress } = useSWR(`/actresses/${actress_id}`, () =>
-    services.actress.getById(Number(actress_id)),
-  );
+  const { data: actress } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
   const { data = [] } = useSWR(`/actresses/${actress_id}/videos`, () =>
     services.actress.listVideos(Number(actress_id)),
   );

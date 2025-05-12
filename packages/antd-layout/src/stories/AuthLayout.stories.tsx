@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
 // import { fn } from '@storybook/test';
 import { ConfigProvider } from 'antd';
+import type { Meta, StoryObj } from '@storybook/react';
 import { AuthLayoutView, AuthLayoutViewProps } from './AuthLayoutView';
 
 const meta: Meta<typeof AuthLayoutView> = {

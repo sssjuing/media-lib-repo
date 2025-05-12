@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { MenuProps } from 'antd';
-import { BaseMenu } from '../components/BaseMenu';
 import { useRoute } from '../LayoutRouteProvider';
+import { BaseMenu } from '../components/BaseMenu';
 import { useLayout } from './useLayout';
 
 export interface LayoutMenuProps extends Pick<MenuProps, 'mode'> {

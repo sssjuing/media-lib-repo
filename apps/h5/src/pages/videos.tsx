@@ -5,7 +5,7 @@ import VideoCard from '@/components/VideoCard';
 import { useScroll } from '@/hooks/useScroll';
 import { services } from '@/services';
 
-export default function () {
+export default function VideosIndexPage() {
   const { data } = useSWR('/videos', services.video.list);
   const { data: videoList, loadMore, hasMore } = useScroll(data);
 

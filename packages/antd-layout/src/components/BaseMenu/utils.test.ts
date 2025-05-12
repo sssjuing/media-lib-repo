@@ -1,6 +1,6 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 import { MenuItem } from './interface';
-import { isMainMenu, getFlatMenuKeys, getInitOpenKeys, getMenuMatches } from './utils';
+import { getFlatMenuKeys, getInitOpenKeys, getMenuMatches, isMainMenu } from './utils';
 
 test('测试 isMainMenu', () => {
   const menuItems: MenuItem[] = [

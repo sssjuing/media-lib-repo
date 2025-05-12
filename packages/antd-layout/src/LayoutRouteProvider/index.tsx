@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useContext, useMemo } from 'react';
+import { FC, PropsWithChildren, createContext, useContext, useMemo } from 'react';
 import { RouteItem } from '../interface';
 import { getMenuItems, getPathRouteMap, joinRoutesPath } from './utils';
 
@@ -17,7 +17,7 @@ const useValues = ({ rootPath, routeData, currentAuth, ...restProps }: LayoutRou
 
   const menuItems = useMemo(
     () => getMenuItems(pathRouteMap[rootPath]?.children ?? [], currentAuth),
-    [rootPath, routes, currentAuth],
+    [rootPath, pathRouteMap, currentAuth],
   );
 
   return {

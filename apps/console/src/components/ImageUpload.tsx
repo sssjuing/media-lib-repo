@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import { css } from '@emotion/css';
 import { Upload, message } from 'antd';
-import { UploadProps, UploadChangeParam } from 'antd/lib/upload';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { UploadChangeParam, UploadProps } from 'antd/lib/upload';
 
 const uploadProps: UploadProps = {
   action: '/api/files/upload_image',
@@ -17,7 +17,7 @@ interface ImageUploadProps {
   onChange?: (value: string) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ value: enteredValue, onChange }) => {
+const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChange }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
 

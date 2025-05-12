@@ -1,7 +1,7 @@
 import { BreadcrumbProps as AntdBreadcrumbProps } from 'antd';
 import { pathToRegexp } from 'path-to-regexp';
-import { urlToList } from '../../utils/utils';
 import { RouteItem } from '../../interface';
+import { urlToList } from '../../utils/utils';
 
 export default function getBreadcrumbItems(
   pathRouteMap: Record<string, RouteItem>,
@@ -15,7 +15,8 @@ export default function getBreadcrumbItems(
   urlList.unshift('/');
   for (const url of urlList) {
     innerloop: for (const key in pathRouteMap) {
-      if (pathToRegexp(key).test(url)) {
+      const { regexp } = pathToRegexp(key);
+      if (regexp.test(url)) {
         result.push({
           path: url,
           title: pathRouteMap[key]?.name,

@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import { AntdLayout, useAuth } from '../main';
-import logo from './assets/logo.svg';
-import avatar from './assets/avatar.png';
 import { routeData } from './data';
+import avatar from './assets/avatar.png';
+import logo from './assets/logo.svg';
 
 const AuthWrapper = ({ pathname }: { pathname: string }) => {
   const { Authorize, Forbidden } = useAuth();

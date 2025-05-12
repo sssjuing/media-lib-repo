@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from 'antd';
-import useSWR from 'swr';
 import dayjs from 'dayjs';
+import useSWR from 'swr';
 import { SubmitVideoDTO, Video } from '@repo/service';
 import ImageUpload from '@/components/ImageUpload';
 import { services } from '@/services';
@@ -85,11 +85,7 @@ const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
           filterOption={(input, option) => (option?.label ?? '').includes(input)}
         />
       </Form.Item>
-      <Form.Item
-        label="发行日期"
-        name="release_date"
-        getValueProps={(value) => ({ value: value && dayjs(value) })}
-      >
+      <Form.Item label="发行日期" name="release_date" getValueProps={(value) => ({ value: value && dayjs(value) })}>
         <DatePicker />
       </Form.Item>
       <Form.Item

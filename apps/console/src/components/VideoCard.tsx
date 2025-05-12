@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, Image, Tag } from 'antd';
 import { EditOutlined, VideoCameraTwoTone } from '@ant-design/icons';
@@ -12,9 +12,7 @@ interface VideoCardProps {
 
 const VideoCard: FC<VideoCardProps> = ({ video, disableActressLink }) => {
   const renderActressTagContent = (a: Actress) => {
-    const text = `${a.unique_name}${
-      (video.release_date && `${getAge(a.birth_date, video.release_date)}`) || ''
-    }`;
+    const text = `${a.unique_name}${(video.release_date && `${getAge(a.birth_date, video.release_date)}`) || ''}`;
     if (disableActressLink) return text;
     return <Link to={`/actresses/${a.id}/videos`}>{text}</Link>;
   };

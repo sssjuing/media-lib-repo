@@ -28,6 +28,9 @@
       "dependsOn": ["^lint"],
       "cache": false
     },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,

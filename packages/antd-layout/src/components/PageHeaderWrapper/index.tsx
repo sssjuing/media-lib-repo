@@ -1,4 +1,4 @@
-import { FC, memo, PropsWithChildren, ReactNode } from 'react';
+import { FC, PropsWithChildren, ReactNode, memo } from 'react';
 import { css, cx } from '@emotion/css';
 import { GridContent } from './GridContent';
 

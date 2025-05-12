@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
-import { VideoService } from './services/video';
 import { ActressService } from './services/actress';
+import { VideoService } from './services/video';
 
 export class Services {
   public video: VideoService;
