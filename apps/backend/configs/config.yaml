@@ -1,9 +1,9 @@
 postgres:
-  host: 127.0.0.1
+  host: 10.9.22.11
   port: 5432
   username: postgresadmin
   password: postgrespassword
-  dbname: testdb
+  dbname: medialib_db
 
 minio:
   host: 127.0.0.1
@@ -11,4 +11,4 @@ minio:
   username: minioadmin
   password: miniopassword
   bucket_name: media-lib
-  public_endpoint: 127.0.0.1:9000
+  public_endpoint: 10.9.22.15:9000
