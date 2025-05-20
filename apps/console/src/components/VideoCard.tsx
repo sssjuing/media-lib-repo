@@ -12,7 +12,7 @@ interface VideoCardProps {
 
 const VideoCard: FC<VideoCardProps> = ({ video, disableActressLink }) => {
   const renderActressTagContent = (a: Actress) => {
-    const text = `${a.unique_name}${(video.release_date && `${getAge(a.birth_date, video.release_date)}`) || ''}`;
+    const text = `${a.unique_name}${(video.release_date && ` ${getAge(a.birth_date, video.release_date)}`) || ''}`;
     if (disableActressLink) return text;
     return <Link to={`/actresses/${a.id}/videos`}>{text}</Link>;
   };
@@ -101,7 +101,10 @@ const VideoCard: FC<VideoCardProps> = ({ video, disableActressLink }) => {
           </div>
           <div>
             <div className="label">Tags</div>
-            <div className="tags">{video.tags?.map((t) => <Tag key={t}>{t}</Tag>)}</div>
+            <div className="tags">
+              {!video.mosaic && <Tag color="orange">无码</Tag>}
+              {video.tags?.map((t) => <Tag key={t}>{t}</Tag>)}
+            </div>
           </div>
         </div>
       </div>

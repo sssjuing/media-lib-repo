@@ -1,3 +1,6 @@
+server:
+  log_level: debug # debug | info | warn | error
+
 postgres:
   host: 127.0.0.1
   port: 5432

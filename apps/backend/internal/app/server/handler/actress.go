@@ -54,7 +54,7 @@ func (h *Handler) RemoveActress(c echo.Context) error {
 
 func (h *Handler) GetVideosByActressId(c echo.Context) error {
 	a := c.Get("actress").(*model.Actress)
-	videos, err := h.videoRepo.FindAllByActressId(a.ID)
+	videos, err := h.actressRepo.FindVideos(a.ID)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}

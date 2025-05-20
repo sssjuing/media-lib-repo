@@ -15,11 +15,11 @@ func init() {
 }
 
 func TestFindVideos(t *testing.T) {
-	// videos, _ := actressRepo.FindVideos(2)
-	// for _, v := range videos {
-	// 	t.Log(v.SerialNumber)
-	// 	for _, a := range v.Actresses {
-	// 		t.Log(a.UniqueName, a.ChineseName)
-	// 	}
-	// }
+	videos, _ := actressRepo.FindVideos(62)
+	for _, v := range videos {
+		t.Log("\n", v.SerialNumber, v.ReleaseDate)
+		for _, a := range v.Actresses {
+			t.Log(a.UniqueName)
+		}
+	}
 }

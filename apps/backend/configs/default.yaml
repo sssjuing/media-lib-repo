@@ -1,3 +1,6 @@
+server:
+  log_level: warn # debug | info | warn | error
+
 postgres:
   host: host.docker.internal
   port: 5432

@@ -10,7 +10,6 @@ import (
 
 type VideoRepository interface {
 	FindAll() ([]model.Video, error)
-	FindAllByActressId(uint) ([]*model.Video, error)
 	FindByID(uint) (*model.Video, error)
 	Create(*model.Video) error
 	Update(*model.Video) error
@@ -33,14 +32,13 @@ func (r *VideoRepositoryImpl) FindAll() ([]model.Video, error) {
 	return videos, nil
 }
 
-// TODO: 返回结果按照 release_date 排序
-func (r *VideoRepositoryImpl) FindAllByActressId(actressId uint) ([]*model.Video, error) {
-	var actress model.Actress
-	if err := r.db.Preload("Videos").Preload("Videos.Actresses").First(&actress, actressId).Error; err != nil {
-		return nil, err
-	}
-	return actress.Videos, nil
-}
+// func (r *VideoRepositoryImpl) FindAllByActressId(actressId uint) ([]*model.Video, error) {
+// 	var actress model.Actress
+// 	if err := r.db.Preload("Videos").Preload("Videos.Actresses").First(&actress, actressId).Error; err != nil {
+// 		return nil, err
+// 	}
+// 	return actress.Videos, nil
+// }
 
 func (r *VideoRepositoryImpl) FindByID(id uint) (*model.Video, error) {
 	var v model.Video
