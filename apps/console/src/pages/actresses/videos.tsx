@@ -1,10 +1,23 @@
 import { Link, useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
-import { Button, List } from 'antd';
+import { Button, Descriptions, List } from 'antd';
+import dayjs from 'dayjs';
 import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
+import { Actress, getAge } from '@repo/service';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
+
+const measurementsRenderer = (actress: Actress) => {
+  if (!actress.measurements) {
+    return null;
+  }
+  const {
+    cup,
+    measurements: { bust, waist, hips },
+  } = actress;
+  return `B${bust}${cup ? `(${actress.cup} Cup)` : ''} / W${waist} / H${hips}`;
+};
 
 export default function ActressVideosPage() {
   const navigate = useNavigate();
@@ -22,6 +35,40 @@ export default function ActressVideosPage() {
         </>
       }
       breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}
+      content={
+        actress && (
+          <Descriptions
+            size="small"
+            column={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5, xxl: 5 }}
+            items={[
+              {
+                label: '中文名',
+                children: actress.chinese_name,
+              },
+              {
+                label: '年龄',
+                children: getAge(actress.birth_date),
+              },
+              {
+                label: '出道日期',
+                children: actress.debut_date && dayjs(actress.debut_date).format('YYYY年MM月'),
+              },
+
+              {
+                label: '身高',
+                children: actress.height && actress.height + ' CM',
+              },
+              {
+                label: '三围',
+                children: measurementsRenderer(actress),
+              },
+            ]}
+            className={css`
+              margin-top: 10px;
+            `}
+          />
+        )
+      }
       extra={
         <Button type="primary">
           <Link to={`/actresses/${actress_id}/edit`}>编辑演员</Link>
@@ -30,15 +77,12 @@ export default function ActressVideosPage() {
     >
       <List
         rowKey="id"
-        className={css`
-          padding: 24px;
-        `}
         dataSource={data}
         grid={{ gutter: 12, xxl: 4, xl: 3, lg: 3, md: 3, sm: 3, xs: 3 }}
         pagination={{ pageSize: 12 }}
         renderItem={(i) => (
           <List.Item>
-            <VideoCard video={i} disableActressLink />
+            <VideoCard video={i} />
           </List.Item>
         )}
       />

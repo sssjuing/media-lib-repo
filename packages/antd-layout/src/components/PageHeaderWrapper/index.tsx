@@ -33,8 +33,8 @@ const PageHeaderWrapper: FC<PageHeaderWrapperProps> = (props) => {
             flex: 1;
           }
           .extra {
-            min-width: 242px;
-            margin-left: 88px;
+            min-width: 120px;
+            margin-left: 24px;
             text-align: right;
           }
           .extra-without-content {

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, Image, Tag } from 'antd';
 import { EditOutlined, VideoCameraTwoTone } from '@ant-design/icons';
@@ -7,13 +7,16 @@ import { Actress, Video, getAge } from '@repo/service';
 
 interface VideoCardProps {
   video: Video;
-  disableActressLink?: boolean;
 }
 
-const VideoCard: FC<VideoCardProps> = ({ video, disableActressLink }) => {
+const VideoCard: FC<VideoCardProps> = ({ video }) => {
+  const { actress_id } = useParams();
+
   const renderActressTagContent = (a: Actress) => {
     const text = `${a.unique_name}${(video.release_date && ` ${getAge(a.birth_date, video.release_date)}`) || ''}`;
-    if (disableActressLink) return text;
+    if (Number(actress_id) === a.id) {
+      return text;
+    }
     return <Link to={`/actresses/${a.id}/videos`}>{text}</Link>;
   };
 
