@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { Button } from 'antd';
 import { AntdLayout, AntdLayoutProps, Breadcrumb, PageHeaderWrapper, usePageTitle } from '../main';
 
 export type AntdLayoutViewProps = Omit<AntdLayoutProps, 'children' | 'rootPath' | 'pathname' | 'onMenuClick'>;
@@ -7,7 +8,12 @@ const InnerComp: FC<Pick<AntdLayoutProps, 'pathname'>> = ({ pathname }) => {
   const pageTitle = usePageTitle();
 
   return (
-    <PageHeaderWrapper title={pageTitle} breadcrumb={<Breadcrumb />}>
+    <PageHeaderWrapper
+      title={pageTitle}
+      breadcrumb={<Breadcrumb />}
+      content="page content"
+      extra={<Button>Action</Button>}
+    >
       <div>{pathname}</div>
     </PageHeaderWrapper>
   );

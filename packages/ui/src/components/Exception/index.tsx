@@ -18,63 +18,25 @@ const Exception: React.FC<ExceptionProps> = (props) => {
   const pageType = type && type in typeConfig ? type : '404';
 
   return (
-    <div
-      className={cx(
-        css`
-          display: flex;
-          align-items: center;
-          min-height: 500px;
-        `,
-        className,
-      )}
-      style={style}
-    >
-      <div
-        className={css`
-          flex: 0 0 55%;
-          width: 62.5%;
-          padding-right: 120px;
-        `}
-      >
+    <div className={cx('flex min-h-[500px] items-center', className)} style={style}>
+      <div className="flex-[0_0_55%] pr-[120px] flex justify-end">
         <div
-          className={css`
-            float: right;
-            width: 100%;
-            max-width: 430px;
-            height: 360px;
-            background: no-repeat 50% 50%;
-            background-size: contain;
-            background-image: url(${image || typeConfig[pageType].img});
-          `}
+          className="w-full max-w-[430px] h-[360px] bg-no-repeat bg-center bg-contain"
+          style={{ backgroundImage: `url(${image || typeConfig[pageType].img})` }}
         />
       </div>
-      <div
-        className={css`
-          flex: auto;
-          > h1 {
-            margin: 0;
-            margin-bottom: 24px;
-            color: #434e59;
-            font-weight: 600;
-            font-size: 72px;
-            line-height: 72px;
-          }
-          > div.desc {
-            margin-bottom: 16px;
-            color: rgba(0, 0, 0, 0.65);
-            font-size: 20px;
-            line-height: 28px;
-          }
-          > div.actions {
+      <div>
+        <h1 className="mb-6 text-[#434e59] font-semibold text-7xl leading-18">{title || typeConfig[pageType].title}</h1>
+        <div className="mb-4 text-gray-500 text-[20px] leading-7">{desc || typeConfig[pageType].desc}</div>
+        <div
+          className={css`
             button:not(:last-child) {
               margin-right: 8px;
             }
-          }
-        `}
-      >
-        <h1>{title || typeConfig[pageType].title}</h1>
-        <div className="desc">{desc || typeConfig[pageType].desc}</div>
-        <div className="actions">{actions}</div>
+          `}
+        >
+          {actions}
+        </div>
       </div>
     </div>
   );

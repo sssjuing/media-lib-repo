@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, ReactNode, memo } from 'react';
-import { css, cx } from '@emotion/css';
+import { cx } from '@emotion/css';
 import { GridContent } from './GridContent';
 
 export interface PageHeaderWrapperProps extends PropsWithChildren {
@@ -24,45 +24,20 @@ const PageHeaderWrapper: FC<PageHeaderWrapperProps> = (props) => {
 
   const headerContent =
     content || extra ? (
-      <div
-        className={css`
-          display: flex;
-          width: 100%;
-          align-items: center;
-          .content {
-            flex: 1;
-          }
-          .extra {
-            min-width: 120px;
-            margin-left: 24px;
-            text-align: right;
-          }
-          .extra-without-content {
-            flex: 1;
-            margin: -32px 0 0;
-          }
-        `}
-      >
-        {content && <div className="content">{content}</div>}
-        {extra && <div className={cx('extra', { 'extra-without-content': !content })}>{extra}</div>}
+      <div className="flex w-full items-center">
+        {content && <div className="grow basis-0">{content}</div>}
+        {extra && (
+          <div className={cx('min-w-32 ml-6 text-right', { 'grow basis-0 mt-[-32px]': !content })}>{extra}</div>
+        )}
       </div>
     ) : null;
 
   return (
     <div>
-      <div
-        className={css`
-          padding: 10px 0;
-          background-color: #fff;
-          h2 {
-            margin: 0;
-            margin-top: 4px;
-          }
-        `}
-      >
+      <div className="bg-white py-2.5">
         <GridContent inlineStyle>
           {breadcrumb && <div>{breadcrumb}</div>}
-          {title && <h2>{title}</h2>}
+          {title && <h2 className="mt-1 text-2xl font-bold text-neutral-800">{title}</h2>}
           {headerContent}
         </GridContent>
       </div>

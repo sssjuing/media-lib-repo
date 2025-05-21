@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router';
 import { ConfigProvider } from 'antd';
 import { HelmetProvider } from 'react-helmet-async';
 import router from '@/router';
-import 'normalize.css';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
