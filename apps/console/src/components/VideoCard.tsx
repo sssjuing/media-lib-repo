@@ -13,7 +13,8 @@ const VideoCard: FC<VideoCardProps> = ({ video }) => {
   const { actress_id } = useParams();
 
   const renderActressTagContent = (a: Actress) => {
-    const text = `${a.unique_name}${(video.release_date && ` ${getAge(a.birth_date, video.release_date)}`) || ''}`;
+    const age = video.release_date && getAge(a.birth_date, video.release_date);
+    const text = !age ? a.unique_name : `${a.unique_name} ${age}`;
     if (Number(actress_id) === a.id) {
       return text;
     }
