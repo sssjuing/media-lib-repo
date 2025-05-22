@@ -9,20 +9,7 @@ export function useUrlParams<T extends Record<string, string | number | string[]
   useEffect(() => {
     if (!mountedRef.current && searchParams.size === 0) {
       const params = new URLSearchParams(queryString.stringify(initialValue));
-      // for (const [k, v] of Object.entries(initialValue)) {
-      //   if (typeof v === 'string') {
-      //     params.set(k, v);
-      //   }
-      //   if (typeof v === 'number') {
-      //     params.set(k, v.toString());
-      //   }
-      //   if (Array.isArray(v)) {
-      //     for (const item of v) {
-      //       params.append(k, item);
-      //     }
-      //   }
-      // }
-      setSearchParams(params);
+      setSearchParams(params, { replace: true });
     }
     return () => {
       mountedRef.current = true;

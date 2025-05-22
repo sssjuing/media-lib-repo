@@ -18,7 +18,7 @@ export default function CreateVideoPage() {
   return (
     <PageHeaderWrapper breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}>
       <Card title="创建视频">
-        <VideoForm onSubmit={handleSubmit} />
+        <VideoForm onSubmit={handleSubmit} onBack={() => navigate('/videos')} />
       </Card>
     </PageHeaderWrapper>
   );

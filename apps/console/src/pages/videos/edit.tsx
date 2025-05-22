@@ -16,7 +16,7 @@ export default function EditVideoPage() {
   const handleSubmit = async (values: SubmitVideoDTO) => {
     const v = await services.video.update(Number(video_id), values);
     if (v) {
-      navigate('/videos');
+      navigate(-1);
     }
   };
 
@@ -59,7 +59,7 @@ export default function EditVideoPage() {
   return (
     <PageHeaderWrapper breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}>
       <Card title={cardTitle} extra={cardExtra}>
-        <VideoForm key={video_id} onSubmit={handleSubmit} video={data} />
+        <VideoForm key={video_id} video={data} onSubmit={handleSubmit} onBack={() => navigate(-1)} />
       </Card>
     </PageHeaderWrapper>
   );

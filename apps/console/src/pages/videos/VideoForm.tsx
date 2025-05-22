@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from 'antd';
 import dayjs from 'dayjs';
 import useSWR from 'swr';
@@ -12,12 +11,12 @@ import { getSubstringAfter } from '@/utils/utils';
 type FormStore = Overwrite<SubmitVideoDTO, { actresses?: number[] }>;
 
 interface VideoFormProps {
-  onSubmit?: (values: SubmitVideoDTO) => void;
   video?: Video;
+  onSubmit?: (values: SubmitVideoDTO) => void;
+  onBack?: () => void;
 }
 
-const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
-  const navigate = useNavigate();
+const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, onBack }) => {
   const [form] = Form.useForm();
   const videoTags = useGlobalStore((state) => state.videoTags);
 
@@ -113,7 +112,7 @@ const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
           <Button type="primary" htmlType="submit">
             提交
           </Button>
-          <Button onClick={() => navigate('/videos')}>返回</Button>
+          <Button onClick={onBack}>返回</Button>
         </Space>
       </Form.Item>
     </Form>
