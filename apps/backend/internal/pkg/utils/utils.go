@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"io"
 	"os"
 	"path"
 	"path/filepath"
@@ -31,6 +32,20 @@ func GetRootPath() string {
 	_, filename, _, _ := runtime.Caller(0) // 获取当前文件路径
 	localPath := path.Dir(filename)        // 获取当前文件所在目录
 	return findModuleRoot(localPath)
+}
+
+func ReadFile(filePath string) ([]byte, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	data, err := io.ReadAll(file) // 读取文件内容
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
 }
 
 func Map[T, R any](slice []T, f func(T) R) []R {

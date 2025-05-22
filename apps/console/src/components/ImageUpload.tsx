@@ -5,7 +5,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { UploadChangeParam, UploadProps } from 'antd/lib/upload';
 
 const uploadProps: UploadProps = {
-  action: '/api/files/upload_image',
+  action: '/api/files/upload-image',
   headers: {},
   accept: '.png, .jpg, .jpeg',
   listType: 'picture-card',

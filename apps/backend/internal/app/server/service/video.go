@@ -10,7 +10,7 @@ import (
 )
 
 type VideoService interface {
-	GetList() ([]dto.VideoDTO, error)
+	GetList(repository.QueryOptions) ([]dto.VideoDTO, error)
 	Create(*dto.CreateVideoDTO) (*dto.VideoDTO, error)
 	Update(*model.Video, *dto.UpdateVideoDTO) (*dto.VideoDTO, error)
 }
@@ -25,8 +25,8 @@ func NewVideoService(videoRepo repository.VideoRepository) *VideoServiceImpl {
 	}
 }
 
-func (svc *VideoServiceImpl) GetList() ([]dto.VideoDTO, error) {
-	videos, err := svc.videoRepo.FindAll()
+func (svc *VideoServiceImpl) GetList(options repository.QueryOptions) ([]dto.VideoDTO, error) {
+	videos, err := svc.videoRepo.FindAll(options)
 	if err != nil {
 		return nil, err
 	}

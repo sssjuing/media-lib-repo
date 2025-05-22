@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { SubmitVideoDTO, Video } from '@repo/service';
 import ImageUpload from '@/components/ImageUpload';
 import { services } from '@/services';
+import { useGlobalStore } from '@/store';
 import { getSubstringAfter } from '@/utils/utils';
 
 type FormStore = Overwrite<SubmitVideoDTO, { actresses?: number[] }>;
@@ -18,6 +19,7 @@ interface VideoFormProps {
 const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const videoTags = useGlobalStore((state) => state.videoTags);
 
   const { data: actressOptions = [] } = useSWR('/actress-options', async () => {
     const actressList = await services.actress.list();
@@ -96,7 +98,12 @@ const VideoForm: FC<VideoFormProps> = ({ onSubmit, video }) => {
         <Input />
       </Form.Item>
       <Form.Item label="Tags" name="tags">
-        <Select mode="tags" tokenSeparators={[',']} open={false} />
+        <Select
+          mode="multiple"
+          tokenSeparators={[',']}
+          allowClear
+          options={videoTags.map((t) => ({ label: t, value: t }))}
+        />
       </Form.Item>
       <Form.Item label="概要" name="synopsis">
         <Input.TextArea rows={5} />

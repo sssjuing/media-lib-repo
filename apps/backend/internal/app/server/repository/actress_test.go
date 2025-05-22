@@ -11,7 +11,7 @@ var actressRepo ActressRepository
 func init() {
 	dsn := config.GetPostgresDsn()
 	d := db.NewDB(dsn)
-	actressRepo = NewActressRepository(d)
+	actressRepo = NewActressRepositoryImpl(d)
 }
 
 func TestFindVideos(t *testing.T) {

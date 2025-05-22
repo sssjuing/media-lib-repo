@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"encoding/json"
 	"errors"
 	"media-lib/internal/app/server/model"
 
@@ -8,8 +9,12 @@ import (
 	"gorm.io/gorm/clause"
 )
 
+type QueryOptions struct {
+	Tags []string
+}
+
 type VideoRepository interface {
-	FindAll() ([]model.Video, error)
+	FindAll(QueryOptions) ([]model.Video, error)
 	FindByID(uint) (*model.Video, error)
 	Create(*model.Video) error
 	Update(*model.Video) error
@@ -20,13 +25,20 @@ type VideoRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func NewVideoRepository(db *gorm.DB) *VideoRepositoryImpl {
+func NewVideoRepositoryImpl(db *gorm.DB) *VideoRepositoryImpl {
 	return &VideoRepositoryImpl{db: db}
 }
 
-func (r *VideoRepositoryImpl) FindAll() ([]model.Video, error) {
+func (r *VideoRepositoryImpl) FindAll(options QueryOptions) ([]model.Video, error) {
 	var videos []model.Video
-	if err := r.db.Preload("Actresses").Order("created_at desc").Find(&videos).Error; err != nil {
+	var err error
+	if len(options.Tags) == 0 {
+		err = r.db.Preload("Actresses").Order("created_at desc").Find(&videos).Error
+	} else {
+		jsonTags, _ := json.Marshal(options.Tags)
+		err = r.db.Where("tags @> ?", string(jsonTags)).Preload("Actresses").Order("created_at desc").Find(&videos).Error
+	}
+	if err != nil {
 		return nil, err
 	}
 	return videos, nil

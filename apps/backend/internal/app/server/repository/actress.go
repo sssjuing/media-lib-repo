@@ -21,7 +21,7 @@ type ActressRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func NewActressRepository(db *gorm.DB) *ActressRepositoryImpl {
+func NewActressRepositoryImpl(db *gorm.DB) *ActressRepositoryImpl {
 	return &ActressRepositoryImpl{db: db}
 }
 

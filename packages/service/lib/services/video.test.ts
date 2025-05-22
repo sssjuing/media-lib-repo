@@ -9,9 +9,10 @@ import { test } from 'vitest';
 //   }),
 // );
 
+// TODO: 测试时请求可用
 test('测试 video list', async () => {
-  // const data = await vs.list();
-  // console.log(data);
+  // const data = await vs.list({ tags: ['OL'] });
+  // console.log(data.length);
 });
 
 // test('测试 video create', async () => {

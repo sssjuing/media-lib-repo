@@ -8,10 +8,12 @@ import (
 )
 
 func (h *Handler) Register(g *echo.Group) {
+	g.GET("/configs/video-tags", h.GetVideoTags)
+
 	files := g.Group("/files")
 	files.GET("", h.ListFiles)
 	files.GET("/:folder_name", h.ListFiles)
-	files.POST("/upload_image", h.UploadImage)
+	files.POST("/upload-image", h.UploadImage)
 
 	g.GET("/actresses", h.ListActresses)
 	g.POST("/actresses", h.CreateActress)

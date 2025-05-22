@@ -1,5 +1,6 @@
 server:
   log_level: debug # debug | info | warn | error
+  video_tags: ["女教师", "OL"]
 
 postgres:
   host: 127.0.0.1

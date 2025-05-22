@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios';
+import queryString from 'query-string';
 import { SubmitVideoDTO, VideoDTO } from '../dtos';
 import { Video } from '../interfaces';
 import { ActressService } from './actress';
@@ -28,14 +29,12 @@ export class VideoService {
     };
   }
 
-  list = async () => {
-    try {
-      const { data } = await this.#axios.get<VideoDTO[]>('/videos');
-      return data.map(VideoService.converter);
-    } catch (e) {
-      console.error(e);
-      return [];
-    }
+  list = async (params: { tags?: string[] }) => {
+    const { data } = await this.#axios.get<VideoDTO[]>('/videos', {
+      params,
+      paramsSerializer: (params) => queryString.stringify(params),
+    });
+    return data.map(VideoService.converter);
   };
 
   create = async (dto: SubmitVideoDTO) => {

@@ -18,8 +18,8 @@ func Run() {
 	dsn := config.GetPostgresDsn()
 	d := db.NewDB(dsn)
 
-	ar := repository.NewActressRepository(d)
-	vr := repository.NewVideoRepository(d)
+	ar := repository.NewActressRepositoryImpl(d)
+	vr := repository.NewVideoRepositoryImpl(d)
 
 	h := handler.NewHandler(ar, vr)
 	v1 := r.Group("/api")

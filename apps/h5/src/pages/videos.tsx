@@ -6,7 +6,7 @@ import { useScroll } from '@/hooks/useScroll';
 import { services } from '@/services';
 
 export default function VideosIndexPage() {
-  const { data } = useSWR('/videos', services.video.list);
+  const { data } = useSWR('/videos', () => services.video.list({}));
   const { data: videoList, loadMore, hasMore } = useScroll(data);
 
   return (

@@ -3,6 +3,7 @@ package handler
 import (
 	"media-lib/internal/app/server/dto"
 	"media-lib/internal/app/server/model"
+	"media-lib/internal/app/server/repository"
 	"media-lib/internal/app/server/utils"
 	"net/http"
 
@@ -10,7 +11,8 @@ import (
 )
 
 func (h *Handler) ListVideos(c echo.Context) error {
-	list, err := h.videoSvc.GetList()
+	tags := c.QueryParams()["tags"]
+	list, err := h.videoSvc.GetList(repository.QueryOptions{Tags: tags})
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}

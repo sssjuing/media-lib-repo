@@ -1,36 +1,66 @@
 import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { Button, Input, List, Space } from 'antd';
-import useSWR from 'swr';
+import { Button, Input, List, Space, Tag } from 'antd';
+import { useQuery } from '@tanstack/react-query';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import VideoCard from '@/components/VideoCard';
 import { useUrlParams } from '@/hooks';
 import { services } from '@/services';
+import { useGlobalStore } from '@/store';
 
 export default function VideosIndexPage() {
   const navigate = useNavigate();
-  const { data } = useSWR('/videos', services.video.list);
+  const videoTags = useGlobalStore((state) => state.videoTags);
 
-  const { value: urlParamsStrObj, setValue: setUrlParams } = useUrlParams({ searchStr: '', pageSize: 24, page: 1 });
-  const urlParams = useMemo(
-    () => ({
+  const { value: urlParamsStrObj, setValue: setUrlParams } = useUrlParams({
+    searchStr: '',
+    pageSize: 24,
+    page: 1,
+    tags: [] as string[],
+  });
+  const urlParams = useMemo(() => {
+    const { pageSize, page, tags } = urlParamsStrObj;
+    return {
       ...urlParamsStrObj,
-      pageSize: Number(urlParamsStrObj.pageSize),
-      page: Number(urlParamsStrObj.page),
-    }),
-    [urlParamsStrObj],
-  );
+      pageSize: pageSize ? Number(pageSize) : undefined,
+      page: page ? Number(page) : undefined,
+      tags: Array.isArray(tags) ? tags : tags ? [tags] : [],
+    };
+  }, [urlParamsStrObj]);
+
+  const videosQuery = useQuery({
+    queryKey: ['/videos', urlParams.tags],
+    queryFn: () => services.video.list({ tags: urlParams.tags }),
+  });
 
   const list = useMemo(() => {
-    return data?.filter(({ title, chinese_title, serial_number }) =>
-      `${title}${chinese_title}${serial_number}`.includes(urlParams.searchStr),
+    return videosQuery.data?.filter(({ title, chinese_title, serial_number }) =>
+      `${title}${chinese_title}${serial_number}`.includes(urlParams.searchStr || ''),
     );
-  }, [data, urlParams.searchStr]);
+  }, [urlParams.searchStr, videosQuery.data]);
 
   return (
     <PageHeaderWrapper
       title="视频列表"
       breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}
+      content={
+        <div className="flex items-center">
+          <span className="mr-2">Tags:</span>
+          {videoTags.map<React.ReactNode>((tag) => (
+            <Tag.CheckableTag
+              key={tag}
+              checked={!!urlParams.tags.includes(tag)}
+              onChange={(checked) => {
+                const nextTags = checked ? [...urlParams.tags, tag] : urlParams.tags.filter((i) => i !== tag);
+                setUrlParams({ tags: nextTags });
+              }}
+              className="mr-1!"
+            >
+              {tag}
+            </Tag.CheckableTag>
+          ))}
+        </div>
+      }
       extra={
         <Space>
           <Input.Search
@@ -52,6 +82,7 @@ export default function VideosIndexPage() {
         pagination={{
           pageSizeOptions: [12, 24, 48, 72, 96],
           pageSize: urlParams.pageSize,
+          defaultPageSize: 24,
           current: urlParams.page,
           onChange: (page, pageSize) => {
             console.log(page, pageSize);
