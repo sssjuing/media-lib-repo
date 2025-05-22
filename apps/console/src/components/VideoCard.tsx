@@ -28,11 +28,7 @@ const ActressTag: FC<ActressTagProps> = ({ actress, video }) => {
   const text = !age ? actress.unique_name : `${actress.unique_name} ${age}`;
 
   if (Number(actress_id) === actress.id) {
-    return (
-      <Tag color={age ? getAgeColor(age) : undefined} bordered={false}>
-        {text}
-      </Tag>
-    );
+    return <Tag color={age ? getAgeColor(age) : undefined}>{text}</Tag>;
   }
 
   return (

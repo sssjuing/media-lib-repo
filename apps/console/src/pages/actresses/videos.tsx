@@ -1,12 +1,28 @@
 import { Link, useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
-import { Button, Descriptions, List } from 'antd';
+import { Button, Descriptions, List, Tag } from 'antd';
 import dayjs from 'dayjs';
 import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { Actress, getAge } from '@repo/service';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
+
+function getCupColor(cup: string) {
+  if (cup >= 'I') {
+    return '#ff3141';
+  }
+  if (cup >= 'G') {
+    return '#f759ab';
+  }
+  if (cup >= 'E') {
+    return '#ff8f1f';
+  }
+  if (cup >= 'C') {
+    return '#40a9ff';
+  }
+  return '#00b578';
+}
 
 const measurementsRenderer = (actress: Actress) => {
   if (!actress.measurements) {
@@ -16,7 +32,12 @@ const measurementsRenderer = (actress: Actress) => {
     cup,
     measurements: { bust, waist, hips },
   } = actress;
-  return `B${bust}${cup ? `(${actress.cup} Cup)` : ''} / W${waist} / H${hips}`;
+  return (
+    <>
+      B{bust}&nbsp;
+      {cup && <Tag color={getCupColor(cup)}>{cup}</Tag>}/ W{waist} / H{hips}
+    </>
+  );
 };
 
 export default function ActressVideosPage() {
