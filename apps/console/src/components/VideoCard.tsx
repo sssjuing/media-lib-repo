@@ -5,22 +5,48 @@ import { Button, Image, Tag } from 'antd';
 import { EditOutlined, VideoCameraTwoTone } from '@ant-design/icons';
 import { Actress, Video, getAge } from '@repo/service';
 
+function getAgeColor(age: number) {
+  if (age >= 45) return '#ff3141';
+  if (age >= 40) return 'red';
+  if (age >= 35) return 'volcano';
+  if (age >= 30) return 'gold';
+  if (age >= 25) return 'blue';
+  if (age >= 20) return 'green';
+  if (age >= 18) return 'purple';
+  return '';
+}
+
+interface ActressTagProps {
+  actress: Actress;
+  video: Video;
+}
+
+const ActressTag: FC<ActressTagProps> = ({ actress, video }) => {
+  const { actress_id } = useParams();
+
+  const age = video.release_date && getAge(actress.birth_date, video.release_date);
+  const text = !age ? actress.unique_name : `${actress.unique_name} ${age}`;
+
+  if (Number(actress_id) === actress.id) {
+    return (
+      <Tag color={age ? getAgeColor(age) : undefined} bordered={false}>
+        {text}
+      </Tag>
+    );
+  }
+
+  return (
+    <Link to={`/actresses/${actress.id}/videos`}>
+      <Tag color={age ? getAgeColor(age) : undefined}>{text}</Tag>
+    </Link>
+  );
+};
+
 interface VideoCardProps {
   video: Video;
 }
 
 const VideoCard: FC<VideoCardProps> = ({ video }) => {
-  const { actress_id } = useParams();
-
-  const renderActressTagContent = (a: Actress) => {
-    const age = video.release_date && getAge(a.birth_date, video.release_date);
-    const text = !age ? a.unique_name : `${a.unique_name} ${age}`;
-    if (Number(actress_id) === a.id) {
-      return text;
-    }
-    return <Link to={`/actresses/${a.id}/videos`}>{text}</Link>;
-  };
-
   return (
     <div
       className={css`
@@ -99,9 +125,7 @@ const VideoCard: FC<VideoCardProps> = ({ video }) => {
           </div>
           <div>
             <div className="label">演员</div>
-            <div className="tags">
-              {video.actresses?.map((a) => <Tag key={a.id}>{renderActressTagContent(a)}</Tag>)}
-            </div>
+            <div className="">{video.actresses?.map((a) => <ActressTag key={a.id} actress={a} video={video} />)}</div>
           </div>
           <div>
             <div className="label">Tags</div>
