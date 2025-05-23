@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Button, Card, Input, Popconfirm, Space, Table, message } from 'antd';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -7,12 +7,27 @@ import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { Actress, getAge } from '@repo/service';
 import { AnchorBtn } from '@repo/ui';
 import configs from '@/configs';
+import { useUrlParams } from '@/hooks';
 import { services } from '@/services';
 
 const { CUP_TYPE } = configs;
 
 export default function ActressesIndexPage() {
   const navigate = useNavigate();
+
+  const { value: urlParamsStrObj, setValue: setUrlParams } = useUrlParams({
+    searchStr: '',
+    pageSize: 10,
+    page: 1,
+  });
+  const urlParams = useMemo(() => {
+    const { pageSize, page } = urlParamsStrObj;
+    return {
+      ...urlParamsStrObj,
+      pageSize: pageSize ? Number(pageSize) : undefined,
+      page: page ? Number(page) : undefined,
+    };
+  }, [urlParamsStrObj]);
 
   const query = useQuery({ queryKey: ['/actresses'], queryFn: services.actress.list });
 
@@ -24,12 +39,15 @@ export default function ActressesIndexPage() {
     },
   });
 
-  const [searchStr, setSearchStr] = useState('');
-
-  const list = useMemo(
-    () => query.data?.filter((i) => i.unique_name.includes(searchStr) || i.chinese_name.includes(searchStr)),
-    [query.data, searchStr],
-  );
+  const list = useMemo(() => {
+    const search = urlParams.searchStr;
+    if (!search) {
+      return query.data;
+    }
+    return query.data?.filter(() =>
+      query.data?.filter((i) => i.unique_name.includes(search) || i.chinese_name.includes(search)),
+    );
+  }, [query.data, urlParams.searchStr]);
 
   return (
     <PageHeaderWrapper
@@ -38,7 +56,7 @@ export default function ActressesIndexPage() {
       extra={
         <Space>
           <Input.Search
-            onSearch={setSearchStr}
+            onSearch={(val) => setUrlParams({ searchStr: val })}
             placeholder="请输入演员姓名"
             style={{ width: 200, marginLeft: 'auto' }}
           />
@@ -91,6 +109,11 @@ export default function ActressesIndexPage() {
             },
           ]}
           dataSource={list}
+          pagination={{
+            pageSize: urlParams.pageSize,
+            current: urlParams.page,
+            onChange: (page, pageSize) => setUrlParams({ page, pageSize }),
+          }}
           loading={query.isLoading}
         />
       </Card>
