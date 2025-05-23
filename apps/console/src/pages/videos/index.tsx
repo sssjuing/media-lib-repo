@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Button, Input, List, Space, Tag } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import VideoCard from '@/components/VideoCard';
@@ -44,21 +45,30 @@ export default function VideosIndexPage() {
       title="视频列表"
       breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}
       content={
-        <div className="flex items-center">
-          <span className="mr-2">Tags:</span>
-          {videoTags.map<React.ReactNode>((tag) => (
-            <Tag.CheckableTag
-              key={tag}
-              checked={!!urlParams.tags.includes(tag)}
-              onChange={(checked) => {
-                const nextTags = checked ? [...urlParams.tags, tag] : urlParams.tags.filter((i) => i !== tag);
-                setUrlParams({ tags: nextTags });
-              }}
-              className="mr-1!"
-            >
-              {tag}
-            </Tag.CheckableTag>
-          ))}
+        <div className="flex">
+          <div className="grow-0 shrink-0 w-10 mt-1">Tags :</div>
+          <div className="flex-grow flex-wrap">
+            {videoTags.map<React.ReactNode>((tag) => (
+              <Tag.CheckableTag
+                key={tag}
+                checked={!!urlParams.tags.includes(tag)}
+                onChange={(checked) => {
+                  const nextTags = checked ? [...urlParams.tags, tag] : urlParams.tags.filter((i) => i !== tag);
+                  setUrlParams({ tags: nextTags });
+                }}
+                className="mr-1! mt-1!"
+              >
+                {tag}
+              </Tag.CheckableTag>
+            ))}
+            <Button
+              size="small"
+              icon={<DeleteOutlined />}
+              type="text"
+              onClick={() => setUrlParams({ tags: [] })}
+              className="text-zinc-400!"
+            />
+          </div>
         </div>
       }
       extra={
@@ -84,10 +94,7 @@ export default function VideosIndexPage() {
           pageSize: urlParams.pageSize,
           defaultPageSize: 24,
           current: urlParams.page,
-          onChange: (page, pageSize) => {
-            console.log(page, pageSize);
-            setUrlParams({ page, pageSize });
-          },
+          onChange: (page, pageSize) => setUrlParams({ page, pageSize }),
         }}
         renderItem={(i) => (
           <List.Item>

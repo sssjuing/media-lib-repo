@@ -35,27 +35,29 @@ const MainLayout: FC<MainLayoutProps> = ({ routes }) => {
   }, [rootPath, routes]);
 
   return (
-    <AntdLayout
-      rootPath={rootPath}
-      theme="dark"
-      logo={logo}
-      siderWidth={230}
-      title="媒体库"
-      pathname={pathname}
-      routeData={routeData}
-      onMenuClick={({ key }) => navigate(key)}
-      onLogoClick={() => navigate('/')}
-      currentUser={{
-        id: 12,
-        name: 'Serati Ma',
-        auth: ['admin', 'user'],
-      }}
-      // accordion
-    >
-      <Wrapper>
-        <Outlet />
-      </Wrapper>
-    </AntdLayout>
+    <div className="min-w-[800px]">
+      <AntdLayout
+        rootPath={rootPath}
+        theme="dark"
+        logo={logo}
+        siderWidth={230}
+        title="媒体库"
+        pathname={pathname}
+        routeData={routeData}
+        onMenuClick={({ key }) => navigate(key)}
+        onLogoClick={() => navigate('/')}
+        currentUser={{
+          id: 12,
+          name: 'Serati Ma',
+          auth: ['admin', 'user'],
+        }}
+        // accordion
+      >
+        <Wrapper>
+          <Outlet />
+        </Wrapper>
+      </AntdLayout>
+    </div>
   );
 };
 
