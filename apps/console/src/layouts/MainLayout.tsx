@@ -44,7 +44,7 @@ const MainLayout: FC<MainLayoutProps> = ({ routes }) => {
         title="媒体库"
         pathname={pathname}
         routeData={routeData}
-        onMenuClick={({ key }) => navigate(key)}
+        onMenuClick={({ key }) => pathname !== key && navigate(key)}
         onLogoClick={() => navigate('/')}
         currentUser={{
           id: 12,
