@@ -9,9 +9,10 @@ interface ActressFormProps {
   onSubmit?: (
     values: Pick<SubmitActressDTO, 'unique_name' | 'chinese_name' | 'measurements' | 'cup' | 'blood_group' | 'notes'>,
   ) => void;
+  submitting?: boolean;
 }
 
-const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
+const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submitting }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
         <TextArea placeholder="请输入内容" rows={5} />
       </Form.Item>
       <Form.Item>
-        <Button block type="submit" color="primary">
+        <Button block type="submit" color="primary" loading={submitting}>
           提交
         </Button>
       </Form.Item>

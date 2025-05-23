@@ -1,8 +1,8 @@
 import { Link, useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, Descriptions, List, Tag } from 'antd';
+import { useQueries } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { Actress, getAge } from '@repo/service';
 import VideoCard from '@/components/VideoCard';
@@ -43,10 +43,13 @@ const measurementsRenderer = (actress: Actress) => {
 export default function ActressVideosPage() {
   const navigate = useNavigate();
   const { actress_id } = useParams();
-  const { data: actress } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
-  const { data = [] } = useSWR(`/actresses/${actress_id}/videos`, () =>
-    services.actress.listVideos(Number(actress_id)),
-  );
+
+  const [{ data: actress }, videosQuery] = useQueries({
+    queries: [
+      { queryKey: [`/actresses/${actress_id}`], queryFn: () => services.actress.getById(Number(actress_id)) },
+      { queryKey: [`/actresses/${actress_id}/videos`], queryFn: () => services.actress.listVideos(Number(actress_id)) },
+    ],
+  });
 
   return (
     <PageHeaderWrapper
@@ -98,7 +101,8 @@ export default function ActressVideosPage() {
     >
       <List
         rowKey="id"
-        dataSource={data}
+        dataSource={videosQuery.data}
+        loading={videosQuery.isLoading}
         grid={{ gutter: 12, xxl: 4, xl: 3, lg: 3, md: 3, sm: 3, xs: 3 }}
         pagination={{ pageSize: 12 }}
         renderItem={(i) => (

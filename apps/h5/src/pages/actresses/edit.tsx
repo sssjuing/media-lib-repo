@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Dialog, Result, Toast } from 'antd-mobile';
-import useSWR from 'swr';
+import { SubmitActressDTO } from '@repo/service';
 import Loading from '@/components/Loading';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { services } from '@/services';
@@ -10,9 +11,35 @@ import ActressForm from './ActressForm';
 export default function EditActressPage() {
   const { actress_id } = useParams();
   const navigate = useNavigate();
-  const { data: actress } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
+
+  const { data: actress } = useQuery({
+    queryKey: [`/actresses/${actress_id}`],
+    queryFn: () => services.actress.getById(Number(actress_id)),
+  });
 
   const back = () => navigate('/actresses');
+
+  const updateMutation = useMutation({
+    mutationFn: (values: SubmitActressDTO) => services.actress.update(Number(actress_id), values),
+    onSuccess: () => {
+      Toast.show({ icon: 'success', content: '更新成功' });
+      back();
+    },
+    onError: () => {
+      Toast.show({ icon: 'fail', content: '更新失败' });
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: services.actress.delete,
+    onSuccess: () => {
+      Toast.show({ icon: 'success', content: '删除成功', position: 'bottom' });
+      back();
+    },
+    onError: () => {
+      Toast.show({ icon: 'fail', content: '删除失败', position: 'bottom' });
+    },
+  });
 
   const right = actress && (
     <Button
@@ -22,24 +49,7 @@ export default function EditActressPage() {
       onClick={() => {
         Dialog.confirm({
           content: '确认删除',
-          onConfirm: async () => {
-            const { ok } = await services.actress.delete(Number(actress_id));
-            if (ok) {
-              Toast.show({
-                icon: 'success',
-                content: '提交成功',
-                position: 'bottom',
-              });
-              back();
-            } else {
-              Toast.show({
-                icon: 'fail',
-                content: '提交失败',
-                position: 'bottom',
-              });
-              throw new Error();
-            }
-          },
+          onConfirm: async () => deleteMutation.mutateAsync(Number(actress_id)),
           confirmText: <span style={{ color: '#ff4a58' }}>删除</span>,
         });
       }}
@@ -50,16 +60,10 @@ export default function EditActressPage() {
 
   const content = actress ? (
     <ActressForm
+      key={actress_id}
       actress={actress}
-      onSubmit={async (a) => {
-        const res = await services.actress.update(Number(actress_id), a);
-        if (res) {
-          Toast.show({ icon: 'success', content: '提交成功' });
-          back();
-        } else {
-          Toast.show({ icon: 'fail', content: '提交失败' });
-        }
-      }}
+      onSubmit={updateMutation.mutate}
+      submitting={updateMutation.isPending}
     />
   ) : (
     <Result status="info" title="资源不存在" description="您要编辑的演员不存在" />

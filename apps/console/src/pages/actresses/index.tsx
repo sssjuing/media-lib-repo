@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { Button, Card, Input, Popconfirm, Space, Table } from 'antd';
+import { Button, Card, Input, Popconfirm, Space, Table, message } from 'antd';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import useSWR from 'swr';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { Actress, getAge } from '@repo/service';
 import { AnchorBtn } from '@repo/ui';
@@ -14,13 +14,21 @@ const { CUP_TYPE } = configs;
 export default function ActressesIndexPage() {
   const navigate = useNavigate();
 
-  const { data, mutate } = useSWR('/actresses', services.actress.list);
+  const query = useQuery({ queryKey: ['/actresses'], queryFn: services.actress.list });
+
+  const deleteMutation = useMutation({
+    mutationFn: services.actress.delete,
+    onSuccess: () => {
+      message.success('删除成功');
+      query.refetch();
+    },
+  });
 
   const [searchStr, setSearchStr] = useState('');
 
   const list = useMemo(
-    () => data?.filter((i) => i.unique_name.includes(searchStr) || i.chinese_name.includes(searchStr)),
-    [data, searchStr],
+    () => query.data?.filter((i) => i.unique_name.includes(searchStr) || i.chinese_name.includes(searchStr)),
+    [query.data, searchStr],
   );
 
   return (
@@ -73,10 +81,7 @@ export default function ActressesIndexPage() {
                   <Link to={`/actresses/${a.id}/edit`}>编辑</Link>
                   <Popconfirm
                     title={`确认删除演员 ${a.unique_name} 吗？`}
-                    onConfirm={async () => {
-                      await services.actress.delete(a.id);
-                      mutate();
-                    }}
+                    onConfirm={() => deleteMutation.mutateAsync(a.id)}
                     okButtonProps={{ danger: true }}
                   >
                     <AnchorBtn danger>删除</AnchorBtn>
@@ -86,6 +91,7 @@ export default function ActressesIndexPage() {
             },
           ]}
           dataSource={list}
+          loading={query.isLoading}
         />
       </Card>
     </PageHeaderWrapper>

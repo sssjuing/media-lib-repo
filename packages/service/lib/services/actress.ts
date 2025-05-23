@@ -33,59 +33,31 @@ export class ActressService {
   }
 
   list = async () => {
-    try {
-      const { data } = await this.#axios.get<ActressDTO[]>('/actresses');
-      return data.map(ActressService.converter);
-    } catch (e) {
-      console.error(e);
-      return [];
-    }
+    const { data } = await this.#axios.get<ActressDTO[]>('/actresses');
+    return data.map(ActressService.converter);
   };
 
   create = async (dto: SubmitActressDTO) => {
-    try {
-      const { data } = await this.#axios.post<ActressDTO>('/actresses', dto);
-      return ActressService.converter(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.#axios.post<ActressDTO>('/actresses', dto);
+    return ActressService.converter(data);
   };
 
   getById = async (actressId: number) => {
-    try {
-      const { data } = await this.#axios.get<ActressDTO>(`/actresses/${actressId}`);
-      return ActressService.converter(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.#axios.get<ActressDTO>(`/actresses/${actressId}`);
+    return ActressService.converter(data);
   };
 
   update = async (actressId: number, dto: Partial<SubmitActressDTO>) => {
-    try {
-      const { data } = await this.#axios.put<ActressDTO>(`/actresses/${actressId}`, dto);
-      return ActressService.converter(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.#axios.put<ActressDTO>(`/actresses/${actressId}`, dto);
+    return ActressService.converter(data);
   };
 
   delete = async (actressId: number) => {
-    try {
-      await this.#axios.delete(`/actresses/${actressId}`);
-      return { ok: true };
-    } catch (e) {
-      console.error(e);
-      return { ok: false };
-    }
+    await this.#axios.delete(`/actresses/${actressId}`);
   };
 
   listVideos = async (actressId: number) => {
-    try {
-      const { data } = await this.#axios.get<VideoDTO[]>(`/actresses/${actressId}/videos`);
-      return data.map(VideoService.converter);
-    } catch (e) {
-      console.error(e);
-      return [];
-    }
+    const { data } = await this.#axios.get<VideoDTO[]>(`/actresses/${actressId}/videos`);
+    return data.map(VideoService.converter);
   };
 }

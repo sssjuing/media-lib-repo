@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 import { Button, Card, Popconfirm, message } from 'antd';
-import useSWR from 'swr';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitActressDTO } from '@repo/service';
 import { services } from '@/services';
@@ -10,28 +10,35 @@ export default function EditActressPage() {
   const navigate = useNavigate();
   const { actress_id } = useParams();
 
-  const { data } = useSWR(`/actresses/${actress_id}`, () => services.actress.getById(Number(actress_id)));
+  const query = useQuery({
+    queryKey: [`/actresses/${actress_id}`],
+    queryFn: () => services.actress.getById(Number(actress_id)),
+  });
 
-  const handleSubmit = async (values: SubmitActressDTO) => {
-    const a = await services.actress.update(Number(actress_id), values);
-    if (a) {
-      navigate('/actresses');
-    }
-  };
+  const updateMutation = useMutation({
+    mutationFn: (values: SubmitActressDTO) => services.actress.update(Number(actress_id), values),
+    onSuccess: () => {
+      message.success('更新成功');
+      navigate(-1);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: services.actress.delete,
+    onSuccess: () => {
+      message.success('删除成功');
+      navigate(-1);
+    },
+  });
 
   const cardExtra = (
     <Popconfirm
+      placement="topRight"
       title="确认删除？"
       okText="删除"
       okButtonProps={{ danger: true, type: 'primary' }}
       cancelText="取消"
-      onConfirm={async () => {
-        const { ok } = await services.actress.delete(Number(actress_id));
-        if (ok) {
-          message.success('删除成功');
-          navigate('/actresses');
-        }
-      }}
+      onConfirm={() => deleteMutation.mutateAsync(Number(actress_id))}
     >
       <Button danger>删除</Button>
     </Popconfirm>
@@ -40,7 +47,13 @@ export default function EditActressPage() {
   return (
     <PageHeaderWrapper breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}>
       <Card title="编辑演员" extra={cardExtra}>
-        <ActressForm onSubmit={handleSubmit} actress={data} />
+        <ActressForm
+          key={actress_id}
+          actress={query.data}
+          onSubmit={updateMutation.mutate}
+          submitting={updateMutation.isPending}
+          onBack={() => navigate(-1)}
+        />
       </Card>
     </PageHeaderWrapper>
   );

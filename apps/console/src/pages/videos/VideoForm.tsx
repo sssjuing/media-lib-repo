@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from 'antd';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import useSWR from 'swr';
 import { SubmitVideoDTO, Video } from '@repo/service';
 import ImageUpload from '@/components/ImageUpload';
 import { services } from '@/services';
@@ -13,19 +13,23 @@ type FormStore = Overwrite<SubmitVideoDTO, { actresses?: number[] }>;
 interface VideoFormProps {
   video?: Video;
   onSubmit?: (values: SubmitVideoDTO) => void;
+  submitting?: boolean;
   onBack?: () => void;
 }
 
-const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, onBack }) => {
+const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onBack }) => {
   const [form] = Form.useForm();
   const videoTags = useGlobalStore((state) => state.videoTags);
 
-  const { data: actressOptions = [] } = useSWR('/actress-options', async () => {
-    const actressList = await services.actress.list();
-    return actressList?.map(({ id, unique_name, chinese_name }) => ({
-      value: id,
-      label: `${unique_name}[${chinese_name}]`,
-    }));
+  const { data: actressOptions = [] } = useQuery({
+    queryKey: ['/actress-options'],
+    queryFn: async () => {
+      const actressList = await services.actress.list();
+      return actressList?.map(({ id, unique_name, chinese_name }) => ({
+        value: id,
+        label: `${unique_name}[${chinese_name}]`,
+      }));
+    },
   });
 
   useEffect(() => {
@@ -109,7 +113,7 @@ const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, onBack }) => {
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 6 }}>
         <Space>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={submitting}>
             提交
           </Button>
           <Button onClick={onBack}>返回</Button>

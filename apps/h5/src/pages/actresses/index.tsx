@@ -1,13 +1,12 @@
 import { Link } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from 'antd-mobile';
-import useSWR from 'swr';
 import ActressCard from '@/components/ActressCard';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { services } from '@/services';
 
 export default function ActressesPage() {
-  // const { data = [] } = useSWR('/actresses', queryActresses);
-  const { data = [] } = useSWR('/actresses', services.actress.list);
+  const { data = [] } = useQuery({ queryKey: ['/videos'], queryFn: services.actress.list });
 
   return (
     <PageHeaderWrapper

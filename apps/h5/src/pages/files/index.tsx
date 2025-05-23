@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import useSWR from 'swr';
+import { useQuery } from '@tanstack/react-query';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import FileList from './FileList';
 import { queryFiles } from './service';
@@ -7,10 +7,11 @@ import { queryFiles } from './service';
 export default function FilesIndexPage() {
   const params = useParams();
   const path = params['*']?.replace(/\/$/, '');
-  const { data = [] } = useSWR(
-    () => (path ? `files/${path}` : 'files'),
-    (key) => queryFiles(key),
-  );
+
+  const { data = [] } = useQuery({
+    queryKey: ['/files', path],
+    queryFn: () => queryFiles(path ? `files/${path}` : 'files'),
+  });
 
   return (
     <PageHeaderWrapper title="文件列表" backIcon={false}>

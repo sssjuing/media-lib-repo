@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import { Card } from 'antd';
+import { useMutation } from '@tanstack/react-query';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitVideoDTO } from '@repo/service';
 import { services } from '@/services';
@@ -7,6 +8,13 @@ import VideoForm from './VideoForm';
 
 export default function CreateVideoPage() {
   const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: services.video.create,
+    onSuccess: () => {
+      navigate('/videos');
+    },
+  });
 
   const handleSubmit = async (values: SubmitVideoDTO) => {
     const v = await services.video.create(values);
@@ -18,7 +26,7 @@ export default function CreateVideoPage() {
   return (
     <PageHeaderWrapper breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}>
       <Card title="创建视频">
-        <VideoForm onSubmit={handleSubmit} onBack={() => navigate('/videos')} />
+        <VideoForm onSubmit={handleSubmit} submitting={mutation.isPending} onBack={() => navigate('/videos')} />
       </Card>
     </PageHeaderWrapper>
   );

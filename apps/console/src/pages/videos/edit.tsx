@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, Card, Popconfirm, message } from 'antd';
-import useSWR from 'swr';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitVideoDTO } from '@repo/service';
 import { services } from '@/services';
@@ -11,14 +11,26 @@ export default function EditVideoPage() {
   const navigate = useNavigate();
   const { video_id } = useParams();
 
-  const { data } = useSWR(`/videos/${video_id}`, () => services.video.getById(Number(video_id)));
+  const query = useQuery({
+    queryKey: [`/videos/${video_id}`],
+    queryFn: () => services.video.getById(Number(video_id)),
+  });
 
-  const handleSubmit = async (values: SubmitVideoDTO) => {
-    const v = await services.video.update(Number(video_id), values);
-    if (v) {
+  const updateMutation = useMutation({
+    mutationFn: (values: SubmitVideoDTO) => services.video.update(Number(video_id), values),
+    onSuccess: () => {
+      message.success('更新成功');
       navigate(-1);
-    }
-  };
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: services.video.delete,
+    onSuccess: () => {
+      message.success('删除成功');
+      navigate(-1);
+    },
+  });
 
   const cardTitle = (
     <div
@@ -30,8 +42,8 @@ export default function EditVideoPage() {
       `}
     >
       编辑视频
-      {data?.video_url && (
-        <a href={data.video_url} target="_blank" rel="noreferrer">
+      {query.data?.video_url && (
+        <a href={query.data.video_url} target="_blank" rel="noreferrer">
           预览
         </a>
       )}
@@ -40,17 +52,12 @@ export default function EditVideoPage() {
 
   const cardExtra = (
     <Popconfirm
+      placement="topRight"
       title="确认删除？"
       okText="删除"
       okButtonProps={{ danger: true, type: 'primary' }}
       cancelText="取消"
-      onConfirm={async () => {
-        const { ok } = await services.video.delete(Number(video_id));
-        if (ok) {
-          message.success('删除成功');
-          navigate('/videos');
-        }
-      }}
+      onConfirm={() => deleteMutation.mutateAsync(Number(video_id))}
     >
       <Button danger>删除</Button>
     </Popconfirm>
@@ -59,7 +66,13 @@ export default function EditVideoPage() {
   return (
     <PageHeaderWrapper breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}>
       <Card title={cardTitle} extra={cardExtra}>
-        <VideoForm key={video_id} video={data} onSubmit={handleSubmit} onBack={() => navigate(-1)} />
+        <VideoForm
+          key={video_id}
+          video={query.data}
+          onSubmit={updateMutation.mutate}
+          submitting={updateMutation.isPending}
+          onBack={() => navigate(-1)}
+        />
       </Card>
     </PageHeaderWrapper>
   );

@@ -38,39 +38,21 @@ export class VideoService {
   };
 
   create = async (dto: SubmitVideoDTO) => {
-    try {
-      const { data } = await this.#axios.post<VideoDTO>('/videos', dto);
-      return VideoService.converter(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.#axios.post<VideoDTO>('/videos', dto);
+    return VideoService.converter(data);
   };
 
   getById = async (videoId: number) => {
-    try {
-      const { data } = await this.#axios.get<VideoDTO>(`/videos/${videoId}`);
-      return VideoService.converter(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.#axios.get<VideoDTO>(`/videos/${videoId}`);
+    return VideoService.converter(data);
   };
 
   update = async (videoId: number, dto: Partial<SubmitVideoDTO>) => {
-    try {
-      const { data } = await this.#axios.put<VideoDTO>(`/videos/${videoId}`, dto);
-      return VideoService.converter(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.#axios.put<VideoDTO>(`/videos/${videoId}`, dto);
+    return VideoService.converter(data);
   };
 
   delete = async (videoId: number) => {
-    try {
-      await this.#axios.delete(`/videos/${videoId}`);
-      return { ok: true };
-    } catch (e) {
-      console.error(e);
-      return { ok: false };
-    }
+    await this.#axios.delete(`/videos/${videoId}`);
   };
 }

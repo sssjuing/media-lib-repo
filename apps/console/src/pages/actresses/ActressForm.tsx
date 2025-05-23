@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { css } from '@emotion/css';
 import { Button, DatePicker, Form, Input, InputNumber, Radio, Select, Space } from 'antd';
 import dayjs from 'dayjs';
@@ -44,10 +43,11 @@ const MeasurementsInput: FC<{
 interface ActressFormProps {
   actress?: Actress;
   onSubmit?: (values: SubmitActressDTO) => void;
+  submitting?: boolean;
+  onBack?: () => void;
 }
 
-const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
-  const navigate = useNavigate();
+const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submitting, onBack }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -111,10 +111,10 @@ const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit }) => {
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 6 }}>
         <Space>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={submitting}>
             提交
           </Button>
-          <Button onClick={() => navigate('/actresses')}>返回</Button>
+          <Button onClick={onBack}>返回</Button>
         </Space>
       </Form.Item>
     </Form>
