@@ -1,44 +1,63 @@
-// import axios from 'axios';
-import { test } from 'vitest';
+import axios from 'axios';
+import AxiosMockAdapter from 'axios-mock-adapter';
+import { describe, expect, test } from 'vitest';
+import { ActressService } from './actress';
+import { actresses, videos } from './test_data';
 
-// import { ActressService } from './actress';
+const mock = new AxiosMockAdapter(axios);
+mock.onGet('/api/actresses').reply(200, actresses);
+mock.onGet('api/actresses/74').reply(200, actresses[0]);
+mock.onGet('api/actresses/74/videos').reply(200, videos);
 
-// const as = new ActressService(
-//   axios.create({
-//     baseURL: 'http://localhost:1323/api',
-//   }),
-// );
+const as = new ActressService(
+  axios.create({
+    baseURL: '/api',
+  }),
+);
 
-// TODO: 测试时请求可用
-test('测试 actress list', async () => {
-  // const data = await as.list();
-  // console.log(data);
+describe('ActressService', () => {
+  describe('list', () => {
+    test('200', async () => {
+      const data = await as.list();
+      expect(data.length).toBe(2);
+    });
+  });
+
+  describe('create', () => {
+    test.skip('201', async () => {
+      const data = await as.create({
+        unique_name: Math.random().toString(),
+        chinese_name: Math.random().toString(),
+      });
+      console.log(data);
+    });
+  });
+
+  describe('getById', () => {
+    test('200', async () => {
+      const data = await as.getById(74);
+      expect(data?.id).toBe(74);
+    });
+  });
+
+  describe('update', () => {
+    test.skip('测试 actress update', async () => {
+      const data = await as.update(1, { unique_name: '12', chinese_name: '223' });
+      console.log(data);
+    });
+  });
+
+  describe('delete', () => {
+    test.skip('测试 actress delete', async () => {
+      const data = await as.delete(3);
+      console.log(data);
+    });
+  });
+
+  describe('listVideos', () => {
+    test('测试 actress listVideo', async () => {
+      const data = await as.listVideos(74);
+      expect(data.length).toBe(2);
+    });
+  });
 });
-
-// test('测试 actress create', async () => {
-//   const data = await as.create({
-//     unique_name: Math.random().toString(),
-//     chinese_name: Math.random().toString(),
-//   });
-//   console.log(data);
-// });
-
-// test('测试 actress getById', async () => {
-//   const data = await as.getById(1);
-//   console.log(data);
-// });
-
-// test('测试 actress update', async () => {
-//   const data = await as.update(1, { unique_name: '12', chinese_name: '223' });
-//   console.log(data);
-// });
-
-// test('测试 actress delete', async () => {
-//   const data = await as.delete(3);
-//   console.log(data);
-// });
-
-// test('测试 actress listVideo', async () => {
-//   const data = await as.listVideos(1);
-//   console.log(data);
-// });
