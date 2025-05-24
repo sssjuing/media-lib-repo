@@ -49,7 +49,9 @@ export default function EditActressPage() {
       onClick={() => {
         Dialog.confirm({
           content: '确认删除',
-          onConfirm: async () => deleteMutation.mutateAsync(Number(actress_id)),
+          onConfirm: async () => {
+            await deleteMutation.mutateAsync(Number(actress_id));
+          },
           confirmText: <span style={{ color: '#ff4a58' }}>删除</span>,
         });
       }}

@@ -44,9 +44,7 @@ export default function ActressesIndexPage() {
     if (!search) {
       return query.data;
     }
-    return query.data?.filter(() =>
-      query.data?.filter((i) => i.unique_name.includes(search) || i.chinese_name.includes(search)),
-    );
+    return query.data?.filter((i) => i.unique_name.includes(search) || i.chinese_name.includes(search));
   }, [query.data, urlParams.searchStr]);
 
   return (
@@ -58,6 +56,7 @@ export default function ActressesIndexPage() {
           <Input.Search
             onSearch={(val) => setUrlParams({ searchStr: val })}
             placeholder="请输入演员姓名"
+            defaultValue={urlParams.searchStr}
             style={{ width: 200, marginLeft: 'auto' }}
           />
           <Link to="/actresses/create">
