@@ -9,7 +9,7 @@ export default function ActressContentPage() {
   const navigate = useNavigate();
 
   const { data: actress } = useQuery({
-    queryKey: ['/videos'],
+    queryKey: [`/actresses/${actress_id}`],
     queryFn: () => services.actress.getById(Number(actress_id)),
   });
 

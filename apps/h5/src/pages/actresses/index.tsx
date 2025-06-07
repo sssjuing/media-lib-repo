@@ -6,7 +6,7 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { services } from '@/services';
 
 export default function ActressesPage() {
-  const { data = [] } = useQuery({ queryKey: ['/videos'], queryFn: services.actress.list });
+  const actressesQuery = useQuery({ queryKey: ['/actresses'], queryFn: services.actress.list });
 
   return (
     <PageHeaderWrapper
@@ -20,9 +20,7 @@ export default function ActressesPage() {
         </Link>
       }
     >
-      {data.map((i) => (
-        <ActressCard key={i.id} actress={i} />
-      ))}
+      {actressesQuery.data?.map((i) => <ActressCard key={i.id} actress={i} />)}
     </PageHeaderWrapper>
   );
 }
