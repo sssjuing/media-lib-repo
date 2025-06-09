@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react';
 import { useNavigate } from 'react-router';
-import { css } from '@emotion/css';
 import { Grid, Image, Tag } from 'antd-mobile';
 import { MdOndemandVideo } from 'react-icons/md';
 import { Actress, Video, getAge, getAgeColor } from '@repo/service';
@@ -10,37 +9,10 @@ const ActressRenderer: FC<{ actress: Actress; video: Video }> = ({ actress, vide
   const age = video.release_date && getAge(actress.birth_date, video.release_date);
 
   return (
-    <div
-      onClick={() => navigate(`/actresses/${actress.id}/content`)}
-      className={css`
-        padding: 0.3rem;
-        border: 1px solid var(--adm-color-light);
-      `}
-    >
-      <div
-        className={css`
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        `}
-      >
-        {actress.unique_name}
-      </div>
-      <div
-        className={css`
-          display: flex;
-          align-items: center;
-          margin-top: 0.2rem;
-        `}
-      >
-        <span
-          className={css`
-            margin-right: 0.5rem;
-            color: var(--adm-color-weak);
-          `}
-        >
-          出演年龄:
-        </span>
+    <div onClick={() => navigate(`/actresses/${actress.id}/content`)} className="p-1 border-1 border-neutral-600">
+      <div className="whitespace-nowrap overflow-hidden text-ellipsis">{actress.unique_name}</div>
+      <div className="flex items-center mt-0.5">
+        <span className="mr-2 text-neutral-400">出演年龄:</span>
         {age && (
           <Tag color={getAgeColor(age)} fill="outline">
             {age}
@@ -58,12 +30,7 @@ interface VideoCardProps {
 
 const VideoCard: FC<VideoCardProps> = ({ video, extra }) => {
   return (
-    <div
-      className={css`
-        margin-bottom: 2rem;
-        background: var(--adm-color-background);
-      `}
-    >
+    <div className="mb-8 bg-neutral-900">
       <Image
         src={video.cover_url}
         alt="cover"
@@ -73,71 +40,25 @@ const VideoCard: FC<VideoCardProps> = ({ video, extra }) => {
           }
         }}
       />
-      <div
-        className={css`
-          padding: 0.5rem;
-        `}
-      >
-        <div
-          className={css`
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-          `}
-        >
-          <div
-            className={css`
-              min-width: 0;
-              flex: 1;
-              > div:first-of-type {
-                margin-bottom: 0.3rem;
-              }
-            `}
-          >
-            <div
-              className={css`
-                display: flex;
-                align-items: center;
-                > div:not(:last-of-type) {
-                  margin-right: 0.3rem;
-                  line-height: 1rem;
-                }
-              `}
-            >
+      <div className="p-2 space-y-1">
+        <div className="flex items-center">
+          <div>
+            <div className="flex items-center space-x-1">
               <div>{video.serial_number}</div>
               {video.video_url && (
-                <div
-                  className={css`
-                    font-size: 1rem;
-                    line-height: 0 !important;
-                  `}
-                >
+                <div className="text-lg leading-4">
                   <MdOndemandVideo />
                 </div>
               )}
-              <div
-                className={css`
-                  span:not(:last-of-type) {
-                    margin-right: 0.2rem;
-                  }
-                `}
-              >
-                {video.tags?.map((i) => <Tag key={i}>{i}</Tag>)}
-              </div>
             </div>
-            <div
-              className={css`
-                color: var(--adm-color-text-secondary);
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-              `}
-            >
-              {video.chinese_title || video.title}
-            </div>
+            <div className="space-x-1">{video.tags?.map((i) => <Tag key={i}>{i}</Tag>)}</div>
           </div>
-          {extra && <div style={{ marginLeft: '0.4rem' }}>{extra}</div>}
+          {extra && <div className="ml-auto">{extra}</div>}
         </div>
+        <div className="whitespace-nowrap overflow-hidden text-ellipsis text-neutral-400">
+          {video.chinese_title || video.title}
+        </div>
+
         <Grid columns={3} gap="0.5rem">
           {video.actresses?.map((i) => (
             <Grid.Item key={i.id}>

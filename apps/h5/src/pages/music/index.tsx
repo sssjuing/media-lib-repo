@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import { css } from '@emotion/css';
 import { Form, Input, Selector } from 'antd-mobile';
 import ReactPlayer from 'react-player';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -15,26 +14,13 @@ const Music: FC = () => {
           <Input value={src} onChange={setSrc} />
         </Form.Item>
       </Form>
-      <div
-        className={css`
-          padding: 2rem;
-          text-align: center;
-          font-size: 2rem;
-        `}
-      >
+      <div className="p-8 text-center text-3xl">
         <a href="https://youtube.iiilab.com/" target="_blank" rel="noreferrer">
           将视频解析成音频
         </a>
       </div>
-      <div
-        className={css`
-          padding-top: 2rem;
-          > div {
-            margin-bottom: 2rem;
-          }
-        `}
-      >
-        <div>
+      <div className="pt-8">
+        <div className="mb-8">
           <h3>播放速度</h3>
           <Selector
             options={[

@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router';
-import { css } from '@emotion/css';
 import { List, Tag } from 'antd-mobile';
-import { MdOutlineFolder, MdOutlineOndemandVideo } from 'react-icons/md';
+import { MdOutlineFolder, MdOutlineVideoFile } from 'react-icons/md';
 import { FileDTO } from './data';
 
 /**
@@ -35,18 +34,10 @@ const FileList: FC<FileListProps> = ({ data }) => {
           key={i.name}
           prefix={
             <div
-              className={css`
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 2.5rem;
-                height: 2.5rem;
-                border-radius: 50%;
-                font-size: 1.5rem;
-                background-color: ${i.ftype === 'file' ? '#874d00' : '#003a8c'};
-              `}
+              className="flex items-center justify-center w-10 h-10 rounded-full text-2xl"
+              style={{ backgroundColor: i.ftype === 'file' ? '#874d00' : '#003a8c' }}
             >
-              {i.ftype === 'file' ? <MdOutlineOndemandVideo /> : <MdOutlineFolder />}
+              {i.ftype === 'file' ? <MdOutlineVideoFile /> : <MdOutlineFolder />}
             </div>
           }
           onClick={() => {
@@ -58,23 +49,8 @@ const FileList: FC<FileListProps> = ({ data }) => {
           }}
           description={i.name}
         >
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-            `}
-          >
-            <div
-              className={css`
-                width: 12rem;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-              `}
-            >
-              {i.name}
-            </div>
+          <div className="flex items-center justify-between">
+            <div className="w-48 whitespace-nowrap overflow-hidden text-ellipsis">{i.name}</div>
             <div>
               {i.ftype === 'file' && (
                 <Tag round color="#185d7b">

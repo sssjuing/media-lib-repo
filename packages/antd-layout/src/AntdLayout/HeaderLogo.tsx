@@ -9,34 +9,32 @@ const HeaderLogo: FC = () => {
     <div
       onClick={onLogoClick}
       className={cx(
+        'flex items-center h-[var(--ant-layout-header-height)] mr-7 text-white cursor-pointer',
         css`
-          display: flex;
-          align-items: center;
-          height: var(--ant-layout-header-height);
-          margin-right: 28px;
-          color: white;
-          cursor: pointer;
-          img {
-            height: 32px;
-          }
-          h1 {
-            margin: 0 0 0 12px;
-            font-weight: 600;
-            font-size: 18px;
-            font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-          }
           &.light {
             color: black;
-          }
-          h1.hidden {
-            visibility: hidden;
           }
         `,
         { light: theme === 'light' },
       )}
     >
-      {logo && <img src={logo} alt="logo" />}
-      {title && <h1 className={cx({ hidden: collapsed })}>{title}</h1>}
+      {logo && <img src={logo} alt="logo" className="h-8" />}
+      {title && (
+        <h1
+          className={cx(
+            'ml-3 text-[18px] font-semibold ',
+            css`
+              font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+              &.hidden {
+                visibility: hidden;
+              }
+            `,
+            { hidden: collapsed },
+          )}
+        >
+          {title}
+        </h1>
+      )}
     </div>
   );
 };

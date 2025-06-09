@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { css } from '@emotion/css';
 import { SpinLoading } from 'antd-mobile';
 
 interface LoadingProps {
@@ -7,18 +6,8 @@ interface LoadingProps {
 }
 
 const Loading: FC<LoadingProps> = ({ content }) => (
-  <div
-    className={css`
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      > div:first-of-type {
-        margin-bottom: 2rem;
-      }
-    `}
-  >
-    <SpinLoading style={{ '--size': '48px' }} />
+  <div className="flex flex-col items-center m-auto">
+    <SpinLoading className="mb-8" style={{ '--size': '48px' }} />
     <div>{content}...</div>
   </div>
 );

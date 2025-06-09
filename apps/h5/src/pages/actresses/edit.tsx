@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router';
-import { css } from '@emotion/css';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Dialog, Result, Toast } from 'antd-mobile';
 import { SubmitActressDTO } from '@repo/service';
@@ -76,12 +75,7 @@ export default function EditActressPage() {
       {actress ? (
         content
       ) : (
-        <div
-          className={css`
-            display: flex;
-            padding-top: 5rem;
-          `}
-        >
+        <div className="pt-20">
           <Loading content="内容加载中" />
         </div>
       )}

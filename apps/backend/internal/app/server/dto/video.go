@@ -35,5 +35,14 @@ type CreateVideoDTO struct {
 }
 
 type UpdateVideoDTO struct {
-	CreateVideoDTO
+	SerialNumber string           `json:"serial_number"`
+	CoverPath    string           `json:"cover_path"` // 封面在对象存储中桶内的路径
+	Title        *string          `json:"title"`
+	ChineseTitle *string          `json:"chinese_title"`
+	Actresses    []*ActressDTO    `json:"actresses"`
+	ReleaseDate  *time.Time       `json:"release_date"` // 发行日期
+	VideoPath    *string          `json:"video_path"`   // 视频在对象存储中桶内的路径
+	Mosaic       *bool            `json:"mosaic"`
+	Tags         *json.RawMessage `json:"tags"`
+	Synopsis     *string          `json:"synopsis"` // 概要
 }
