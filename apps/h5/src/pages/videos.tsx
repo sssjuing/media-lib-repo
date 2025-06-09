@@ -20,9 +20,9 @@ const EditTagPopup: FC<EditTagPopupProps> = ({ video, tags = [], onSuccess, onCa
   const [selected, setSelected] = useState<string[]>(video?.tags ?? []);
 
   const mutation = useMutation({
-    mutationFn: () => services.video.update(Number(video?.id), { tags: selected }),
+    mutationFn: () => services.video.update(Number(video!.id), { actresses: video!.actresses, tags: selected }),
     onSuccess: (v) => {
-      onSuccess?.({ ...video!, tags: v.tags, updated_at: v.updated_at });
+      onSuccess?.(v);
       Toast.show({
         icon: 'success',
         content: '更新成功',

@@ -71,7 +71,10 @@ func (r *VideoRepositoryImpl) Update(v *model.Video) error {
 	if err := r.db.Model(v).Association("Actresses").Replace(v.Actresses); err != nil {
 		return err
 	}
-	return r.db.Model(v).Updates(v).Error
+	if err := r.db.Model(v).Updates(v).Error; err != nil {
+		return err
+	}
+	return r.db.Preload("Actresses").First(&v, v.ID).Error
 }
 
 func (r *VideoRepositoryImpl) Delete(v *model.Video) error {
