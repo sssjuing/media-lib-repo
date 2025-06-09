@@ -1,8 +1,8 @@
 import { FC, useRef } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { TabBar } from 'antd-mobile';
-// import { throttle } from 'lodash-es';
 import { MdFolder, MdMusicNote, MdPerson, MdVideoLibrary } from 'react-icons/md';
+import { cn } from '@/utils/utils';
 
 const tabs = [
   {
@@ -31,39 +31,24 @@ const MainLayout: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
-  // const [hideTabBar, setHideTabBar] = useState(false);
-
-  // useEffect(() => {
-  //   const container = containerRef.current;
-  //   if (container) {
-  //     container.onscroll = throttle(() => {
-  //       setHideTabBar(container.scrollTop > 10);
-  //     }, 300);
-  //   }
-  // }, []);
 
   return (
-    <div className="h-lvh flex flex-col bg-neutral-800">
-      <div ref={containerRef} className="grow-1 overflow-auto">
-        <Outlet />
-      </div>
+    <div className="bg-neutral-800">
       <div
-        className="border-t-1 border-t-neutral-700 bg-neutral-950"
-        // className={cx(
-        //   css`
-        //     transition: transform 0.5s ease-out;
-        //     &.hide {
-        //       transform: translateY(100%);
-        //     }
-        //   `,
-        //   { hide: hideTabBar },
-        // )}
+        className={cn(
+          'fixed bottom-0 left-0 right-0 border-t-1 border-t-neutral-700 z-10 ',
+          // 'opacity-70 transition-opacity duration-200 ease-linear',
+          'backdrop-blur-xl bg-[#0f0f0f]/70',
+        )}
       >
         <TabBar activeKey={`/${pathname.match(/^\/(\w+)\/?/)?.[1]}`} onChange={navigate}>
           {tabs.map((item) => (
             <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
           ))}
         </TabBar>
+      </div>
+      <div ref={containerRef} className="min-h-lvh pb-[50px]">
+        <Outlet />
       </div>
     </div>
   );
