@@ -1,15 +1,23 @@
 import { FC, ReactNode } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Grid, Image, Tag } from 'antd-mobile';
 import { MdOndemandVideo } from 'react-icons/md';
 import { Actress, Video, getAge, getAgeColor } from '@repo/service';
 
 const ActressRenderer: FC<{ actress: Actress; video: Video }> = ({ actress, video }) => {
   const navigate = useNavigate();
+  const { actress_id } = useParams();
   const age = video.release_date && getAge(actress.birth_date, video.release_date);
 
   return (
-    <div onClick={() => navigate(`/actresses/${actress.id}/content`)} className="p-1 border-1 border-neutral-600">
+    <div
+      onClick={() => {
+        if (Number(actress_id) !== actress.id) {
+          navigate(`/actresses/${actress.id}/content`);
+        }
+      }}
+      className="p-1 border-1 border-neutral-600"
+    >
       <div className="whitespace-nowrap overflow-hidden text-ellipsis">{actress.unique_name}</div>
       <div className="flex items-center mt-0.5">
         <span className="mr-2 text-neutral-400">出演年龄:</span>

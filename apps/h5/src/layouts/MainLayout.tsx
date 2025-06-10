@@ -37,7 +37,6 @@ const MainLayout: FC = () => {
       <div
         className={cn(
           'fixed bottom-0 left-0 right-0 border-t-1 border-t-neutral-700 z-10 ',
-          // 'opacity-70 transition-opacity duration-200 ease-linear',
           'backdrop-blur-xl bg-[#0f0f0f]/70',
         )}
       >
