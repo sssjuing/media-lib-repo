@@ -42,7 +42,7 @@ const FileList: FC<FileListProps> = ({ data }) => {
           }
           onClick={() => {
             if (isFile(i)) {
-              window.location.href = i.url;
+              open(i.url);
             } else {
               navigate(`/files/${i.name}`);
             }

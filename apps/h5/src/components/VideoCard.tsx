@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Grid, Image, Tag } from 'antd-mobile';
+import { Grid, Tag } from 'antd-mobile';
 import { MdOndemandVideo } from 'react-icons/md';
 import { Actress, Video, getAge, getAgeColor } from '@repo/service';
 
@@ -11,7 +11,8 @@ const ActressRenderer: FC<{ actress: Actress; video: Video }> = ({ actress, vide
 
   return (
     <div
-      onClick={() => {
+      onClick={(e) => {
+        e.preventDefault();
         if (Number(actress_id) !== actress.id) {
           navigate(`/actresses/${actress.id}/content`);
         }
@@ -39,14 +40,11 @@ interface VideoCardProps {
 const VideoCard: FC<VideoCardProps> = ({ video, extra }) => {
   return (
     <div className="mb-8 bg-neutral-900">
-      <Image
+      <img
         src={video.cover_url}
         alt="cover"
-        onClick={() => {
-          if (video.video_url) {
-            open(video.video_url);
-          }
-        }}
+        onClick={() => video.video_url && open(video.video_url)}
+        className="aspect-400/269 w-full object-contain"
       />
       <div className="p-2 space-y-1">
         <div className="flex items-center">

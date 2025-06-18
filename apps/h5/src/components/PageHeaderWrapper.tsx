@@ -22,7 +22,7 @@ const PageHeaderWrapper: FC<PageHeaderWrapperProps> = ({ title, children, ...res
         setHide(false);
         lastScrollY.current = window.scrollY;
       }
-      console.log(window.scrollY);
+      // console.log(window.scrollY);
     }, 300);
     window.addEventListener('scroll', handleScroll);
     return () => {

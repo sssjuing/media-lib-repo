@@ -37,6 +37,11 @@ export class VideoService {
     return data.map(VideoService.converter);
   };
 
+  paginate = async (req: { tags?: string[]; page?: number; size?: number }) => {
+    const { data } = await this.#axios.post<{ data: VideoDTO[]; total: number }>('/videos/paginate', req);
+    return { data: data.data.map(VideoService.converter), total: data.total };
+  };
+
   create = async (dto: SubmitVideoDTO) => {
     const { data } = await this.#axios.post<VideoDTO>('/videos', dto);
     return VideoService.converter(data);

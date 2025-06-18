@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router';
+import { Outlet, ScrollRestoration, useLocation, useNavigate } from 'react-router';
 import { TabBar } from 'antd-mobile';
 import { MdFolder, MdMusicNote, MdPerson, MdVideoLibrary } from 'react-icons/md';
 import { cn } from '@/utils/utils';
@@ -34,13 +34,19 @@ const MainLayout: FC = () => {
 
   return (
     <div className="bg-neutral-800">
+      <ScrollRestoration
+      // getKey={(location) => location.pathname}
+      />
       <div
         className={cn(
           'fixed bottom-0 left-0 right-0 border-t-1 border-t-neutral-700 z-10 ',
           'backdrop-blur-xl bg-[#0f0f0f]/70',
         )}
       >
-        <TabBar activeKey={`/${pathname.match(/^\/(\w+)\/?/)?.[1]}`} onChange={navigate}>
+        <TabBar
+          activeKey={`/${pathname.match(/^\/(\w+)\/?/)?.[1]}`}
+          onChange={(key) => navigate(key, { preventScrollReset: false })}
+        >
           {tabs.map((item) => (
             <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
           ))}

@@ -6,6 +6,7 @@ import { VideoService } from './video';
 
 const mock = new AxiosMockAdapter(axios);
 mock.onGet('/api/videos').reply(200, videos);
+mock.onPost('/api/videos/paginate').reply(200, { data: videos, total: 2 });
 mock.onGet('api/videos/229').reply(200, videos[1]);
 
 const vs = new VideoService(
@@ -19,6 +20,13 @@ describe('VideoService', () => {
     test('200', async () => {
       const data = await vs.list({ tags: ['OL'] });
       expect(data.length).toBe(2);
+    });
+  });
+
+  describe('paginate', () => {
+    test('200', async () => {
+      const data = await vs.paginate({ page: 1, size: 5 });
+      expect(data.total).toBe(2);
     });
   });
 

@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, InfiniteScroll, Picker } from 'antd-mobile';
 import { MdEdit } from 'react-icons/md';
 import { Video } from '@repo/service';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import VideoCard from '@/components/VideoCard';
-import { useScroll } from '@/hooks/useScroll';
 import { services } from '@/services';
 import { EditTagPopup } from './EditTagPopup';
 
@@ -20,12 +19,16 @@ export default function VideosIndexPage() {
   const [selected, setSelected] = useState<Video>();
 
   const tagsQuery = useQuery({ queryKey: ['/configs/video-tags'], queryFn: services.config.tags });
-  const videosQuery = useQuery({
-    queryKey: ['/videos', tag],
-    queryFn: () => services.video.list({ tags: tag ? [tag] : undefined }),
-  });
 
-  const { data: videoList, loadMore, hasMore } = useScroll(videosQuery.data);
+  const { fetchNextPage, hasNextPage, data } = useInfiniteQuery({
+    queryKey: ['/videos/paginate', tag],
+    queryFn: async ({ pageParam }) => {
+      const { data } = await services.video.paginate({ tags: tag ? [tag] : undefined, page: pageParam });
+      return data;
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => (lastPage.length === 0 ? undefined : pages.length + 1),
+  });
 
   return (
     <PageHeaderWrapper
@@ -58,7 +61,7 @@ export default function VideosIndexPage() {
         }}
         onCancel={() => setSelected(undefined)}
       />
-      {videoList.map((i) => (
+      {data?.pages.flat().map((i) => (
         <VideoCard
           key={i.id}
           video={i}
@@ -69,7 +72,12 @@ export default function VideosIndexPage() {
           }
         />
       ))}
-      <InfiniteScroll loadMore={loadMore} hasMore={hasMore} />
+      <InfiniteScroll
+        loadMore={async () => {
+          await fetchNextPage();
+        }}
+        hasMore={hasNextPage}
+      />
     </PageHeaderWrapper>
   );
 }
