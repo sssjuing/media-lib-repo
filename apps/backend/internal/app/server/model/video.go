@@ -2,7 +2,7 @@ package model
 
 import (
 	"encoding/json"
-	"media-lib/internal/app/server/dto"
+	"media-lib/internal/app/server/types"
 	"media-lib/internal/pkg/config"
 	"media-lib/internal/pkg/utils"
 	"time"
@@ -34,7 +34,7 @@ func init() {
 	publicUrl = config.GetMinioPublicUrl()
 }
 
-func (v *Video) DTO() *dto.VideoDTO {
+func (v *Video) DTO() *types.VideoDTO {
 	if v == nil {
 		return nil
 	}
@@ -43,13 +43,13 @@ func (v *Video) DTO() *dto.VideoDTO {
 		videoUrl = new(string)
 		*videoUrl = publicUrl + *v.VideoPath
 	}
-	return &dto.VideoDTO{
+	return &types.VideoDTO{
 		ID:           v.ID,
 		SerialNumber: v.SerialNumber,
 		CoverUrl:     publicUrl + v.CoverPath,
 		Title:        v.Title,
 		ChineseTitle: v.ChineseTitle,
-		Actresses: utils.Map(v.Actresses, func(a *Actress) *dto.ActressDTO {
+		Actresses: utils.Map(v.Actresses, func(a *Actress) *types.ActressDTO {
 			return a.DTO()
 		}),
 		ReleaseDate: v.ReleaseDate,

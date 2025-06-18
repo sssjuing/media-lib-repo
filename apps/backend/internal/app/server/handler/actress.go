@@ -1,9 +1,10 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/dto"
 	"media-lib/internal/app/server/model"
+	"media-lib/internal/app/server/types"
 	"media-lib/internal/app/server/utils"
+	commonUtils "media-lib/internal/pkg/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -58,9 +59,8 @@ func (h *Handler) GetVideosByActressId(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	output := make([]*dto.VideoDTO, len(videos))
-	for i, video := range videos {
-		output[i] = video.DTO()
-	}
-	return c.JSON(http.StatusOK, output)
+	list := commonUtils.Map(videos, func(v *model.Video) types.VideoDTO {
+		return *v.DTO()
+	})
+	return c.JSON(http.StatusOK, list)
 }

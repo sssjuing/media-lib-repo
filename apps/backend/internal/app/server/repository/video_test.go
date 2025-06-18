@@ -15,7 +15,7 @@ func init() {
 }
 
 func TestFindAll(t *testing.T) {
-	videos, _ := videoRepo.FindAll(QueryOptions{Tags: []string{"OL"}})
+	videos, _ := videoRepo.FindAll(VidoesQueryOptions{Tags: []string{"OL"}})
 	t.Log(len(videos))
 	for _, v := range videos {
 		t.Log(v.SerialNumber)
@@ -23,6 +23,20 @@ func TestFindAll(t *testing.T) {
 			t.Log(a.UniqueName)
 		}
 	}
-	allVideos, _ := videoRepo.FindAll(QueryOptions{})
+	allVideos, _ := videoRepo.FindAll(VidoesQueryOptions{})
 	t.Log(len(allVideos))
+}
+
+func TestPaginateAll(t *testing.T) {
+	videos, _ := videoRepo.PaginateAll(VidoesQueryOptions{Page: 2, Size: 10})
+	for _, v := range videos {
+		t.Log(v.SerialNumber)
+	}
+}
+
+func TestCount(t *testing.T) {
+	count1, _ := videoRepo.Count(VidoesQueryOptions{})
+	t.Log(count1)
+	count2, _ := videoRepo.Count(VidoesQueryOptions{Tags: []string{"OL"}})
+	t.Log(count2)
 }

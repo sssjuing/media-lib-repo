@@ -1,14 +1,14 @@
 package service
 
 import (
-	"media-lib/internal/app/server/dto"
 	"media-lib/internal/app/server/model"
 	"media-lib/internal/app/server/repository"
+	"media-lib/internal/app/server/types"
 	"media-lib/internal/pkg/utils"
 )
 
 type ActressService interface {
-	GetList() ([]dto.ActressDTO, error)
+	GetList() ([]types.ActressDTO, error)
 }
 
 type ActressServiceImpl struct {
@@ -21,12 +21,12 @@ func NewActressService(actressRepo repository.ActressRepository) *ActressService
 	}
 }
 
-func (svc *ActressServiceImpl) GetList() ([]dto.ActressDTO, error) {
+func (svc *ActressServiceImpl) GetList() ([]types.ActressDTO, error) {
 	actresses, err := svc.actressRepo.FindAll()
 	if err != nil {
 		return nil, err
 	}
-	list := utils.Map(actresses, func(a model.Actress) dto.ActressDTO {
+	list := utils.Map(actresses, func(a model.Actress) types.ActressDTO {
 		return *a.DTO()
 	})
 	return list, nil

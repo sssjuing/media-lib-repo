@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/dto"
 	"media-lib/internal/app/server/model"
 	"media-lib/internal/app/server/repository"
+	"media-lib/internal/app/server/types"
 	"media-lib/internal/app/server/utils"
+	commonUtils "media-lib/internal/pkg/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -12,15 +13,42 @@ import (
 
 func (h *Handler) ListVideos(c echo.Context) error {
 	tags := c.QueryParams()["tags"]
-	list, err := h.videoSvc.GetList(repository.QueryOptions{Tags: tags})
+	videos, err := h.videoRepo.FindAll(repository.VidoesQueryOptions{Tags: tags})
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
+	list := commonUtils.Map(videos, func(v model.Video) types.VideoDTO {
+		return *v.DTO()
+	})
 	return c.JSON(http.StatusOK, list)
 }
 
+type paginateVideosRespone struct {
+	Data  []types.VideoDTO `json:"data"`
+	Total int64            `json:"total"`
+}
+
+func (h *Handler) PaginateVideos(c echo.Context) error {
+	var opts repository.VidoesQueryOptions
+	if code, err := validateRequest(c, &opts); err != nil {
+		return c.JSON(code, utils.NewError(err))
+	}
+	videos, err := h.videoRepo.PaginateAll(opts)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	count, err := h.videoRepo.Count(opts)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	list := commonUtils.Map(videos, func(v model.Video) types.VideoDTO {
+		return *v.DTO()
+	})
+	return c.JSON(http.StatusOK, paginateVideosRespone{Data: list, Total: count})
+}
+
 func (h *Handler) CreateVideo(c echo.Context) error {
-	var cvd dto.CreateVideoDTO
+	var cvd types.CreateVideoDTO
 	if code, err := validateRequest(c, &cvd); err != nil {
 		return c.JSON(code, utils.NewError(err))
 	}
@@ -38,7 +66,7 @@ func (h *Handler) GetVideoById(c echo.Context) error {
 
 func (h *Handler) UpdateVideo(c echo.Context) error {
 	v := c.Get("video").(*model.Video)
-	var uvd dto.UpdateVideoDTO
+	var uvd types.UpdateVideoDTO
 	if code, err := validateRequest(c, &uvd); err != nil {
 		return c.JSON(code, utils.NewError(err))
 	}

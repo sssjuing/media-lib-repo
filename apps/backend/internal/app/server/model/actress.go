@@ -2,7 +2,7 @@ package model
 
 import (
 	"encoding/json"
-	"media-lib/internal/app/server/dto"
+	"media-lib/internal/app/server/types"
 	"time"
 
 	"gorm.io/datatypes"
@@ -32,11 +32,11 @@ type Actress struct {
 	Videos       []*Video        `gorm:"many2many:actress_video" json:"videos"`
 }
 
-func (a *Actress) DTO() *dto.ActressDTO {
+func (a *Actress) DTO() *types.ActressDTO {
 	if a == nil {
 		return nil
 	}
-	return &dto.ActressDTO{
+	return &types.ActressDTO{
 		ID:           a.ID,
 		UniqueName:   a.UniqueName,
 		ChineseName:  a.ChineseName,

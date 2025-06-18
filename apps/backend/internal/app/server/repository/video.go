@@ -9,12 +9,16 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-type QueryOptions struct {
-	Tags []string
+type VidoesQueryOptions struct {
+	Tags []string `json:"tags"`
+	Page int      `json:"page"`
+	Size int      `json:"size"`
 }
 
 type VideoRepository interface {
-	FindAll(QueryOptions) ([]model.Video, error)
+	FindAll(VidoesQueryOptions) ([]model.Video, error)
+	PaginateAll(VidoesQueryOptions) ([]model.Video, error)
+	Count(VidoesQueryOptions) (int64, error)
 	FindByID(uint) (*model.Video, error)
 	Create(*model.Video) error
 	Update(*model.Video) error
@@ -29,7 +33,8 @@ func NewVideoRepositoryImpl(db *gorm.DB) *VideoRepositoryImpl {
 	return &VideoRepositoryImpl{db: db}
 }
 
-func (r *VideoRepositoryImpl) FindAll(options QueryOptions) ([]model.Video, error) {
+// TODO: 待删除, 用 PaginateAll 代替
+func (r *VideoRepositoryImpl) FindAll(options VidoesQueryOptions) ([]model.Video, error) {
 	var videos []model.Video
 	var err error
 	if len(options.Tags) == 0 {
@@ -42,6 +47,37 @@ func (r *VideoRepositoryImpl) FindAll(options QueryOptions) ([]model.Video, erro
 		return nil, err
 	}
 	return videos, nil
+}
+
+func (r *VideoRepositoryImpl) PaginateAll(options VidoesQueryOptions) ([]model.Video, error) {
+	var videos []model.Video
+	var err error
+	if len(options.Tags) == 0 {
+		err = r.db.Preload("Actresses").Order("created_at desc").Scopes(paginate(options.Page, options.Size)).Find(&videos).Error
+	} else {
+		jsonTags, _ := json.Marshal(options.Tags)
+		err = r.db.Where("tags @> ?", string(jsonTags)).Preload("Actresses").Order("created_at desc").
+			Scopes(paginate(options.Page, options.Size)).Find(&videos).Error
+	}
+	if err != nil {
+		return nil, err
+	}
+	return videos, nil
+}
+
+func (r *VideoRepositoryImpl) Count(options VidoesQueryOptions) (int64, error) {
+	var count int64
+	var err error
+	if len(options.Tags) == 0 {
+		err = r.db.Model(&model.Video{}).Count(&count).Error
+	} else {
+		jsonTags, _ := json.Marshal(options.Tags)
+		err = r.db.Model(&model.Video{}).Where("tags @> ?", string(jsonTags)).Count(&count).Error
+	}
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
 }
 
 // func (r *VideoRepositoryImpl) FindAllByActressId(actressId uint) ([]*model.Video, error) {

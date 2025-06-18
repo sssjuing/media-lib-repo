@@ -24,6 +24,7 @@ func (h *Handler) Register(g *echo.Group) {
 	actress.GET("/videos", h.GetVideosByActressId)
 
 	g.GET("/videos", h.ListVideos)
+	g.POST("/videos/paginate", h.PaginateVideos)
 	g.POST("/videos", h.CreateVideo)
 	video := g.Group("/videos/:video_id", middleware.VideoChecker(h.videoRepo))
 	video.GET("", h.GetVideoById)
