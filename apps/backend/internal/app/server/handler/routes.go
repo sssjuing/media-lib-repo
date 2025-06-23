@@ -8,6 +8,11 @@ import (
 )
 
 func (h *Handler) Register(g *echo.Group) {
+	g.POST("/user/login", h.Login)
+
+	g.Use(middleware.JWT())
+	g.GET("/user/whoami", h.CurrentUser)
+
 	g.GET("/configs/video-tags", h.GetVideoTags)
 
 	files := g.Group("/files")

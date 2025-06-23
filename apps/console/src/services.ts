@@ -4,8 +4,15 @@ import { Services } from '@repo/service';
 
 const errorHandler = ({ response, config }: AxiosError<{ errors: { body: string } }>) => {
   if (response && response.status) {
-    console.log(response);
     const statusCode = response.status;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (statusCode === 401 || (response.data as any).message === 'missing or malformed jwt') {
+      const encodedRedirectUri = encodeURIComponent(window.location.pathname + window.location.search);
+      const urlParams = new URLSearchParams();
+      urlParams.set('redirect_uri', encodedRedirectUri);
+      window.location.href = `/login?${urlParams.toString()}`;
+      return;
+    }
     notification.error({
       message: `请求错误 ${statusCode}: ${config?.baseURL?.replace(/\/$/, '')}${config?.url}`,
       description: response.data.errors.body,

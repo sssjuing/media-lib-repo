@@ -15,3 +15,12 @@ func validateRequest[T any](c echo.Context, req *T) (int, error) {
 	}
 	return 0, nil
 }
+
+type userLoginRequest struct {
+	Username string `json:"username" validate:"required"`
+	Password string `json:"password" validate:"required"`
+}
+
+func (r *userLoginRequest) bind(c echo.Context) (int, error) {
+	return validateRequest(c, r)
+}

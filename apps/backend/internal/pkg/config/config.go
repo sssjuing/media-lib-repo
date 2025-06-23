@@ -48,3 +48,16 @@ func GetMinioPublicUrl() string {
 	bucketName := config.GetString("minio.bucket_name")
 	return fmt.Sprintf("//%s/%s/", endpoint, bucketName)
 }
+
+type User struct {
+	Username string `mapstructure:"name"`
+	Password string `mapstructure:"password"`
+}
+
+func GetUsers() ([]User, error) {
+	var users []User
+	if err := config.UnmarshalKey("server.users", &users); err != nil {
+		return nil, fmt.Errorf("error unmarshaling server.users: %w", err)
+	}
+	return users, nil
+}
