@@ -16,16 +16,16 @@ const vs = new VideoService(
 );
 
 describe('VideoService', () => {
-  describe('list', () => {
-    test('200', async () => {
-      const data = await vs.list({ tags: ['OL'] });
-      expect(data.length).toBe(2);
-    });
-  });
+  // describe('list', () => {
+  //   test('200', async () => {
+  //     const data = await vs.list({ tags: ['OL'] });
+  //     expect(data.length).toBe(2);
+  //   });
+  // });
 
   describe('paginate', () => {
     test('200', async () => {
-      const data = await vs.paginate({ page: 1, size: 5 });
+      const data = await vs.paginate({ page: 1, size: 5, tags: ['OL'] });
       expect(data.total).toBe(2);
     });
   });

@@ -13,6 +13,7 @@ const config = {
   plugins: ['@trivago/prettier-plugin-sort-imports'],
   importOrder: [
     '^(react|react-dom\/client|react-router)$',
+    '^@tanstack',
     '^@emotion',
     '^antd$',
     '^@ant',

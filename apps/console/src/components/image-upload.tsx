@@ -17,7 +17,7 @@ interface ImageUploadProps {
   onChange?: (value: string) => void;
 }
 
-const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChange }) => {
+export const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChange }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
 
@@ -81,5 +81,3 @@ const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChange }) =>
     </Upload>
   );
 };
-
-export default ImageUpload;

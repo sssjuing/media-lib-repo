@@ -11,17 +11,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (h *Handler) ListVideos(c echo.Context) error {
-	tags := c.QueryParams()["tags"]
-	videos, err := h.videoRepo.FindAll(repository.VidoesQueryOptions{Tags: tags})
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
-	}
-	list := commonUtils.Map(videos, func(v model.Video) types.VideoDTO {
-		return *v.DTO()
-	})
-	return c.JSON(http.StatusOK, list)
-}
+// func (h *Handler) ListVideos(c echo.Context) error {
+// 	tags := c.QueryParams()["tags"]
+// 	videos, err := h.videoRepo.FindAll(repository.VidoesQueryOptions{Tags: tags})
+// 	if err != nil {
+// 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+// 	}
+// 	list := commonUtils.Map(videos, func(v model.Video) types.VideoDTO {
+// 		return *v.DTO()
+// 	})
+// 	return c.JSON(http.StatusOK, list)
+// }
 
 type paginateVideosRespone struct {
 	Data  []types.VideoDTO `json:"data"`

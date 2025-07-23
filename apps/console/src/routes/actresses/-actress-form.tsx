@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import { css } from '@emotion/css';
 import { Button, DatePicker, Form, Input, InputNumber, Radio, Select, Space } from 'antd';
 import dayjs from 'dayjs';
 import { Actress, Measurements, SubmitActressDTO } from '@repo/service';
@@ -14,24 +13,18 @@ const MeasurementsInput: FC<{
   const defaultValue = { bust: 90, waist: 60, hips: 90 };
 
   return (
-    <div
-      className={css`
-        .label {
-          margin-left: 12px;
-        }
-      `}
-    >
-      <span className="label">胸围：</span>
+    <div>
+      <span className="ml-3">胸围：</span>
       <InputNumber
         value={value?.bust}
         onChange={(val) => val && onChange?.({ ...defaultValue, ...value, bust: val })}
       />
-      <span className="label">腰围：</span>
+      <span className="ml-3">腰围：</span>
       <InputNumber
         value={value?.waist}
         onChange={(val) => val && onChange?.({ ...defaultValue, ...value, waist: val })}
       />
-      <span className="label">臀围：</span>
+      <span className="ml-3">臀围：</span>
       <InputNumber
         value={value?.hips}
         onChange={(val) => val && onChange?.({ ...defaultValue, ...value, hips: val })}
@@ -47,7 +40,7 @@ interface ActressFormProps {
   onBack?: () => void;
 }
 
-const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submitting, onBack }) => {
+export const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submitting, onBack }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -120,5 +113,3 @@ const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submitting, onBa
     </Form>
   );
 };
-
-export default ActressForm;

@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react';
-import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from 'antd';
 import { useQuery } from '@tanstack/react-query';
+import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from 'antd';
 import dayjs from 'dayjs';
 import { SubmitVideoDTO, Video } from '@repo/service';
-import ImageUpload from '@/components/ImageUpload';
+import { ImageUpload } from '@/components/image-upload';
 import { services } from '@/services';
 import { useGlobalStore } from '@/store';
 import { getSubstringAfter } from '@/utils/utils';
@@ -17,7 +17,7 @@ interface VideoFormProps {
   onBack?: () => void;
 }
 
-const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onBack }) => {
+export const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onBack }) => {
   const [form] = Form.useForm();
   const videoTags = useGlobalStore((state) => state.videoTags);
 
@@ -122,5 +122,3 @@ const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onBack }) 
     </Form>
   );
 };
-
-export default VideoForm;

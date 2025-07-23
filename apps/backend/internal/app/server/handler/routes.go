@@ -28,7 +28,7 @@ func (h *Handler) Register(g *echo.Group) {
 	actress.DELETE("", h.RemoveActress)
 	actress.GET("/videos", h.GetVideosByActressId)
 
-	g.GET("/videos", h.ListVideos)
+	// g.GET("/videos", h.ListVideos)
 	g.POST("/videos/paginate", h.PaginateVideos)
 	g.POST("/videos", h.CreateVideo)
 	video := g.Group("/videos/:video_id", middleware.VideoChecker(h.videoRepo))

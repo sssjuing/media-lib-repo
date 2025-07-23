@@ -1,11 +1,9 @@
-import { Link, useNavigate, useParams } from 'react-router';
-import { css } from '@emotion/css';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { Button, Descriptions, List, Tag } from 'antd';
-import { useQueries } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { Actress, getAge } from '@repo/service';
-import VideoCard from '@/components/VideoCard';
+import { VideoCard } from '@/components/video-card';
 import { services } from '@/services';
 
 function getCupColor(cup: string) {
@@ -40,16 +38,20 @@ const measurementsRenderer = (actress: Actress) => {
   );
 };
 
-export default function ActressVideosPage() {
-  const navigate = useNavigate();
-  const { actress_id } = useParams();
+export const Route = createFileRoute('/actresses/$actressId/videos')({
+  staticData: { name: '演员的相关视频' },
+  loader: ({ params: { actressId } }) =>
+    Promise.all([
+      //
+      services.actress.getById(Number(actressId)),
+      services.actress.listVideos(Number(actressId)),
+    ]),
+  component: RouteComponent,
+});
 
-  const [{ data: actress }, videosQuery] = useQueries({
-    queries: [
-      { queryKey: [`/actresses/${actress_id}`], queryFn: () => services.actress.getById(Number(actress_id)) },
-      { queryKey: [`/actresses/${actress_id}/videos`], queryFn: () => services.actress.listVideos(Number(actress_id)) },
-    ],
-  });
+function RouteComponent() {
+  const navigate = Route.useNavigate();
+  const [actress, videos] = Route.useLoaderData();
 
   return (
     <PageHeaderWrapper
@@ -58,7 +60,7 @@ export default function ActressVideosPage() {
           演员<i style={{ margin: '0 8px' }}>{actress?.unique_name}</i>的视频列表
         </>
       }
-      breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}
+      breadcrumb={<Breadcrumb onClick={(key) => navigate({ to: key })} />}
       content={
         actress && (
           <Descriptions
@@ -87,22 +89,21 @@ export default function ActressVideosPage() {
                 children: measurementsRenderer(actress),
               },
             ]}
-            className={css`
-              margin-top: 10px;
-            `}
+            className="mt-2"
           />
         )
       }
       extra={
         <Button type="primary">
-          <Link to={`/actresses/${actress_id}/edit`}>编辑演员</Link>
+          <Link to="/actresses/$actressId/edit" params={{ actressId: actress.id.toString() }}>
+            编辑演员
+          </Link>
         </Button>
       }
     >
       <List
         rowKey="id"
-        dataSource={videosQuery.data}
-        loading={videosQuery.isLoading}
+        dataSource={videos}
         grid={{ gutter: 12, xxl: 4, xl: 3, lg: 3, md: 3, sm: 3, xs: 3 }}
         pagination={{ pageSize: 12 }}
         renderItem={(i) => (

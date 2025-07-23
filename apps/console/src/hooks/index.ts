@@ -1,11 +1,14 @@
-import { useUrlParams } from './useUrlParams';
+import { usePathname } from './usePathname';
+import { useRefresh } from './useRefresh';
 
 const Hooks = {
-  useUrlParams,
+  usePathname,
+  useRefresh,
 };
 
 export {
   //
   Hooks as default,
-  useUrlParams,
+  usePathname,
+  useRefresh,
 };

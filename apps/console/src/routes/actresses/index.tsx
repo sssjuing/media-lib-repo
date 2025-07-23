@@ -1,33 +1,33 @@
 import { useMemo } from 'react';
-import { Link, useNavigate } from 'react-router';
-import { Button, Card, Input, Popconfirm, Space, Table, message } from 'antd';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Link, createFileRoute } from '@tanstack/react-router';
+import { Button, Card, Input, Popconfirm, Table, message } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import { z } from 'zod';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { Actress, getAge } from '@repo/service';
 import { AnchorBtn } from '@repo/ui';
 import configs from '@/configs';
-import { useUrlParams } from '@/hooks';
+import { useRefresh } from '@/hooks';
 import { services } from '@/services';
 
 const { CUP_TYPE } = configs;
 
-export default function ActressesIndexPage() {
-  const navigate = useNavigate();
+export const Route = createFileRoute('/actresses/')({
+  staticData: { name: '演员', icon: <UserOutlined />, hideChildrenInMenu: true },
+  validateSearch: z.object({
+    page: z.number().default(1).catch(1),
+    size: z.number().default(10).catch(10),
+    searchStr: z.string().default('').catch(''),
+  }),
+  component: RouteComponent,
+});
 
-  const { value: urlParamsStrObj, setValue: setUrlParams } = useUrlParams({
-    searchStr: '',
-    pageSize: 10,
-    page: 1,
-  });
-  const urlParams = useMemo(() => {
-    const { pageSize, page } = urlParamsStrObj;
-    return {
-      ...urlParamsStrObj,
-      pageSize: pageSize ? Number(pageSize) : undefined,
-      page: page ? Number(page) : undefined,
-    };
-  }, [urlParamsStrObj]);
+function RouteComponent() {
+  const { page, size, searchStr } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const refresh = useRefresh(Route.id);
 
   const query = useQuery({ queryKey: ['/actresses'], queryFn: services.actress.list });
 
@@ -35,34 +35,35 @@ export default function ActressesIndexPage() {
     mutationFn: services.actress.delete,
     onSuccess: () => {
       message.success('删除成功');
-      query.refetch();
+      refresh();
     },
   });
 
   const list = useMemo(() => {
-    const search = urlParams.searchStr;
+    const search = searchStr;
     if (!search) {
       return query.data;
     }
     return query.data?.filter((i) => i.unique_name.includes(search) || i.chinese_name.includes(search));
-  }, [query.data, urlParams.searchStr]);
+  }, [query.data, searchStr]);
 
   return (
     <PageHeaderWrapper
       title="演员列表"
-      breadcrumb={<Breadcrumb onClick={(key) => navigate(key)} />}
+      breadcrumb={<Breadcrumb onClick={(key) => navigate({ to: key })} />}
       extra={
-        <Space>
+        <div className="flex space-x-2">
           <Input.Search
-            onSearch={(val) => setUrlParams({ searchStr: val })}
+            defaultValue={searchStr}
+            onSearch={(val) => navigate({ search: { size, searchStr: val } })}
+            allowClear
             placeholder="请输入演员姓名"
-            defaultValue={urlParams.searchStr}
             style={{ width: 200, marginLeft: 'auto' }}
           />
           <Link to="/actresses/create">
             <Button type="primary">创建</Button>
           </Link>
-        </Space>
+        </div>
       }
     >
       <Card>
@@ -72,7 +73,11 @@ export default function ActressesIndexPage() {
             {
               title: '姓名',
               dataIndex: 'unique_name',
-              render: (value, r) => <Link to={`/actresses/${r.id}/videos`}>{value}</Link>,
+              render: (value, r) => (
+                <Link to="/actresses/$actressId/videos" params={{ actressId: r.id.toString() }}>
+                  {value}
+                </Link>
+              ),
             },
             { title: '中文名', dataIndex: 'chinese_name' },
             { title: '年龄', dataIndex: 'birth_date', render: (b) => getAge(b) },
@@ -94,8 +99,10 @@ export default function ActressesIndexPage() {
             {
               title: '操作',
               render: (a: Actress) => (
-                <Space>
-                  <Link to={`/actresses/${a.id}/edit`}>编辑</Link>
+                <div className="space-x-2">
+                  <Link to="/actresses/$actressId/edit" params={{ actressId: a.id.toString() }}>
+                    编辑
+                  </Link>
                   <Popconfirm
                     title={`确认删除演员 ${a.unique_name} 吗？`}
                     onConfirm={() => deleteMutation.mutateAsync(a.id)}
@@ -103,15 +110,15 @@ export default function ActressesIndexPage() {
                   >
                     <AnchorBtn danger>删除</AnchorBtn>
                   </Popconfirm>
-                </Space>
+                </div>
               ),
             },
           ]}
           dataSource={list}
           pagination={{
-            pageSize: urlParams.pageSize,
-            current: urlParams.page,
-            onChange: (page, pageSize) => setUrlParams({ page, pageSize }),
+            pageSize: size,
+            current: page,
+            onChange: (page, pageSize) => navigate({ search: { page, size: pageSize, searchStr } }),
           }}
           loading={query.isLoading}
         />

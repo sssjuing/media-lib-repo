@@ -10,9 +10,10 @@ import (
 )
 
 type VidoesQueryOptions struct {
-	Tags []string `json:"tags"`
-	Page int      `json:"page"`
-	Size int      `json:"size"`
+	Tags   []string `json:"tags"`
+	Page   int      `json:"page"`
+	Size   int      `json:"size"`
+	Search string   `json:"search"`
 }
 
 type VideoRepository interface {
@@ -33,7 +34,6 @@ func NewVideoRepositoryImpl(db *gorm.DB) *VideoRepositoryImpl {
 	return &VideoRepositoryImpl{db: db}
 }
 
-// TODO: 待删除, 用 PaginateAll 代替
 func (r *VideoRepositoryImpl) FindAll(options VidoesQueryOptions) ([]model.Video, error) {
 	var videos []model.Video
 	var err error
@@ -53,11 +53,11 @@ func (r *VideoRepositoryImpl) PaginateAll(options VidoesQueryOptions) ([]model.V
 	var videos []model.Video
 	var err error
 	if len(options.Tags) == 0 {
-		err = r.db.Preload("Actresses").Order("created_at desc").Scopes(paginate(options.Page, options.Size)).Find(&videos).Error
+		err = r.db.Preload("Actresses").Order("created_at desc").
+			Scopes(searchVideos(options.Search), paginate(options.Page, options.Size)).Find(&videos).Error
 	} else {
-		jsonTags, _ := json.Marshal(options.Tags)
-		err = r.db.Where("tags @> ?", string(jsonTags)).Preload("Actresses").Order("created_at desc").
-			Scopes(paginate(options.Page, options.Size)).Find(&videos).Error
+		err = r.db.Preload("Actresses").Order("created_at desc").
+			Scopes(videoTagsFilter(options.Tags), searchVideos(options.Search), paginate(options.Page, options.Size)).Find(&videos).Error
 	}
 	if err != nil {
 		return nil, err
@@ -69,10 +69,11 @@ func (r *VideoRepositoryImpl) Count(options VidoesQueryOptions) (int64, error) {
 	var count int64
 	var err error
 	if len(options.Tags) == 0 {
-		err = r.db.Model(&model.Video{}).Count(&count).Error
+		err = r.db.Model(&model.Video{}).Scopes(searchVideos(options.Search)).
+			Count(&count).Error
 	} else {
-		jsonTags, _ := json.Marshal(options.Tags)
-		err = r.db.Model(&model.Video{}).Where("tags @> ?", string(jsonTags)).Count(&count).Error
+		err = r.db.Model(&model.Video{}).Scopes(videoTagsFilter(options.Tags), searchVideos(options.Search)).
+			Count(&count).Error
 	}
 	if err != nil {
 		return 0, err

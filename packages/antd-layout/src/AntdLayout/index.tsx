@@ -1,5 +1,4 @@
 import { FC, PropsWithChildren } from 'react';
-import { css } from '@emotion/css';
 import { Layout } from 'antd';
 import { LayoutRouteProvider, LayoutRouteProviderProps } from '../LayoutRouteProvider';
 import Header from './Header';
@@ -17,19 +16,8 @@ const AntdLayout: FC<PropsWithChildren<AntdLayoutProps>> = (props) => {
   const { topMenu } = useLayout();
 
   const layout = (
-    <Layout
-      className={css`
-        min-height: 100vh;
-      `}
-    >
-      {!topMenu && (
-        <SiderMenu
-          className={css`
-            z-index: 2;
-            box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-          `}
-        />
-      )}
+    <Layout className="min-h-screen!">
+      {!topMenu && <SiderMenu className="z-10 shadow-[2px_0_6px_rgba(0,21,41,0.35)]" />}
       <Layout>
         <Header {...props} />
         <Content>{children}</Content>

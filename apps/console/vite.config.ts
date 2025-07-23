@@ -1,3 +1,4 @@
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
 import { resolve } from 'path';
@@ -7,7 +8,7 @@ import { defineConfig } from 'vite';
 export default defineConfig(({ mode }) => {
   console.log({ mode });
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [tanstackRouter({ target: 'react', autoCodeSplitting: true }), react(), tailwindcss()],
     resolve: {
       alias: { '@': resolve(__dirname, 'src') },
     },
@@ -19,6 +20,10 @@ export default defineConfig(({ mode }) => {
           target: 'http://localhost:1323',
           changeOrigin: true,
           // rewrite: (path) => path.replace(/^\/api/, '')
+        },
+        '/login': {
+          target: 'http://localhost:1323',
+          changeOrigin: true,
         },
       },
     },

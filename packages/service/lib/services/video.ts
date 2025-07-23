@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import queryString from 'query-string';
+// import queryString from 'query-string';
 import { SubmitVideoDTO, VideoDTO } from '../dtos';
 import { Video } from '../interfaces';
 import { ActressService } from './actress';
@@ -29,15 +29,15 @@ export class VideoService {
     };
   }
 
-  list = async (params: { tags?: string[] }) => {
-    const { data } = await this.#axios.get<VideoDTO[]>('/videos', {
-      params,
-      paramsSerializer: (params) => queryString.stringify(params),
-    });
-    return data.map(VideoService.converter);
-  };
+  // list = async (params: { tags?: string[] }) => {
+  //   const { data } = await this.#axios.get<VideoDTO[]>('/videos', {
+  //     params,
+  //     paramsSerializer: (params) => queryString.stringify(params),
+  //   });
+  //   return data.map(VideoService.converter);
+  // };
 
-  paginate = async (req: { tags?: string[]; page?: number; size?: number }) => {
+  paginate = async (req: { page?: number; size?: number; search?: string; tags?: string[] }) => {
     const { data } = await this.#axios.post<{ data: VideoDTO[]; total: number }>('/videos/paginate', req);
     return { data: data.data.map(VideoService.converter), total: data.total };
   };
