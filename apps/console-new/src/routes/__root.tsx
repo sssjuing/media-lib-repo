@@ -4,6 +4,7 @@ import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-r
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { AntdLayout } from '@repo/antd-layout';
 import NotFound from '@/components/NotFound';
+import { usePathname } from '@/hooks';
 import getRouteData, { Route as UtilsRoute, flatRoutes } from '@/utils/getRouteData';
 import logo from '@/assets/logo.svg';
 
@@ -19,13 +20,13 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   const router = useRouter();
+  const pathname = usePathname();
+  const navigate = Route.useNavigate();
 
   const routeData = useMemo(() => {
     const routes = flatRoutes(router.options.routeTree?.children as unknown as UtilsRoute[]);
     return [{ path: '/', name: '首页', reachable: true, children: getRouteData(routes) }];
   }, [router]);
-
-  console.log(routeData);
 
   return (
     <>
@@ -36,9 +37,9 @@ function RootComponent() {
           logo={logo}
           siderWidth={230}
           title="媒体库"
-          // pathname={pathname}
+          pathname={pathname}
           routeData={routeData}
-          // onMenuClick={({ key }) => pathname !== key && navigate(key)}
+          onMenuClick={({ key }) => pathname !== key && navigate({ to: key })}
           // onLogoClick={() => navigate('/')}
           // currentUser={{
           //   id: 12,

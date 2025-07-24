@@ -8,31 +8,20 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as HomeRouteImport } from './routes/home'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VideosIndexRouteImport } from './routes/videos/index'
 import { Route as ActressesIndexRouteImport } from './routes/actresses/index'
+import { Route as VideosCreateRouteImport } from './routes/videos/create'
 import { Route as ActressesCreateRouteImport } from './routes/actresses/create'
-import { Route as VideosPathlessLayoutRouteRouteImport } from './routes/videos/_pathlessLayout/route'
-import { Route as VideosPathlessLayoutIndexRouteImport } from './routes/videos/_pathlessLayout/index'
-import { Route as VideosPathlessLayoutCreateRouteImport } from './routes/videos/_pathlessLayout/create'
 import { Route as VideosVideoIdEditRouteImport } from './routes/videos/$videoId/edit'
 import { Route as ActressesActressIdVideosRouteImport } from './routes/actresses/$actressId/videos'
 import { Route as ActressesActressIdEditRouteImport } from './routes/actresses/$actressId/edit'
-import { Route as VideosVideoIdABCDRouteImport } from './routes/videos/$videoId/a/b/c/d'
 
-const VideosRouteImport = createFileRoute('/videos')()
-
-const VideosRoute = VideosRouteImport.update({
-  id: '/videos',
-  path: '/videos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -40,9 +29,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideosIndexRoute = VideosIndexRouteImport.update({
+  id: '/videos/',
+  path: '/videos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActressesIndexRoute = ActressesIndexRouteImport.update({
   id: '/actresses/',
   path: '/actresses/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosCreateRoute = VideosCreateRouteImport.update({
+  id: '/videos/create',
+  path: '/videos/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActressesCreateRoute = ActressesCreateRouteImport.update({
@@ -50,27 +49,10 @@ const ActressesCreateRoute = ActressesCreateRouteImport.update({
   path: '/actresses/create',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VideosPathlessLayoutRouteRoute =
-  VideosPathlessLayoutRouteRouteImport.update({
-    id: '/_pathlessLayout',
-    getParentRoute: () => VideosRoute,
-  } as any)
-const VideosPathlessLayoutIndexRoute =
-  VideosPathlessLayoutIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => VideosPathlessLayoutRouteRoute,
-  } as any)
-const VideosPathlessLayoutCreateRoute =
-  VideosPathlessLayoutCreateRouteImport.update({
-    id: '/create',
-    path: '/create',
-    getParentRoute: () => VideosPathlessLayoutRouteRoute,
-  } as any)
 const VideosVideoIdEditRoute = VideosVideoIdEditRouteImport.update({
-  id: '/$videoId/edit',
-  path: '/$videoId/edit',
-  getParentRoute: () => VideosRoute,
+  id: '/videos/$videoId/edit',
+  path: '/videos/$videoId/edit',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ActressesActressIdVideosRoute =
   ActressesActressIdVideosRouteImport.update({
@@ -83,118 +65,96 @@ const ActressesActressIdEditRoute = ActressesActressIdEditRouteImport.update({
   path: '/actresses/$actressId/edit',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VideosVideoIdABCDRoute = VideosVideoIdABCDRouteImport.update({
-  id: '/$videoId/a/b/c/d',
-  path: '/$videoId/a/b/c/d',
-  getParentRoute: () => VideosRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/videos': typeof VideosPathlessLayoutRouteRouteWithChildren
+  '/home': typeof HomeRoute
   '/actresses/create': typeof ActressesCreateRoute
+  '/videos/create': typeof VideosCreateRoute
   '/actresses': typeof ActressesIndexRoute
+  '/videos': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
   '/videos/$videoId/edit': typeof VideosVideoIdEditRoute
-  '/videos/create': typeof VideosPathlessLayoutCreateRoute
-  '/videos/': typeof VideosPathlessLayoutIndexRoute
-  '/videos/$videoId/a/b/c/d': typeof VideosVideoIdABCDRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/videos': typeof VideosPathlessLayoutIndexRoute
+  '/home': typeof HomeRoute
   '/actresses/create': typeof ActressesCreateRoute
+  '/videos/create': typeof VideosCreateRoute
   '/actresses': typeof ActressesIndexRoute
+  '/videos': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
   '/videos/$videoId/edit': typeof VideosVideoIdEditRoute
-  '/videos/create': typeof VideosPathlessLayoutCreateRoute
-  '/videos/$videoId/a/b/c/d': typeof VideosVideoIdABCDRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/videos': typeof VideosRouteWithChildren
-  '/videos/_pathlessLayout': typeof VideosPathlessLayoutRouteRouteWithChildren
+  '/home': typeof HomeRoute
   '/actresses/create': typeof ActressesCreateRoute
+  '/videos/create': typeof VideosCreateRoute
   '/actresses/': typeof ActressesIndexRoute
+  '/videos/': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
   '/videos/$videoId/edit': typeof VideosVideoIdEditRoute
-  '/videos/_pathlessLayout/create': typeof VideosPathlessLayoutCreateRoute
-  '/videos/_pathlessLayout/': typeof VideosPathlessLayoutIndexRoute
-  '/videos/$videoId/a/b/c/d': typeof VideosVideoIdABCDRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
-    | '/videos'
+    | '/home'
     | '/actresses/create'
+    | '/videos/create'
     | '/actresses'
+    | '/videos'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
     | '/videos/$videoId/edit'
-    | '/videos/create'
-    | '/videos/'
-    | '/videos/$videoId/a/b/c/d'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
-    | '/videos'
+    | '/home'
     | '/actresses/create'
+    | '/videos/create'
     | '/actresses'
+    | '/videos'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
     | '/videos/$videoId/edit'
-    | '/videos/create'
-    | '/videos/$videoId/a/b/c/d'
   id:
     | '__root__'
     | '/'
-    | '/about'
-    | '/videos'
-    | '/videos/_pathlessLayout'
+    | '/home'
     | '/actresses/create'
+    | '/videos/create'
     | '/actresses/'
+    | '/videos/'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
     | '/videos/$videoId/edit'
-    | '/videos/_pathlessLayout/create'
-    | '/videos/_pathlessLayout/'
-    | '/videos/$videoId/a/b/c/d'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  VideosRoute: typeof VideosRouteWithChildren
+  HomeRoute: typeof HomeRoute
   ActressesCreateRoute: typeof ActressesCreateRoute
+  VideosCreateRoute: typeof VideosCreateRoute
   ActressesIndexRoute: typeof ActressesIndexRoute
+  VideosIndexRoute: typeof VideosIndexRoute
   ActressesActressIdEditRoute: typeof ActressesActressIdEditRoute
   ActressesActressIdVideosRoute: typeof ActressesActressIdVideosRoute
+  VideosVideoIdEditRoute: typeof VideosVideoIdEditRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/videos': {
-      id: '/videos'
-      path: '/videos'
-      fullPath: '/videos'
-      preLoaderRoute: typeof VideosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -204,11 +164,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/videos/': {
+      id: '/videos/'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/actresses/': {
       id: '/actresses/'
       path: '/actresses'
       fullPath: '/actresses'
       preLoaderRoute: typeof ActressesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos/create': {
+      id: '/videos/create'
+      path: '/videos/create'
+      fullPath: '/videos/create'
+      preLoaderRoute: typeof VideosCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/actresses/create': {
@@ -218,33 +192,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActressesCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/videos/_pathlessLayout': {
-      id: '/videos/_pathlessLayout'
-      path: '/videos'
-      fullPath: '/videos'
-      preLoaderRoute: typeof VideosPathlessLayoutRouteRouteImport
-      parentRoute: typeof VideosRoute
-    }
-    '/videos/_pathlessLayout/': {
-      id: '/videos/_pathlessLayout/'
-      path: '/'
-      fullPath: '/videos/'
-      preLoaderRoute: typeof VideosPathlessLayoutIndexRouteImport
-      parentRoute: typeof VideosPathlessLayoutRouteRoute
-    }
-    '/videos/_pathlessLayout/create': {
-      id: '/videos/_pathlessLayout/create'
-      path: '/create'
-      fullPath: '/videos/create'
-      preLoaderRoute: typeof VideosPathlessLayoutCreateRouteImport
-      parentRoute: typeof VideosPathlessLayoutRouteRoute
-    }
     '/videos/$videoId/edit': {
       id: '/videos/$videoId/edit'
-      path: '/$videoId/edit'
+      path: '/videos/$videoId/edit'
       fullPath: '/videos/$videoId/edit'
       preLoaderRoute: typeof VideosVideoIdEditRouteImport
-      parentRoute: typeof VideosRoute
+      parentRoute: typeof rootRouteImport
     }
     '/actresses/$actressId/videos': {
       id: '/actresses/$actressId/videos'
@@ -260,55 +213,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActressesActressIdEditRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/videos/$videoId/a/b/c/d': {
-      id: '/videos/$videoId/a/b/c/d'
-      path: '/$videoId/a/b/c/d'
-      fullPath: '/videos/$videoId/a/b/c/d'
-      preLoaderRoute: typeof VideosVideoIdABCDRouteImport
-      parentRoute: typeof VideosRoute
-    }
   }
 }
-
-interface VideosPathlessLayoutRouteRouteChildren {
-  VideosPathlessLayoutCreateRoute: typeof VideosPathlessLayoutCreateRoute
-  VideosPathlessLayoutIndexRoute: typeof VideosPathlessLayoutIndexRoute
-}
-
-const VideosPathlessLayoutRouteRouteChildren: VideosPathlessLayoutRouteRouteChildren =
-  {
-    VideosPathlessLayoutCreateRoute: VideosPathlessLayoutCreateRoute,
-    VideosPathlessLayoutIndexRoute: VideosPathlessLayoutIndexRoute,
-  }
-
-const VideosPathlessLayoutRouteRouteWithChildren =
-  VideosPathlessLayoutRouteRoute._addFileChildren(
-    VideosPathlessLayoutRouteRouteChildren,
-  )
-
-interface VideosRouteChildren {
-  VideosPathlessLayoutRouteRoute: typeof VideosPathlessLayoutRouteRouteWithChildren
-  VideosVideoIdEditRoute: typeof VideosVideoIdEditRoute
-  VideosVideoIdABCDRoute: typeof VideosVideoIdABCDRoute
-}
-
-const VideosRouteChildren: VideosRouteChildren = {
-  VideosPathlessLayoutRouteRoute: VideosPathlessLayoutRouteRouteWithChildren,
-  VideosVideoIdEditRoute: VideosVideoIdEditRoute,
-  VideosVideoIdABCDRoute: VideosVideoIdABCDRoute,
-}
-
-const VideosRouteWithChildren =
-  VideosRoute._addFileChildren(VideosRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  VideosRoute: VideosRouteWithChildren,
+  HomeRoute: HomeRoute,
   ActressesCreateRoute: ActressesCreateRoute,
+  VideosCreateRoute: VideosCreateRoute,
   ActressesIndexRoute: ActressesIndexRoute,
+  VideosIndexRoute: VideosIndexRoute,
   ActressesActressIdEditRoute: ActressesActressIdEditRoute,
   ActressesActressIdVideosRoute: ActressesActressIdVideosRoute,
+  VideosVideoIdEditRoute: VideosVideoIdEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

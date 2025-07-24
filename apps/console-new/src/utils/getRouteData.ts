@@ -60,11 +60,12 @@ export default function getRouteData(routes: Route[] = []): RouteItem[] {
     let currentNode = root;
     for (let i = 0; i < parts.length; i++) {
       currentPath = currentPath ? `${currentPath}/${parts[i]}` : parts[i];
-      const target = currentNode.children?.find((r) => r.path === parts[i]);
+      const target = currentNode.children?.find((r) => r.path === parts[i].replace('$', ':'));
       if (!target) {
         if (i === parts.length - 1) {
           const item: RouteItem = {
-            path: currentPath,
+            path: currentPath.replaceAll('$', ':'),
+            reachable: true,
             ...route.options.staticData,
           };
           currentNode.children = currentNode.children ? [...currentNode.children, item] : [item];
