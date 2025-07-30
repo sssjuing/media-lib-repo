@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
     },
     base: '/console',
     server: {
-      port: 8091,
+      // port: 8091,
       proxy: {
         '/api': {
           target: 'http://localhost:1323',

@@ -7,7 +7,7 @@ export type Route = {
   path: string;
   fullPath: string;
   options: {
-    staticData: StaticDataRouteOption;
+    staticData?: StaticDataRouteOption;
     component?: Component;
   };
   children?: Route[];
@@ -36,11 +36,9 @@ export function flatRoutes(routes: Route[] = []): Route[] {
     //   result.push({ id: route.id, path: route.path, fullPath: route.fullPath, options: route.options });
     // }
     if (route.children) {
-      route.children
-        .sort((a, b) => (a.options.staticData.weight || 0) - (b.options.staticData.weight || 0))
-        .forEach((i) => {
-          queue.unshift({ id: i.id, path: i.path, fullPath: i.fullPath, options: i.options, children: i.children });
-        });
+      route.children.forEach((i) => {
+        queue.unshift({ id: i.id, path: i.path, fullPath: i.fullPath, options: i.options, children: i.children });
+      });
     } else {
       result.push({ id: route.id, path: route.path, fullPath: route.fullPath, options: route.options });
     }
@@ -55,7 +53,12 @@ export default function getRouteData(routes: Route[] = []): RouteItem[] {
       return { ...i, tmp: { cleanPath, pathLen: cleanPath.split('/').length } };
     })
     .filter((i) => i.tmp.cleanPath !== '')
-    .sort((a, b) => a.tmp.pathLen - b.tmp.pathLen)
+    .sort((a, b) => {
+      if (a.tmp.pathLen !== b.tmp.pathLen) {
+        return a.tmp.pathLen - b.tmp.pathLen;
+      }
+      return (a.options.staticData?.weight ?? 1_000) - (b.options.staticData?.weight ?? 1_000);
+    })
     .map(({ tmp, ...rest }) => ({ ...rest, fullPath: tmp.cleanPath }));
   const root = { path: '/', children: [] } as unknown as RouteItem;
   for (const route of sortedRoutes) {

@@ -16,7 +16,7 @@ const AntdLayout: FC<PropsWithChildren<AntdLayoutProps>> = (props) => {
   const { topMenu } = useLayout();
 
   const layout = (
-    <Layout className="h-lvh">
+    <Layout className="min-h-screen!">
       {!topMenu && <SiderMenu className="z-10 shadow-[2px_0_6px_rgba(0,21,41,0.35)]" />}
       <Layout>
         <Header {...props} />

@@ -12,9 +12,30 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ResourceIndexRouteImport } from './routes/resource/index'
-import { Route as ResourceSupplierIndexRouteImport } from './routes/resource/supplier/index'
-import { Route as ResourceSupplierOutsideRouteImport } from './routes/resource/supplier/outside'
-import { Route as ResourceSupplierInsideRouteImport } from './routes/resource/supplier/inside'
+import { Route as ResourceUsageIndexRouteImport } from './routes/resource-usage/index'
+import { Route as PlansIndexRouteImport } from './routes/plans/index'
+import { Route as ModelsIndexRouteImport } from './routes/models/index'
+import { Route as ResourceTeamsRouteImport } from './routes/resource/teams'
+import { Route as ResourceProductsRouteImport } from './routes/resource/products'
+import { Route as ResourceProductCapacityRouteImport } from './routes/resource/product-capacity'
+import { Route as ResourceInventoriesRouteImport } from './routes/resource/inventories'
+import { Route as ResourceFactoriesRouteImport } from './routes/resource/factories'
+import { Route as PlansTemplatesRouteImport } from './routes/plans/templates'
+import { Route as PlansTasksRouteImport } from './routes/plans/tasks'
+import { Route as ResourceSuppliersIndexRouteImport } from './routes/resource/suppliers/index'
+import { Route as ResourceLocationIndexRouteImport } from './routes/resource/location/index'
+import { Route as ResourceEquipmentIndexRouteImport } from './routes/resource/equipment/index'
+import { Route as ResourceSuppliersOutsideRouteImport } from './routes/resource/suppliers/outside'
+import { Route as ResourceSuppliersInsideRouteImport } from './routes/resource/suppliers/inside'
+import { Route as ResourceLocationTracksRouteImport } from './routes/resource/location/tracks'
+import { Route as ResourceLocationTestStationsRouteImport } from './routes/resource/location/test-stations'
+import { Route as ResourceLocationStorageAreasRouteImport } from './routes/resource/location/storage-areas'
+import { Route as ResourceLocationRecyclingAreasRouteImport } from './routes/resource/location/recycling-areas'
+import { Route as ResourceLocationLaunchStationsRouteImport } from './routes/resource/location/launch-stations'
+import { Route as ResourceLocationEquipmentStationsRouteImport } from './routes/resource/location/equipment-stations'
+import { Route as ResourceLocationAssemblyStationsRouteImport } from './routes/resource/location/assembly-stations'
+import { Route as ResourceEquipmentTemplatesRouteImport } from './routes/resource/equipment/templates'
+import { Route as ResourceEquipmentEquipmentRouteImport } from './routes/resource/equipment/equipment'
 
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
@@ -31,81 +52,342 @@ const ResourceIndexRoute = ResourceIndexRouteImport.update({
   path: '/resource/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResourceSupplierIndexRoute = ResourceSupplierIndexRouteImport.update({
-  id: '/resource/supplier/',
-  path: '/resource/supplier/',
+const ResourceUsageIndexRoute = ResourceUsageIndexRouteImport.update({
+  id: '/resource-usage/',
+  path: '/resource-usage/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResourceSupplierOutsideRoute = ResourceSupplierOutsideRouteImport.update({
-  id: '/resource/supplier/outside',
-  path: '/resource/supplier/outside',
+const PlansIndexRoute = PlansIndexRouteImport.update({
+  id: '/plans/',
+  path: '/plans/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResourceSupplierInsideRoute = ResourceSupplierInsideRouteImport.update({
-  id: '/resource/supplier/inside',
-  path: '/resource/supplier/inside',
+const ModelsIndexRoute = ModelsIndexRouteImport.update({
+  id: '/models/',
+  path: '/models/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourceTeamsRoute = ResourceTeamsRouteImport.update({
+  id: '/resource/teams',
+  path: '/resource/teams',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceProductsRoute = ResourceProductsRouteImport.update({
+  id: '/resource/products',
+  path: '/resource/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceProductCapacityRoute = ResourceProductCapacityRouteImport.update({
+  id: '/resource/product-capacity',
+  path: '/resource/product-capacity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceInventoriesRoute = ResourceInventoriesRouteImport.update({
+  id: '/resource/inventories',
+  path: '/resource/inventories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceFactoriesRoute = ResourceFactoriesRouteImport.update({
+  id: '/resource/factories',
+  path: '/resource/factories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlansTemplatesRoute = PlansTemplatesRouteImport.update({
+  id: '/plans/templates',
+  path: '/plans/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlansTasksRoute = PlansTasksRouteImport.update({
+  id: '/plans/tasks',
+  path: '/plans/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceSuppliersIndexRoute = ResourceSuppliersIndexRouteImport.update({
+  id: '/resource/suppliers/',
+  path: '/resource/suppliers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceLocationIndexRoute = ResourceLocationIndexRouteImport.update({
+  id: '/resource/location/',
+  path: '/resource/location/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceEquipmentIndexRoute = ResourceEquipmentIndexRouteImport.update({
+  id: '/resource/equipment/',
+  path: '/resource/equipment/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceSuppliersOutsideRoute =
+  ResourceSuppliersOutsideRouteImport.update({
+    id: '/resource/suppliers/outside',
+    path: '/resource/suppliers/outside',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceSuppliersInsideRoute = ResourceSuppliersInsideRouteImport.update({
+  id: '/resource/suppliers/inside',
+  path: '/resource/suppliers/inside',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceLocationTracksRoute = ResourceLocationTracksRouteImport.update({
+  id: '/resource/location/tracks',
+  path: '/resource/location/tracks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceLocationTestStationsRoute =
+  ResourceLocationTestStationsRouteImport.update({
+    id: '/resource/location/test-stations',
+    path: '/resource/location/test-stations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceLocationStorageAreasRoute =
+  ResourceLocationStorageAreasRouteImport.update({
+    id: '/resource/location/storage-areas',
+    path: '/resource/location/storage-areas',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceLocationRecyclingAreasRoute =
+  ResourceLocationRecyclingAreasRouteImport.update({
+    id: '/resource/location/recycling-areas',
+    path: '/resource/location/recycling-areas',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceLocationLaunchStationsRoute =
+  ResourceLocationLaunchStationsRouteImport.update({
+    id: '/resource/location/launch-stations',
+    path: '/resource/location/launch-stations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceLocationEquipmentStationsRoute =
+  ResourceLocationEquipmentStationsRouteImport.update({
+    id: '/resource/location/equipment-stations',
+    path: '/resource/location/equipment-stations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceLocationAssemblyStationsRoute =
+  ResourceLocationAssemblyStationsRouteImport.update({
+    id: '/resource/location/assembly-stations',
+    path: '/resource/location/assembly-stations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceEquipmentTemplatesRoute =
+  ResourceEquipmentTemplatesRouteImport.update({
+    id: '/resource/equipment/templates',
+    path: '/resource/equipment/templates',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ResourceEquipmentEquipmentRoute =
+  ResourceEquipmentEquipmentRouteImport.update({
+    id: '/resource/equipment/equipment',
+    path: '/resource/equipment/equipment',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/plans/tasks': typeof PlansTasksRoute
+  '/plans/templates': typeof PlansTemplatesRoute
+  '/resource/factories': typeof ResourceFactoriesRoute
+  '/resource/inventories': typeof ResourceInventoriesRoute
+  '/resource/product-capacity': typeof ResourceProductCapacityRoute
+  '/resource/products': typeof ResourceProductsRoute
+  '/resource/teams': typeof ResourceTeamsRoute
+  '/models': typeof ModelsIndexRoute
+  '/plans': typeof PlansIndexRoute
+  '/resource-usage': typeof ResourceUsageIndexRoute
   '/resource': typeof ResourceIndexRoute
-  '/resource/supplier/inside': typeof ResourceSupplierInsideRoute
-  '/resource/supplier/outside': typeof ResourceSupplierOutsideRoute
-  '/resource/supplier': typeof ResourceSupplierIndexRoute
+  '/resource/equipment/equipment': typeof ResourceEquipmentEquipmentRoute
+  '/resource/equipment/templates': typeof ResourceEquipmentTemplatesRoute
+  '/resource/location/assembly-stations': typeof ResourceLocationAssemblyStationsRoute
+  '/resource/location/equipment-stations': typeof ResourceLocationEquipmentStationsRoute
+  '/resource/location/launch-stations': typeof ResourceLocationLaunchStationsRoute
+  '/resource/location/recycling-areas': typeof ResourceLocationRecyclingAreasRoute
+  '/resource/location/storage-areas': typeof ResourceLocationStorageAreasRoute
+  '/resource/location/test-stations': typeof ResourceLocationTestStationsRoute
+  '/resource/location/tracks': typeof ResourceLocationTracksRoute
+  '/resource/suppliers/inside': typeof ResourceSuppliersInsideRoute
+  '/resource/suppliers/outside': typeof ResourceSuppliersOutsideRoute
+  '/resource/equipment': typeof ResourceEquipmentIndexRoute
+  '/resource/location': typeof ResourceLocationIndexRoute
+  '/resource/suppliers': typeof ResourceSuppliersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/plans/tasks': typeof PlansTasksRoute
+  '/plans/templates': typeof PlansTemplatesRoute
+  '/resource/factories': typeof ResourceFactoriesRoute
+  '/resource/inventories': typeof ResourceInventoriesRoute
+  '/resource/product-capacity': typeof ResourceProductCapacityRoute
+  '/resource/products': typeof ResourceProductsRoute
+  '/resource/teams': typeof ResourceTeamsRoute
+  '/models': typeof ModelsIndexRoute
+  '/plans': typeof PlansIndexRoute
+  '/resource-usage': typeof ResourceUsageIndexRoute
   '/resource': typeof ResourceIndexRoute
-  '/resource/supplier/inside': typeof ResourceSupplierInsideRoute
-  '/resource/supplier/outside': typeof ResourceSupplierOutsideRoute
-  '/resource/supplier': typeof ResourceSupplierIndexRoute
+  '/resource/equipment/equipment': typeof ResourceEquipmentEquipmentRoute
+  '/resource/equipment/templates': typeof ResourceEquipmentTemplatesRoute
+  '/resource/location/assembly-stations': typeof ResourceLocationAssemblyStationsRoute
+  '/resource/location/equipment-stations': typeof ResourceLocationEquipmentStationsRoute
+  '/resource/location/launch-stations': typeof ResourceLocationLaunchStationsRoute
+  '/resource/location/recycling-areas': typeof ResourceLocationRecyclingAreasRoute
+  '/resource/location/storage-areas': typeof ResourceLocationStorageAreasRoute
+  '/resource/location/test-stations': typeof ResourceLocationTestStationsRoute
+  '/resource/location/tracks': typeof ResourceLocationTracksRoute
+  '/resource/suppliers/inside': typeof ResourceSuppliersInsideRoute
+  '/resource/suppliers/outside': typeof ResourceSuppliersOutsideRoute
+  '/resource/equipment': typeof ResourceEquipmentIndexRoute
+  '/resource/location': typeof ResourceLocationIndexRoute
+  '/resource/suppliers': typeof ResourceSuppliersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/plans/tasks': typeof PlansTasksRoute
+  '/plans/templates': typeof PlansTemplatesRoute
+  '/resource/factories': typeof ResourceFactoriesRoute
+  '/resource/inventories': typeof ResourceInventoriesRoute
+  '/resource/product-capacity': typeof ResourceProductCapacityRoute
+  '/resource/products': typeof ResourceProductsRoute
+  '/resource/teams': typeof ResourceTeamsRoute
+  '/models/': typeof ModelsIndexRoute
+  '/plans/': typeof PlansIndexRoute
+  '/resource-usage/': typeof ResourceUsageIndexRoute
   '/resource/': typeof ResourceIndexRoute
-  '/resource/supplier/inside': typeof ResourceSupplierInsideRoute
-  '/resource/supplier/outside': typeof ResourceSupplierOutsideRoute
-  '/resource/supplier/': typeof ResourceSupplierIndexRoute
+  '/resource/equipment/equipment': typeof ResourceEquipmentEquipmentRoute
+  '/resource/equipment/templates': typeof ResourceEquipmentTemplatesRoute
+  '/resource/location/assembly-stations': typeof ResourceLocationAssemblyStationsRoute
+  '/resource/location/equipment-stations': typeof ResourceLocationEquipmentStationsRoute
+  '/resource/location/launch-stations': typeof ResourceLocationLaunchStationsRoute
+  '/resource/location/recycling-areas': typeof ResourceLocationRecyclingAreasRoute
+  '/resource/location/storage-areas': typeof ResourceLocationStorageAreasRoute
+  '/resource/location/test-stations': typeof ResourceLocationTestStationsRoute
+  '/resource/location/tracks': typeof ResourceLocationTracksRoute
+  '/resource/suppliers/inside': typeof ResourceSuppliersInsideRoute
+  '/resource/suppliers/outside': typeof ResourceSuppliersOutsideRoute
+  '/resource/equipment/': typeof ResourceEquipmentIndexRoute
+  '/resource/location/': typeof ResourceLocationIndexRoute
+  '/resource/suppliers/': typeof ResourceSuppliersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/home'
+    | '/plans/tasks'
+    | '/plans/templates'
+    | '/resource/factories'
+    | '/resource/inventories'
+    | '/resource/product-capacity'
+    | '/resource/products'
+    | '/resource/teams'
+    | '/models'
+    | '/plans'
+    | '/resource-usage'
     | '/resource'
-    | '/resource/supplier/inside'
-    | '/resource/supplier/outside'
-    | '/resource/supplier'
+    | '/resource/equipment/equipment'
+    | '/resource/equipment/templates'
+    | '/resource/location/assembly-stations'
+    | '/resource/location/equipment-stations'
+    | '/resource/location/launch-stations'
+    | '/resource/location/recycling-areas'
+    | '/resource/location/storage-areas'
+    | '/resource/location/test-stations'
+    | '/resource/location/tracks'
+    | '/resource/suppliers/inside'
+    | '/resource/suppliers/outside'
+    | '/resource/equipment'
+    | '/resource/location'
+    | '/resource/suppliers'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/home'
+    | '/plans/tasks'
+    | '/plans/templates'
+    | '/resource/factories'
+    | '/resource/inventories'
+    | '/resource/product-capacity'
+    | '/resource/products'
+    | '/resource/teams'
+    | '/models'
+    | '/plans'
+    | '/resource-usage'
     | '/resource'
-    | '/resource/supplier/inside'
-    | '/resource/supplier/outside'
-    | '/resource/supplier'
+    | '/resource/equipment/equipment'
+    | '/resource/equipment/templates'
+    | '/resource/location/assembly-stations'
+    | '/resource/location/equipment-stations'
+    | '/resource/location/launch-stations'
+    | '/resource/location/recycling-areas'
+    | '/resource/location/storage-areas'
+    | '/resource/location/test-stations'
+    | '/resource/location/tracks'
+    | '/resource/suppliers/inside'
+    | '/resource/suppliers/outside'
+    | '/resource/equipment'
+    | '/resource/location'
+    | '/resource/suppliers'
   id:
     | '__root__'
     | '/'
     | '/home'
+    | '/plans/tasks'
+    | '/plans/templates'
+    | '/resource/factories'
+    | '/resource/inventories'
+    | '/resource/product-capacity'
+    | '/resource/products'
+    | '/resource/teams'
+    | '/models/'
+    | '/plans/'
+    | '/resource-usage/'
     | '/resource/'
-    | '/resource/supplier/inside'
-    | '/resource/supplier/outside'
-    | '/resource/supplier/'
+    | '/resource/equipment/equipment'
+    | '/resource/equipment/templates'
+    | '/resource/location/assembly-stations'
+    | '/resource/location/equipment-stations'
+    | '/resource/location/launch-stations'
+    | '/resource/location/recycling-areas'
+    | '/resource/location/storage-areas'
+    | '/resource/location/test-stations'
+    | '/resource/location/tracks'
+    | '/resource/suppliers/inside'
+    | '/resource/suppliers/outside'
+    | '/resource/equipment/'
+    | '/resource/location/'
+    | '/resource/suppliers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
+  PlansTasksRoute: typeof PlansTasksRoute
+  PlansTemplatesRoute: typeof PlansTemplatesRoute
+  ResourceFactoriesRoute: typeof ResourceFactoriesRoute
+  ResourceInventoriesRoute: typeof ResourceInventoriesRoute
+  ResourceProductCapacityRoute: typeof ResourceProductCapacityRoute
+  ResourceProductsRoute: typeof ResourceProductsRoute
+  ResourceTeamsRoute: typeof ResourceTeamsRoute
+  ModelsIndexRoute: typeof ModelsIndexRoute
+  PlansIndexRoute: typeof PlansIndexRoute
+  ResourceUsageIndexRoute: typeof ResourceUsageIndexRoute
   ResourceIndexRoute: typeof ResourceIndexRoute
-  ResourceSupplierInsideRoute: typeof ResourceSupplierInsideRoute
-  ResourceSupplierOutsideRoute: typeof ResourceSupplierOutsideRoute
-  ResourceSupplierIndexRoute: typeof ResourceSupplierIndexRoute
+  ResourceEquipmentEquipmentRoute: typeof ResourceEquipmentEquipmentRoute
+  ResourceEquipmentTemplatesRoute: typeof ResourceEquipmentTemplatesRoute
+  ResourceLocationAssemblyStationsRoute: typeof ResourceLocationAssemblyStationsRoute
+  ResourceLocationEquipmentStationsRoute: typeof ResourceLocationEquipmentStationsRoute
+  ResourceLocationLaunchStationsRoute: typeof ResourceLocationLaunchStationsRoute
+  ResourceLocationRecyclingAreasRoute: typeof ResourceLocationRecyclingAreasRoute
+  ResourceLocationStorageAreasRoute: typeof ResourceLocationStorageAreasRoute
+  ResourceLocationTestStationsRoute: typeof ResourceLocationTestStationsRoute
+  ResourceLocationTracksRoute: typeof ResourceLocationTracksRoute
+  ResourceSuppliersInsideRoute: typeof ResourceSuppliersInsideRoute
+  ResourceSuppliersOutsideRoute: typeof ResourceSuppliersOutsideRoute
+  ResourceEquipmentIndexRoute: typeof ResourceEquipmentIndexRoute
+  ResourceLocationIndexRoute: typeof ResourceLocationIndexRoute
+  ResourceSuppliersIndexRoute: typeof ResourceSuppliersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -131,25 +413,172 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourceIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/resource/supplier/': {
-      id: '/resource/supplier/'
-      path: '/resource/supplier'
-      fullPath: '/resource/supplier'
-      preLoaderRoute: typeof ResourceSupplierIndexRouteImport
+    '/resource-usage/': {
+      id: '/resource-usage/'
+      path: '/resource-usage'
+      fullPath: '/resource-usage'
+      preLoaderRoute: typeof ResourceUsageIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/resource/supplier/outside': {
-      id: '/resource/supplier/outside'
-      path: '/resource/supplier/outside'
-      fullPath: '/resource/supplier/outside'
-      preLoaderRoute: typeof ResourceSupplierOutsideRouteImport
+    '/plans/': {
+      id: '/plans/'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/resource/supplier/inside': {
-      id: '/resource/supplier/inside'
-      path: '/resource/supplier/inside'
-      fullPath: '/resource/supplier/inside'
-      preLoaderRoute: typeof ResourceSupplierInsideRouteImport
+    '/models/': {
+      id: '/models/'
+      path: '/models'
+      fullPath: '/models'
+      preLoaderRoute: typeof ModelsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/teams': {
+      id: '/resource/teams'
+      path: '/resource/teams'
+      fullPath: '/resource/teams'
+      preLoaderRoute: typeof ResourceTeamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/products': {
+      id: '/resource/products'
+      path: '/resource/products'
+      fullPath: '/resource/products'
+      preLoaderRoute: typeof ResourceProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/product-capacity': {
+      id: '/resource/product-capacity'
+      path: '/resource/product-capacity'
+      fullPath: '/resource/product-capacity'
+      preLoaderRoute: typeof ResourceProductCapacityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/inventories': {
+      id: '/resource/inventories'
+      path: '/resource/inventories'
+      fullPath: '/resource/inventories'
+      preLoaderRoute: typeof ResourceInventoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/factories': {
+      id: '/resource/factories'
+      path: '/resource/factories'
+      fullPath: '/resource/factories'
+      preLoaderRoute: typeof ResourceFactoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans/templates': {
+      id: '/plans/templates'
+      path: '/plans/templates'
+      fullPath: '/plans/templates'
+      preLoaderRoute: typeof PlansTemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans/tasks': {
+      id: '/plans/tasks'
+      path: '/plans/tasks'
+      fullPath: '/plans/tasks'
+      preLoaderRoute: typeof PlansTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/suppliers/': {
+      id: '/resource/suppliers/'
+      path: '/resource/suppliers'
+      fullPath: '/resource/suppliers'
+      preLoaderRoute: typeof ResourceSuppliersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/': {
+      id: '/resource/location/'
+      path: '/resource/location'
+      fullPath: '/resource/location'
+      preLoaderRoute: typeof ResourceLocationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/equipment/': {
+      id: '/resource/equipment/'
+      path: '/resource/equipment'
+      fullPath: '/resource/equipment'
+      preLoaderRoute: typeof ResourceEquipmentIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/suppliers/outside': {
+      id: '/resource/suppliers/outside'
+      path: '/resource/suppliers/outside'
+      fullPath: '/resource/suppliers/outside'
+      preLoaderRoute: typeof ResourceSuppliersOutsideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/suppliers/inside': {
+      id: '/resource/suppliers/inside'
+      path: '/resource/suppliers/inside'
+      fullPath: '/resource/suppliers/inside'
+      preLoaderRoute: typeof ResourceSuppliersInsideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/tracks': {
+      id: '/resource/location/tracks'
+      path: '/resource/location/tracks'
+      fullPath: '/resource/location/tracks'
+      preLoaderRoute: typeof ResourceLocationTracksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/test-stations': {
+      id: '/resource/location/test-stations'
+      path: '/resource/location/test-stations'
+      fullPath: '/resource/location/test-stations'
+      preLoaderRoute: typeof ResourceLocationTestStationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/storage-areas': {
+      id: '/resource/location/storage-areas'
+      path: '/resource/location/storage-areas'
+      fullPath: '/resource/location/storage-areas'
+      preLoaderRoute: typeof ResourceLocationStorageAreasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/recycling-areas': {
+      id: '/resource/location/recycling-areas'
+      path: '/resource/location/recycling-areas'
+      fullPath: '/resource/location/recycling-areas'
+      preLoaderRoute: typeof ResourceLocationRecyclingAreasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/launch-stations': {
+      id: '/resource/location/launch-stations'
+      path: '/resource/location/launch-stations'
+      fullPath: '/resource/location/launch-stations'
+      preLoaderRoute: typeof ResourceLocationLaunchStationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/equipment-stations': {
+      id: '/resource/location/equipment-stations'
+      path: '/resource/location/equipment-stations'
+      fullPath: '/resource/location/equipment-stations'
+      preLoaderRoute: typeof ResourceLocationEquipmentStationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/location/assembly-stations': {
+      id: '/resource/location/assembly-stations'
+      path: '/resource/location/assembly-stations'
+      fullPath: '/resource/location/assembly-stations'
+      preLoaderRoute: typeof ResourceLocationAssemblyStationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/equipment/templates': {
+      id: '/resource/equipment/templates'
+      path: '/resource/equipment/templates'
+      fullPath: '/resource/equipment/templates'
+      preLoaderRoute: typeof ResourceEquipmentTemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/equipment/equipment': {
+      id: '/resource/equipment/equipment'
+      path: '/resource/equipment/equipment'
+      fullPath: '/resource/equipment/equipment'
+      preLoaderRoute: typeof ResourceEquipmentEquipmentRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -158,10 +587,32 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
+  PlansTasksRoute: PlansTasksRoute,
+  PlansTemplatesRoute: PlansTemplatesRoute,
+  ResourceFactoriesRoute: ResourceFactoriesRoute,
+  ResourceInventoriesRoute: ResourceInventoriesRoute,
+  ResourceProductCapacityRoute: ResourceProductCapacityRoute,
+  ResourceProductsRoute: ResourceProductsRoute,
+  ResourceTeamsRoute: ResourceTeamsRoute,
+  ModelsIndexRoute: ModelsIndexRoute,
+  PlansIndexRoute: PlansIndexRoute,
+  ResourceUsageIndexRoute: ResourceUsageIndexRoute,
   ResourceIndexRoute: ResourceIndexRoute,
-  ResourceSupplierInsideRoute: ResourceSupplierInsideRoute,
-  ResourceSupplierOutsideRoute: ResourceSupplierOutsideRoute,
-  ResourceSupplierIndexRoute: ResourceSupplierIndexRoute,
+  ResourceEquipmentEquipmentRoute: ResourceEquipmentEquipmentRoute,
+  ResourceEquipmentTemplatesRoute: ResourceEquipmentTemplatesRoute,
+  ResourceLocationAssemblyStationsRoute: ResourceLocationAssemblyStationsRoute,
+  ResourceLocationEquipmentStationsRoute:
+    ResourceLocationEquipmentStationsRoute,
+  ResourceLocationLaunchStationsRoute: ResourceLocationLaunchStationsRoute,
+  ResourceLocationRecyclingAreasRoute: ResourceLocationRecyclingAreasRoute,
+  ResourceLocationStorageAreasRoute: ResourceLocationStorageAreasRoute,
+  ResourceLocationTestStationsRoute: ResourceLocationTestStationsRoute,
+  ResourceLocationTracksRoute: ResourceLocationTracksRoute,
+  ResourceSuppliersInsideRoute: ResourceSuppliersInsideRoute,
+  ResourceSuppliersOutsideRoute: ResourceSuppliersOutsideRoute,
+  ResourceEquipmentIndexRoute: ResourceEquipmentIndexRoute,
+  ResourceLocationIndexRoute: ResourceLocationIndexRoute,
+  ResourceSuppliersIndexRoute: ResourceSuppliersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { GridContent } from '@repo/antd-layout';
 
 export const Route = createFileRoute('/home')({
-  staticData: { name: '首页', icon: <HomeOutlined /> },
+  staticData: { name: '首页', weight: 0, icon: <HomeOutlined />, hideInMenu: true },
   component: RouteComponent,
 });
 
