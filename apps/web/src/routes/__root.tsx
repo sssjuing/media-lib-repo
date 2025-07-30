@@ -1,12 +1,27 @@
-import { useMemo } from 'react';
+import { FC, PropsWithChildren, useMemo } from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { AntdLayout } from '@repo/antd-layout';
+import { Helmet } from 'react-helmet-async';
+import { AntdLayout, useAuth, usePageTitle } from '@repo/antd-layout';
 import NotFound from '@/components/NotFound';
 import { usePathname } from '@/hooks';
 import getRouteData, { Route as UtilsRoute, flatRoutes } from '@/utils/getRouteData';
 import logo from '@/assets/logo.svg';
+
+const Wrapper: FC<PropsWithChildren> = ({ children }) => {
+  const { Authorize, Forbidden } = useAuth();
+  const pageTitle = usePageTitle();
+
+  return (
+    <>
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
+      <Authorize noMatch={<Forbidden />}>{children}</Authorize>
+    </>
+  );
+};
 
 interface RouterContext {
   queryClient?: QueryClient;
@@ -46,9 +61,11 @@ function RootComponent() {
           //   name: 'Serati Ma',
           //   auth: ['admin', 'user'],
           // }}
-          // accordion
+          accordion
         >
-          <Outlet />
+          <Wrapper>
+            <Outlet />
+          </Wrapper>
         </AntdLayout>
       </div>
       <TanStackRouterDevtools />
