@@ -24,7 +24,6 @@ function RootComponent() {
   const navigate = Route.useNavigate();
 
   const routeData = useMemo(() => {
-    console.log(router.options.routeTree?.children);
     const routes = flatRoutes(router.options.routeTree?.children as unknown as UtilsRoute[]);
     return [{ path: '/', name: '首页', reachable: true, children: getRouteData(routes) }];
   }, [router]);

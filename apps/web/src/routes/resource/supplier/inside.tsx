@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { Breadcrumb } from '@repo/antd-layout';
 
 export const Route = createFileRoute('/resource/supplier/inside')({
   staticData: { name: '内部供应商' },
@@ -6,5 +7,11 @@ export const Route = createFileRoute('/resource/supplier/inside')({
 });
 
 function RouteComponent() {
-  return <div>Hello &quot;/resource/supplier/inside&quot;!</div>;
+  const navigate = Route.useNavigate();
+  return (
+    <div>
+      <Breadcrumb onClick={(key) => navigate({ to: key })} />
+      Hello &quot;/resource/supplier/inside&quot;!
+    </div>
+  );
 }
