@@ -20,6 +20,8 @@ import { Route as ResourceProductsRouteImport } from './routes/resource/products
 import { Route as ResourceProductCapacityRouteImport } from './routes/resource/product-capacity'
 import { Route as ResourceInventoriesRouteImport } from './routes/resource/inventories'
 import { Route as ResourceFactoriesRouteImport } from './routes/resource/factories'
+import { Route as ResourceUsageHeatMapRouteImport } from './routes/resource-usage/heat-map'
+import { Route as ResourceUsageGanttRouteImport } from './routes/resource-usage/gantt'
 import { Route as PlansTemplatesRouteImport } from './routes/plans/templates'
 import { Route as PlansTasksRouteImport } from './routes/plans/tasks'
 import { Route as ResourceSuppliersIndexRouteImport } from './routes/resource/suppliers/index'
@@ -90,6 +92,16 @@ const ResourceInventoriesRoute = ResourceInventoriesRouteImport.update({
 const ResourceFactoriesRoute = ResourceFactoriesRouteImport.update({
   id: '/resource/factories',
   path: '/resource/factories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceUsageHeatMapRoute = ResourceUsageHeatMapRouteImport.update({
+  id: '/resource-usage/heat-map',
+  path: '/resource-usage/heat-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceUsageGanttRoute = ResourceUsageGanttRouteImport.update({
+  id: '/resource-usage/gantt',
+  path: '/resource-usage/gantt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlansTemplatesRoute = PlansTemplatesRouteImport.update({
@@ -187,6 +199,8 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/plans/tasks': typeof PlansTasksRoute
   '/plans/templates': typeof PlansTemplatesRoute
+  '/resource-usage/gantt': typeof ResourceUsageGanttRoute
+  '/resource-usage/heat-map': typeof ResourceUsageHeatMapRoute
   '/resource/factories': typeof ResourceFactoriesRoute
   '/resource/inventories': typeof ResourceInventoriesRoute
   '/resource/product-capacity': typeof ResourceProductCapacityRoute
@@ -216,6 +230,8 @@ export interface FileRoutesByTo {
   '/home': typeof HomeRoute
   '/plans/tasks': typeof PlansTasksRoute
   '/plans/templates': typeof PlansTemplatesRoute
+  '/resource-usage/gantt': typeof ResourceUsageGanttRoute
+  '/resource-usage/heat-map': typeof ResourceUsageHeatMapRoute
   '/resource/factories': typeof ResourceFactoriesRoute
   '/resource/inventories': typeof ResourceInventoriesRoute
   '/resource/product-capacity': typeof ResourceProductCapacityRoute
@@ -246,6 +262,8 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/plans/tasks': typeof PlansTasksRoute
   '/plans/templates': typeof PlansTemplatesRoute
+  '/resource-usage/gantt': typeof ResourceUsageGanttRoute
+  '/resource-usage/heat-map': typeof ResourceUsageHeatMapRoute
   '/resource/factories': typeof ResourceFactoriesRoute
   '/resource/inventories': typeof ResourceInventoriesRoute
   '/resource/product-capacity': typeof ResourceProductCapacityRoute
@@ -277,6 +295,8 @@ export interface FileRouteTypes {
     | '/home'
     | '/plans/tasks'
     | '/plans/templates'
+    | '/resource-usage/gantt'
+    | '/resource-usage/heat-map'
     | '/resource/factories'
     | '/resource/inventories'
     | '/resource/product-capacity'
@@ -306,6 +326,8 @@ export interface FileRouteTypes {
     | '/home'
     | '/plans/tasks'
     | '/plans/templates'
+    | '/resource-usage/gantt'
+    | '/resource-usage/heat-map'
     | '/resource/factories'
     | '/resource/inventories'
     | '/resource/product-capacity'
@@ -335,6 +357,8 @@ export interface FileRouteTypes {
     | '/home'
     | '/plans/tasks'
     | '/plans/templates'
+    | '/resource-usage/gantt'
+    | '/resource-usage/heat-map'
     | '/resource/factories'
     | '/resource/inventories'
     | '/resource/product-capacity'
@@ -365,6 +389,8 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   PlansTasksRoute: typeof PlansTasksRoute
   PlansTemplatesRoute: typeof PlansTemplatesRoute
+  ResourceUsageGanttRoute: typeof ResourceUsageGanttRoute
+  ResourceUsageHeatMapRoute: typeof ResourceUsageHeatMapRoute
   ResourceFactoriesRoute: typeof ResourceFactoriesRoute
   ResourceInventoriesRoute: typeof ResourceInventoriesRoute
   ResourceProductCapacityRoute: typeof ResourceProductCapacityRoute
@@ -467,6 +493,20 @@ declare module '@tanstack/react-router' {
       path: '/resource/factories'
       fullPath: '/resource/factories'
       preLoaderRoute: typeof ResourceFactoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource-usage/heat-map': {
+      id: '/resource-usage/heat-map'
+      path: '/resource-usage/heat-map'
+      fullPath: '/resource-usage/heat-map'
+      preLoaderRoute: typeof ResourceUsageHeatMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource-usage/gantt': {
+      id: '/resource-usage/gantt'
+      path: '/resource-usage/gantt'
+      fullPath: '/resource-usage/gantt'
+      preLoaderRoute: typeof ResourceUsageGanttRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/plans/templates': {
@@ -589,6 +629,8 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   PlansTasksRoute: PlansTasksRoute,
   PlansTemplatesRoute: PlansTemplatesRoute,
+  ResourceUsageGanttRoute: ResourceUsageGanttRoute,
+  ResourceUsageHeatMapRoute: ResourceUsageHeatMapRoute,
   ResourceFactoriesRoute: ResourceFactoriesRoute,
   ResourceInventoriesRoute: ResourceInventoriesRoute,
   ResourceProductCapacityRoute: ResourceProductCapacityRoute,

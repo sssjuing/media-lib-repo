@@ -1,9 +1,11 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { ConfigProvider } from 'antd';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { ConfigProvider } from 'antd';
+import NiceModal from '@ebay/nice-modal-react';
+import zhCN from 'antd/locale/zh_CN';
 import { HelmetProvider } from 'react-helmet-async';
 import { RouteMeta } from '@repo/antd-layout';
 import { routeTree } from './routeTree.gen';
@@ -35,10 +37,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <ConfigProvider theme={{ cssVar: true, components: { Layout: { headerHeight: 48 } } }}>
-          <RouterProvider router={router} />
-        </ConfigProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <NiceModal.Provider>
+          <ConfigProvider locale={zhCN} theme={{ cssVar: true, components: { Layout: { headerHeight: 48 } } }}>
+            <RouterProvider router={router} />
+          </ConfigProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </NiceModal.Provider>
       </QueryClientProvider>
     </HelmetProvider>
   </StrictMode>,

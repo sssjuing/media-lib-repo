@@ -17,9 +17,9 @@ export default defineConfig(({ mode }) => {
       // port: 8091,
       proxy: {
         '/api': {
-          target: 'http://localhost:1323',
+          target: 'https://m1.apifoxmock.com',
           changeOrigin: true,
-          // rewrite: (path) => path.replace(/^\/api/, '')
+          rewrite: (path) => path.replace(/^\/api/, '/m1/6869502-6584110-default/prod-api'),
         },
       },
     },

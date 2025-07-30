@@ -1,6 +1,5 @@
 import { notification } from 'antd';
-import axios, { AxiosError } from 'axios';
-import { Services } from '@repo/service';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 const errorHandler = ({ response, config }: AxiosError<{ errors: { body: string } }>) => {
   if (response && response.status) {
@@ -32,8 +31,29 @@ const axiosInstance = axios.create({
   timeout: 3000,
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface ApiResponse<T = any> {
+  code: number;
+  message?: string;
+  result: T; // 业务数据
+}
+
 axiosInstance.interceptors.response.use((response) => {
   return response;
 }, errorHandler);
 
-export const services = new Services({ axiosInstance });
+const createRequest = (defaultConfig: AxiosRequestConfig) => {
+  return async <T>(config: AxiosRequestConfig): Promise<T> => {
+    try {
+      const { data } = await axiosInstance.request<ApiResponse<T>>({
+        ...defaultConfig,
+        ...config,
+      });
+      return data.result;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+};
+
+export const request = createRequest({});

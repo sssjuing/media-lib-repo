@@ -4,7 +4,7 @@ import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-r
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Helmet } from 'react-helmet-async';
 import { AntdLayout, useAuth, usePageTitle } from '@repo/antd-layout';
-import NotFound from '@/components/NotFound';
+import { NotFound } from '@/components/not-found';
 import { usePathname } from '@/hooks';
 import getRouteData, { Route as UtilsRoute, flatRoutes } from '@/utils/getRouteData';
 import logo from '@/assets/logo.svg';

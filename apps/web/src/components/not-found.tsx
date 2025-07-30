@@ -1,9 +1,9 @@
-import { FC, memo } from 'react';
-import { Button } from 'antd';
+import { FC } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { Button } from 'antd';
 import { Exception } from '@repo/ui';
 
-const NotFound: FC = () => {
+export const NotFound: FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -18,5 +18,3 @@ const NotFound: FC = () => {
     />
   );
 };
-
-export default memo(NotFound);
