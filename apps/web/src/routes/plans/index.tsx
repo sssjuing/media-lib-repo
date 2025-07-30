@@ -1,5 +1,6 @@
+import { ProfileOutlined } from '@ant-design/icons';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/plans/')({
-  staticData: { name: '计划管理', weight: 2 },
+  staticData: { name: '计划管理', weight: 2, icon: <ProfileOutlined /> },
 });
