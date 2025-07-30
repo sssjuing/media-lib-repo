@@ -8,15 +8,14 @@ export const Route = createFileRoute('/plans/tasks')({
 
 function RouteComponent() {
   return (
-    <div>
-      <div>
-        <WujieReact
-          name="vue-app" // 子应用唯一标识
-          url="http://localhost:5173/" // Vue 子应用地址
-          sync={true} // 路由同步
-          // props={{ userId: 123 }} // 向子应用传递 props
-        />
-      </div>
+    <div className="">
+      <WujieReact
+        name="vue-app-plans-tasks" // 子应用唯一标识
+        // url="http://localhost:5173/" // Vue 子应用地址
+        url="http://localhost:8849/task-manager-ui/plan/planIndex"
+        sync={true} // 路由同步
+        // props={{ userId: 123 }} // 向子应用传递 props
+      />
     </div>
   );
 }

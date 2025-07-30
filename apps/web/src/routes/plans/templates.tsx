@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import WujieReact from 'wujie-react';
 
 export const Route = createFileRoute('/plans/templates')({
   staticData: { name: '计划模板' },
@@ -6,5 +7,15 @@ export const Route = createFileRoute('/plans/templates')({
 });
 
 function RouteComponent() {
-  return <div>Hello /plans/templates!</div>;
+  return (
+    <div className="">
+      <WujieReact
+        name="vue-app-plans-templates" // 子应用唯一标识
+        // url="http://localhost:5173/" // Vue 子应用地址
+        url="http://localhost:8849/task-manager-ui/plan/planIndex"
+        sync={true} // 路由同步
+        // props={{ userId: 123 }} // 向子应用传递 props
+      />
+    </div>
+  );
 }

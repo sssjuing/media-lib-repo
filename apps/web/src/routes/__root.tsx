@@ -30,13 +30,13 @@ function RootComponent() {
 
   return (
     <>
-      <div className="min-w-[800px]">
+      <div className="min-w-[1200px]">
         <AntdLayout
           rootPath="/"
           theme="dark"
           logo={logo}
           siderWidth={230}
-          title="媒体库"
+          title="任务管理平台"
           pathname={pathname}
           routeData={routeData}
           onMenuClick={({ key }) => pathname !== key && navigate({ to: key })}
