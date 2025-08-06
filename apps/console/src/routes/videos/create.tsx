@@ -13,7 +13,6 @@ export const Route = createFileRoute('/videos/create')({
 });
 
 function RouteComponent() {
-  const search = Route.useSearch();
   const navigate = Route.useNavigate();
 
   const mutation = useMutation({
@@ -36,7 +35,7 @@ function RouteComponent() {
         <VideoForm
           onSubmit={handleSubmit}
           submitting={mutation.isPending}
-          onBack={() => navigate({ to: '..', search })}
+          onBack={() => navigate({ to: '..', search: (prev) => prev })}
         />
       </Card>
     </PageHeaderWrapper>

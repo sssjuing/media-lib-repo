@@ -12,7 +12,6 @@ export const Route = createFileRoute('/actresses/create')({
 });
 
 function RouteComponent() {
-  const search = Route.useSearch();
   const navigate = Route.useNavigate();
 
   const mutation = useMutation({
@@ -29,7 +28,7 @@ function RouteComponent() {
         <ActressForm
           onSubmit={mutation.mutate}
           submitting={mutation.isPending}
-          onBack={() => navigate({ to: '..', search })}
+          onBack={() => navigate({ to: '..', search: (prev) => prev })}
         />
       </Card>
     </PageHeaderWrapper>

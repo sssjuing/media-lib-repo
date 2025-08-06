@@ -15,7 +15,6 @@ export const Route = createFileRoute('/actresses/$actressId/edit')({
 
 function RouteComponent() {
   const { actressId } = Route.useParams();
-  const search = Route.useSearch();
   const navigate = Route.useNavigate();
   const data = Route.useLoaderData();
 
@@ -23,7 +22,7 @@ function RouteComponent() {
     mutationFn: (values: SubmitActressDTO) => services.actress.update(Number(actressId), values),
     onSuccess: () => {
       message.success('更新成功');
-      navigate({ to: '/actresses', search });
+      navigate({ to: '/actresses', search: (prev) => prev });
     },
   });
 
@@ -35,7 +34,7 @@ function RouteComponent() {
           actress={data}
           onSubmit={updateMutation.mutate}
           submitting={updateMutation.isPending}
-          onBack={() => navigate({ to: '/actresses', search })}
+          onBack={() => navigate({ to: '/actresses', search: (prev) => prev })}
         />
       </Card>
     </PageHeaderWrapper>

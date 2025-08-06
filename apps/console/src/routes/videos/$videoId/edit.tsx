@@ -15,7 +15,6 @@ export const Route = createFileRoute('/videos/$videoId/edit')({
 
 function RouteComponent() {
   const { videoId } = Route.useParams();
-  const search = Route.useSearch();
   const navigate = Route.useNavigate();
   const data = Route.useLoaderData();
 
@@ -23,7 +22,7 @@ function RouteComponent() {
     mutationFn: (values: SubmitVideoDTO) => services.video.update(Number(videoId), values),
     onSuccess: () => {
       message.success('更新成功');
-      navigate({ to: '../..', search });
+      navigate({ to: '../..', search: (prev) => prev });
     },
   });
 
@@ -31,7 +30,7 @@ function RouteComponent() {
     mutationFn: services.video.delete,
     onSuccess: () => {
       message.success('删除成功');
-      navigate({ to: '../..', search });
+      navigate({ to: '../..', search: (prev) => prev });
     },
   });
 
@@ -67,7 +66,7 @@ function RouteComponent() {
           video={data}
           onSubmit={updateMutation.mutate}
           submitting={updateMutation.isPending}
-          onBack={() => navigate({ to: '../..', search })}
+          onBack={() => navigate({ to: '../..', search: (prev) => prev })}
         />
       </Card>
     </PageHeaderWrapper>
