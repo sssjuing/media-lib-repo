@@ -13,14 +13,6 @@ export type Route = {
   children?: Route[];
 };
 
-// function splitByFirstChar(str: string, char: string) {
-//   const index = str.indexOf(char);
-//   if (index === -1) {
-//     return [str, '']; // 分隔符不存在，返回原字符串和空字符串
-//   }
-//   return [str.slice(0, index), str.slice(index + 1)];
-// }
-
 export function flatRoutes(routes: Route[] = []): Route[] {
   const queue: Route[] = routes.map((i) => ({
     id: i.id,
@@ -32,9 +24,6 @@ export function flatRoutes(routes: Route[] = []): Route[] {
   const result: Route[] = [];
   while (queue.length > 0) {
     const route = queue.shift()!;
-    // if (route.path) {
-    //   result.push({ id: route.id, path: route.path, fullPath: route.fullPath, options: route.options });
-    // }
     if (route.children) {
       route.children.forEach((i) => {
         queue.unshift({ id: i.id, path: i.path, fullPath: i.fullPath, options: i.options, children: i.children });
@@ -46,13 +35,14 @@ export function flatRoutes(routes: Route[] = []): Route[] {
   return result;
 }
 
-export default function getRouteData(routes: Route[] = []): RouteItem[] {
+export function getRouteData(routes: Route[] = []): RouteItem[] {
   const sortedRoutes = routes
     .map((i) => {
-      const cleanPath = i.fullPath.replace(/^\/+|\/+$/g, '');
+      const cleanPath = i.fullPath.replace(/^\/+|\/+$/g, ''); // 去除两端的斜杠
       return { ...i, tmp: { cleanPath, pathLen: cleanPath.split('/').length } };
     })
     .filter((i) => i.tmp.cleanPath !== '')
+    // 先按路径深度排序, 同样深度按 weight 权重排序
     .sort((a, b) => {
       if (a.tmp.pathLen !== b.tmp.pathLen) {
         return a.tmp.pathLen - b.tmp.pathLen;
@@ -68,6 +58,10 @@ export default function getRouteData(routes: Route[] = []): RouteItem[] {
     for (let i = 0; i < parts.length; i++) {
       currentPath = currentPath ? `${currentPath}/${parts[i]}` : parts[i];
       const target = currentNode.children?.find((r) => r.path === parts[i].replace('$', ':'));
+      // 跳过 splat route, 一般是 404 页面
+      if (currentPath === '$') {
+        continue;
+      }
       if (!target) {
         if (i === parts.length - 1) {
           const item: RouteItem = {

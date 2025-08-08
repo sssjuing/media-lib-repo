@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { AntdLayout, useAuth, usePageTitle } from '@repo/antd-layout';
 import { NotFound } from '@/components/not-found';
 import { usePathname } from '@/hooks';
-import getRouteData, { Route as UtilsRoute, flatRoutes } from '@/utils/getRouteData';
+import { Route as UtilsRoute, flatRoutes, getRouteData } from '@/utils/getRouteData';
 import logo from '@/assets/logo.svg';
 
 const Wrapper: FC<PropsWithChildren> = ({ children }) => {
