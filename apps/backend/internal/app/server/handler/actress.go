@@ -4,10 +4,10 @@ import (
 	"media-lib/internal/app/server/model"
 	"media-lib/internal/app/server/types"
 	"media-lib/internal/app/server/utils"
-	commonUtils "media-lib/internal/pkg/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/samber/lo"
 )
 
 func (h *Handler) ListActresses(c echo.Context) error {
@@ -59,7 +59,7 @@ func (h *Handler) GetVideosByActressId(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	list := commonUtils.Map(videos, func(v *model.Video) types.VideoDTO {
+	list := lo.Map(videos, func(v *model.Video, _ int) types.VideoDTO {
 		return *v.DTO()
 	})
 	return c.JSON(http.StatusOK, list)

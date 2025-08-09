@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"media-lib/internal/app/server/types"
 	"media-lib/internal/pkg/config"
-	"media-lib/internal/pkg/utils"
 	"time"
 
+	"github.com/samber/lo"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )
@@ -49,7 +49,7 @@ func (v *Video) DTO() *types.VideoDTO {
 		CoverUrl:     publicUrl + v.CoverPath,
 		Title:        v.Title,
 		ChineseTitle: v.ChineseTitle,
-		Actresses: utils.Map(v.Actresses, func(a *Actress) *types.ActressDTO {
+		Actresses: lo.Map(v.Actresses, func(a *Actress, _ int) *types.ActressDTO {
 			return a.DTO()
 		}),
 		ReleaseDate: v.ReleaseDate,

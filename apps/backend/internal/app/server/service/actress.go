@@ -4,7 +4,8 @@ import (
 	"media-lib/internal/app/server/model"
 	"media-lib/internal/app/server/repository"
 	"media-lib/internal/app/server/types"
-	"media-lib/internal/pkg/utils"
+
+	"github.com/samber/lo"
 )
 
 type ActressService interface {
@@ -26,7 +27,7 @@ func (svc *ActressServiceImpl) GetList() ([]types.ActressDTO, error) {
 	if err != nil {
 		return nil, err
 	}
-	list := utils.Map(actresses, func(a model.Actress) types.ActressDTO {
+	list := lo.Map(actresses, func(a model.Actress, _ int) types.ActressDTO {
 		return *a.DTO()
 	})
 	return list, nil

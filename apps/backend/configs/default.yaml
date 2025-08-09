@@ -1,6 +1,6 @@
 server:
   log_level: warn # debug | info | warn | error
-  video_tags: ["女教师", "OL"]
+  video_tags: ["SM", "OL"]
 
 postgres:
   host: host.docker.internal

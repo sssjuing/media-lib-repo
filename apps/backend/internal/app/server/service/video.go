@@ -4,8 +4,8 @@ import (
 	"media-lib/internal/app/server/model"
 	"media-lib/internal/app/server/repository"
 	"media-lib/internal/app/server/types"
-	"media-lib/internal/pkg/utils"
 
+	"github.com/samber/lo"
 	"gorm.io/datatypes"
 )
 
@@ -42,7 +42,7 @@ func (svc *VideoServiceImpl) Create(cvd *types.CreateVideoDTO) (*types.VideoDTO,
 		CoverPath:    cvd.CoverPath,
 		Title:        cvd.Title,
 		ChineseTitle: cvd.ChineseTitle,
-		Actresses: utils.Map(cvd.Actresses, func(ad *types.ActressDTO) *model.Actress {
+		Actresses: lo.Map(cvd.Actresses, func(ad *types.ActressDTO, _ int) *model.Actress {
 			return &model.Actress{ID: ad.ID}
 		}),
 		ReleaseDate: cvd.ReleaseDate,
@@ -62,7 +62,7 @@ func (svc *VideoServiceImpl) Update(v *model.Video, uvd *types.UpdateVideoDTO) (
 	v.CoverPath = uvd.CoverPath
 	v.Title = uvd.Title
 	v.ChineseTitle = uvd.ChineseTitle
-	v.Actresses = utils.Map(uvd.Actresses, func(ad *types.ActressDTO) *model.Actress {
+	v.Actresses = lo.Map(uvd.Actresses, func(ad *types.ActressDTO, _ int) *model.Actress {
 		return &model.Actress{ID: ad.ID}
 	})
 	v.ReleaseDate = uvd.ReleaseDate

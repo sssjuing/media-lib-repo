@@ -1,6 +1,6 @@
 server:
   log_level: debug # debug | info | warn | error
-  video_tags: ["女教师", "OL"]
+  video_tags: ["SM", "OL"]
   users:
     - name: user1
       password: user1password

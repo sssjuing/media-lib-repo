@@ -2,6 +2,7 @@ package server
 
 import (
 	"media-lib/internal/app/server/db"
+	"media-lib/internal/app/server/download"
 	"media-lib/internal/app/server/handler"
 	"media-lib/internal/app/server/repository"
 	"media-lib/internal/app/server/router"
@@ -14,6 +15,8 @@ import (
 func Run() {
 	r := router.New()
 	// r.GET("/swagger/*", echoSwagger.WrapHandler)
+
+	download.Init(r.Logger)
 
 	dsn := config.GetPostgresDsn()
 	d := db.NewDB(dsn)
