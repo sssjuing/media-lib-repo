@@ -8,7 +8,7 @@ import { services } from '@/services';
 import { useGlobalStore } from '@/store';
 
 export const Route = createFileRoute('/videos/')({
-  staticData: { name: '视频', icon: <VideoCameraOutlined />, hideChildrenInMenu: true },
+  staticData: { name: '视频列表', weight: 2, icon: <VideoCameraOutlined />, hideChildrenInMenu: true },
   validateSearch: z.object({
     page: z.number().default(1).catch(1),
     size: z.number().default(24).catch(24),

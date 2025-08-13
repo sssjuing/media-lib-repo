@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { ConfigProvider } from 'antd';
+import NiceModal from '@ebay/nice-modal-react';
 import zhCN from 'antd/locale/zh_CN';
 import { HelmetProvider } from 'react-helmet-async';
 import { RouteMeta } from '@repo/antd-layout';
@@ -37,12 +38,14 @@ declare module '@tanstack/react-router' {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HelmetProvider>
-      <ConfigProvider locale={zhCN} theme={{ cssVar: true, components: { Layout: { headerHeight: 48 } } }}>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </ConfigProvider>
+      <QueryClientProvider client={queryClient}>
+        <ConfigProvider locale={zhCN} theme={{ cssVar: true, components: { Layout: { headerHeight: 48 } } }}>
+          <NiceModal.Provider>
+            <RouterProvider router={router} />
+          </NiceModal.Provider>
+        </ConfigProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </HelmetProvider>
   </StrictMode>,
 );

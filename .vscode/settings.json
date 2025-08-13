@@ -3,5 +3,6 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "go.testFlags": ["-count=1"]
+  "go.testFlags": ["-count=1"],
+  "go.testTimeout": "100s"
 }

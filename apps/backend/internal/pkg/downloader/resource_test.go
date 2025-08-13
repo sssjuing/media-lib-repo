@@ -2,8 +2,8 @@ package downloader
 
 import "testing"
 
-var url = "https://test-streams.mux.dev/x36xhzz/url_4/193039199_mp4_h264_aac_7.m3u8"
-var name = "big-buck-bunny"
+// var url = "https://test-streams.mux.dev/x36xhzz/url_4/193039199_mp4_h264_aac_7.m3u8"
+// var name = "big-buck-bunny"
 
 func TestMakeSegmentList(t *testing.T) {
 	// url := "https://surrit.com/964d8939-b398-4c98-9ea5-e58b9a6164bb/1280x720/video.m3u8"

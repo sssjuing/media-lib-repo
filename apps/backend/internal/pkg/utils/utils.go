@@ -2,6 +2,7 @@ package utils
 
 import (
 	"io"
+	"io/fs"
 	"os"
 	"path"
 	"path/filepath"
@@ -46,4 +47,29 @@ func ReadFile(filePath string) ([]byte, error) {
 		return nil, err
 	}
 	return data, nil
+}
+
+type File struct {
+	Path string `json:"path"`
+	Size int64  `json:"size"`
+}
+
+func ListFilesInDir(targetDir string) ([]File, error) {
+	files := make([]File, 0, 10)
+	if err := filepath.WalkDir(targetDir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() {
+			info, err := d.Info()
+			if err != nil {
+				return err
+			}
+			files = append(files, File{path, info.Size()})
+		}
+		return nil
+	}); err != nil {
+		return nil, err
+	}
+	return files, nil
 }

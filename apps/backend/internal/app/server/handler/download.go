@@ -3,6 +3,7 @@ package handler
 import (
 	"media-lib/internal/app/server/download"
 	"media-lib/internal/app/server/utils"
+	commonUtils "media-lib/internal/pkg/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -22,4 +23,12 @@ func (h *Handler) SubmitDownload(c echo.Context) error {
 		return c.JSON(http.StatusServiceUnavailable, utils.NewError(err))
 	}
 	return c.NoContent(http.StatusAccepted)
+}
+
+func (h *Handler) ListDownloadedFiles(c echo.Context) error {
+	files, err := commonUtils.ListFilesInDir("/data")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	return c.JSON(http.StatusOK, files)
 }

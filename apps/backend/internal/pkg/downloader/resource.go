@@ -40,6 +40,16 @@ func NewResource(url, name, tempDir string, segments []SegmentRow) *Resource {
 	return r
 }
 
+type ResourcePO struct {
+	Url   string `json:"u"`
+	Name  string `json:"n"`
+	Total int    `json:"t"`
+}
+
+func (r *Resource) PO() ResourcePO {
+	return ResourcePO{Url: r.m3u8URL, Name: r.filename, Total: r.total}
+}
+
 func (r *Resource) MakeSegmentList() error {
 	// 下载 m3u8 文件内容
 	resp, err := http.Get(r.m3u8URL)

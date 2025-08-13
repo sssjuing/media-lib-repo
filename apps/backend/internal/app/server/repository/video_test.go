@@ -18,9 +18,9 @@ func TestFindAll(t *testing.T) {
 	videos, _ := videoRepo.FindAll(VidoesQueryOptions{Tags: []string{"OL"}})
 	t.Log(len(videos))
 	for _, v := range videos {
-		t.Log("video: ", v.SerialNumber)
+		t.Log("video:", v.SerialNumber)
 		for _, a := range v.Actresses {
-			t.Log("actress: ", a.UniqueName)
+			t.Log("actress:", a.UniqueName)
 		}
 	}
 	allVideos, _ := videoRepo.FindAll(VidoesQueryOptions{})

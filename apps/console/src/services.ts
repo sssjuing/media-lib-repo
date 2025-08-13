@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { Services } from '@repo/service';
 
 const errorHandler = ({ response, config }: AxiosError<{ errors: { body: string } }>) => {
@@ -29,7 +29,7 @@ const errorHandler = ({ response, config }: AxiosError<{ errors: { body: string 
 
 const axiosInstance = axios.create({
   baseURL: '/api',
-  timeout: 3000,
+  timeout: 30000,
 });
 
 axiosInstance.interceptors.response.use((response) => {
@@ -37,3 +37,19 @@ axiosInstance.interceptors.response.use((response) => {
 }, errorHandler);
 
 export const services = new Services({ axiosInstance });
+
+const createRequest = (defaultConfig: AxiosRequestConfig) => {
+  return async <T>(config: AxiosRequestConfig): Promise<T> => {
+    try {
+      const { data } = await axiosInstance.request({
+        ...defaultConfig,
+        ...config,
+      });
+      return data;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+};
+
+export const request = createRequest({});

@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VideosIndexRouteImport } from './routes/videos/index'
+import { Route as DownloadsIndexRouteImport } from './routes/downloads/index'
 import { Route as ActressesIndexRouteImport } from './routes/actresses/index'
 import { Route as VideosCreateRouteImport } from './routes/videos/create'
 import { Route as ActressesCreateRouteImport } from './routes/actresses/create'
+import { Route as DownloadsTasksIndexRouteImport } from './routes/downloads/tasks/index'
+import { Route as DownloadsFilesIndexRouteImport } from './routes/downloads/files/index'
 import { Route as VideosVideoIdEditRouteImport } from './routes/videos/$videoId/edit'
 import { Route as ActressesActressIdVideosRouteImport } from './routes/actresses/$actressId/videos'
 import { Route as ActressesActressIdEditRouteImport } from './routes/actresses/$actressId/edit'
@@ -34,6 +37,11 @@ const VideosIndexRoute = VideosIndexRouteImport.update({
   path: '/videos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DownloadsIndexRoute = DownloadsIndexRouteImport.update({
+  id: '/downloads/',
+  path: '/downloads/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActressesIndexRoute = ActressesIndexRouteImport.update({
   id: '/actresses/',
   path: '/actresses/',
@@ -47,6 +55,16 @@ const VideosCreateRoute = VideosCreateRouteImport.update({
 const ActressesCreateRoute = ActressesCreateRouteImport.update({
   id: '/actresses/create',
   path: '/actresses/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadsTasksIndexRoute = DownloadsTasksIndexRouteImport.update({
+  id: '/downloads/tasks/',
+  path: '/downloads/tasks/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadsFilesIndexRoute = DownloadsFilesIndexRouteImport.update({
+  id: '/downloads/files/',
+  path: '/downloads/files/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VideosVideoIdEditRoute = VideosVideoIdEditRouteImport.update({
@@ -72,10 +90,13 @@ export interface FileRoutesByFullPath {
   '/actresses/create': typeof ActressesCreateRoute
   '/videos/create': typeof VideosCreateRoute
   '/actresses': typeof ActressesIndexRoute
+  '/downloads': typeof DownloadsIndexRoute
   '/videos': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
   '/videos/$videoId/edit': typeof VideosVideoIdEditRoute
+  '/downloads/files': typeof DownloadsFilesIndexRoute
+  '/downloads/tasks': typeof DownloadsTasksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,10 +104,13 @@ export interface FileRoutesByTo {
   '/actresses/create': typeof ActressesCreateRoute
   '/videos/create': typeof VideosCreateRoute
   '/actresses': typeof ActressesIndexRoute
+  '/downloads': typeof DownloadsIndexRoute
   '/videos': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
   '/videos/$videoId/edit': typeof VideosVideoIdEditRoute
+  '/downloads/files': typeof DownloadsFilesIndexRoute
+  '/downloads/tasks': typeof DownloadsTasksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,10 +119,13 @@ export interface FileRoutesById {
   '/actresses/create': typeof ActressesCreateRoute
   '/videos/create': typeof VideosCreateRoute
   '/actresses/': typeof ActressesIndexRoute
+  '/downloads/': typeof DownloadsIndexRoute
   '/videos/': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
   '/videos/$videoId/edit': typeof VideosVideoIdEditRoute
+  '/downloads/files/': typeof DownloadsFilesIndexRoute
+  '/downloads/tasks/': typeof DownloadsTasksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,10 +135,13 @@ export interface FileRouteTypes {
     | '/actresses/create'
     | '/videos/create'
     | '/actresses'
+    | '/downloads'
     | '/videos'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
     | '/videos/$videoId/edit'
+    | '/downloads/files'
+    | '/downloads/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,10 +149,13 @@ export interface FileRouteTypes {
     | '/actresses/create'
     | '/videos/create'
     | '/actresses'
+    | '/downloads'
     | '/videos'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
     | '/videos/$videoId/edit'
+    | '/downloads/files'
+    | '/downloads/tasks'
   id:
     | '__root__'
     | '/'
@@ -130,10 +163,13 @@ export interface FileRouteTypes {
     | '/actresses/create'
     | '/videos/create'
     | '/actresses/'
+    | '/downloads/'
     | '/videos/'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
     | '/videos/$videoId/edit'
+    | '/downloads/files/'
+    | '/downloads/tasks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -142,10 +178,13 @@ export interface RootRouteChildren {
   ActressesCreateRoute: typeof ActressesCreateRoute
   VideosCreateRoute: typeof VideosCreateRoute
   ActressesIndexRoute: typeof ActressesIndexRoute
+  DownloadsIndexRoute: typeof DownloadsIndexRoute
   VideosIndexRoute: typeof VideosIndexRoute
   ActressesActressIdEditRoute: typeof ActressesActressIdEditRoute
   ActressesActressIdVideosRoute: typeof ActressesActressIdVideosRoute
   VideosVideoIdEditRoute: typeof VideosVideoIdEditRoute
+  DownloadsFilesIndexRoute: typeof DownloadsFilesIndexRoute
+  DownloadsTasksIndexRoute: typeof DownloadsTasksIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -171,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/downloads/': {
+      id: '/downloads/'
+      path: '/downloads'
+      fullPath: '/downloads'
+      preLoaderRoute: typeof DownloadsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/actresses/': {
       id: '/actresses/'
       path: '/actresses'
@@ -190,6 +236,20 @@ declare module '@tanstack/react-router' {
       path: '/actresses/create'
       fullPath: '/actresses/create'
       preLoaderRoute: typeof ActressesCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/downloads/tasks/': {
+      id: '/downloads/tasks/'
+      path: '/downloads/tasks'
+      fullPath: '/downloads/tasks'
+      preLoaderRoute: typeof DownloadsTasksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/downloads/files/': {
+      id: '/downloads/files/'
+      path: '/downloads/files'
+      fullPath: '/downloads/files'
+      preLoaderRoute: typeof DownloadsFilesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/videos/$videoId/edit': {
@@ -222,10 +282,13 @@ const rootRouteChildren: RootRouteChildren = {
   ActressesCreateRoute: ActressesCreateRoute,
   VideosCreateRoute: VideosCreateRoute,
   ActressesIndexRoute: ActressesIndexRoute,
+  DownloadsIndexRoute: DownloadsIndexRoute,
   VideosIndexRoute: VideosIndexRoute,
   ActressesActressIdEditRoute: ActressesActressIdEditRoute,
   ActressesActressIdVideosRoute: ActressesActressIdVideosRoute,
   VideosVideoIdEditRoute: VideosVideoIdEditRoute,
+  DownloadsFilesIndexRoute: DownloadsFilesIndexRoute,
+  DownloadsTasksIndexRoute: DownloadsTasksIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

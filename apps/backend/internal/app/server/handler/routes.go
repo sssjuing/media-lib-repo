@@ -37,6 +37,7 @@ func (h *Handler) Register(g *echo.Group) {
 	video.DELETE("", h.RemoveVideo)
 
 	g.POST("/downloads", h.SubmitDownload)
+	g.GET("/downloads/files", h.ListDownloadedFiles)
 
 	g.GET("/*", func(c echo.Context) error {
 		return c.String(http.StatusNotFound, "not found")

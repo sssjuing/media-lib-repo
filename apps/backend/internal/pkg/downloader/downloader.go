@@ -11,7 +11,8 @@ import (
 type taskImpl struct {
 	resource        *Resource
 	logger          Logger
-	onSegmentFinish func(r *SegmentRow) // 片段下载完成时的回调函数
+	onSegmentFinish func(r *SegmentRow)    // 片段下载完成时的回调函数
+	onFinally       func(*Resource, error) // 当任务结束时的回调, 无论成功/失败
 }
 
 func (t *taskImpl) PreExecute() error {
@@ -30,8 +31,8 @@ func (t *taskImpl) PreExecute() error {
 }
 
 func (t *taskImpl) Execute() {
-	func() error {
-		t.logger.Info("start to download segments")
+	err := func() error {
+		t.logger.Infof("start to download %d segments", len(t.resource.segmentList))
 		t.resource.DownloadSegments(t.onSegmentFinish) // 传入 onFinish 用于向外部同步切片的下载状态
 
 		if !t.resource.CheckSegments() {
@@ -46,17 +47,33 @@ func (t *taskImpl) Execute() {
 		t.logger.Info("delete temporary directory")
 		return os.RemoveAll(t.resource.tempDir)
 	}()
+	t.onFinally(t.resource, err)
 }
 
 type Downloader struct {
 	taskQueue       *taskqueue.TaskQueue
-	onSegmentFinish func(r *SegmentRow) // 片段下载完成时的回调函数
+	onSegmentFinish func(r *SegmentRow)    // 片段下载完成时的回调函数
+	onTaskFinally   func(*Resource, error) // 当任务结束时的回调, 无论成功/失败
 }
 
-func New(onSegmentFinish func(r *SegmentRow)) *Downloader {
+type Option func(*Downloader)
+
+func WithSegmentFinish(fn func(r *SegmentRow)) Option {
+	return func(d *Downloader) { d.onSegmentFinish = fn }
+}
+
+func WithTaskFinally(fn func(*Resource, error)) Option {
+	return func(d *Downloader) { d.onTaskFinally = fn }
+}
+
+func New(opts ...Option) *Downloader {
 	d := &Downloader{
 		taskQueue:       taskqueue.New(context.Background()),
-		onSegmentFinish: onSegmentFinish, // 片段下载完成时的回调函数
+		onSegmentFinish: func(r *SegmentRow) {}, // 片段下载完成时的回调函数
+		onTaskFinally:   func(r *Resource, err error) {},
+	}
+	for _, opt := range opts {
+		opt(d)
 	}
 	return d
 }
@@ -66,7 +83,11 @@ func (d *Downloader) AddResource(r *Resource, logger Logger) error {
 	if r.segmentList == nil || r.tempDir == "" {
 		r.tempDir = filepath.Join("/var/tmp/media-lib", r.filename)
 	}
-	task := &taskImpl{resource: r, logger: logger, onSegmentFinish: d.onSegmentFinish}
+	task := &taskImpl{resource: r,
+		logger:          logger,
+		onSegmentFinish: d.onSegmentFinish,
+		onFinally:       d.onTaskFinally,
+	}
 	if err := task.PreExecute(); err != nil {
 		return err
 	}

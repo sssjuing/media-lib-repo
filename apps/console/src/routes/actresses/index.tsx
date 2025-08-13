@@ -15,7 +15,7 @@ import { services } from '@/services';
 const { CUP_TYPE } = configs;
 
 export const Route = createFileRoute('/actresses/')({
-  staticData: { name: '演员', icon: <UserOutlined />, hideChildrenInMenu: true },
+  staticData: { name: '演员列表', weight: 1, icon: <UserOutlined />, hideChildrenInMenu: true },
   validateSearch: z.object({
     page: z.number().default(1).catch(1),
     size: z.number().default(10).catch(10),
