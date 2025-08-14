@@ -1,4 +1,4 @@
-package setup
+package logger
 
 import (
 	"media-lib/internal/pkg/config"
@@ -33,6 +33,6 @@ func init() {
 	logger.SetLevel(getLogLevel())
 }
 
-func Logger() *logrus.Logger {
+func GetLogger() *logrus.Logger {
 	return logger
 }

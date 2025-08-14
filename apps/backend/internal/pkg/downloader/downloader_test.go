@@ -1,28 +1,55 @@
 package downloader
 
-import (
-	"testing"
+import "testing"
 
-	"github.com/sirupsen/logrus"
-)
+func createDownloader(t *testing.T) *Downloader {
+	// url := "https://surrit.com/964d8939-b398-4c98-9ea5-e58b9a6164bb/1280x720/video.m3u8"
+	url := "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/tears-of-steel-audio_eng=64008-video_eng=401000.m3u8"
+	name := "tears-of-steel"
 
-var url = "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/tears-of-steel-audio_eng=64008-video_eng=401000.m3u8"
-var name = "tears-of-steel"
-
-func TestDownloader(t *testing.T) {
-	logger := logrus.New()
+	r := NewResource(url, name, "tmp", nil)
 	sf := WithSegmentFinish(func(sr *SegmentRow) {
 		t.Logf("download segment %s finished, status: %d", sr.Path, sr.Status)
 	})
-	tf := WithTaskFinally(func(r *Resource, err error) {
+	tf := WithFinally(func(r *Resource, err error) {
 		if err != nil {
 			t.Log("task error:", err)
 		}
-		t.Logf("task %s finished", r.filename)
+		t.Logf("task %s finished", r.Filename)
 	})
-	d := New(sf, tf)
-	resource := NewResource(url, name, "", nil)
-	d.AddResource(resource, logger)
-	d.Close()
-	d.Wait()
+	return New(r, sf, tf)
+}
+
+func TestMakeSegmentList(t *testing.T) {
+	d := createDownloader(t)
+	d.makeSegmentList()
+	t.Logf("name: %s; segment length: %d", d.resource.Filename, len(d.resource.SegmentList))
+	t.Log(d.resource.SegmentList[0])
+}
+
+func TestDownloadSegments(t *testing.T) {
+	d := createDownloader(t)
+	d.makeSegmentList()
+	d.resource.SegmentList = d.resource.SegmentList[:5]
+	d.resource.SegmentList[2].Status = 1
+
+	d.makeTempDir()
+	d.downloadSegments(func(sr *SegmentRow) {
+		t.Log(sr.Path)
+	})
+	for idx, sr := range d.resource.SegmentList {
+		t.Log(idx, sr.Path, sr.Status)
+	}
+}
+
+func TestMergeSegments(t *testing.T) {
+	d := createDownloader(t)
+	d.makeSegmentList()
+	d.resource.SegmentList = d.resource.SegmentList[:5]
+
+	d.makeTempDir()
+	d.downloadSegments(func(sr *SegmentRow) {
+		t.Log(sr.Path)
+	})
+	d.mergeSegments("tmp")
 }

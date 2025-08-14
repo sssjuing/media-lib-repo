@@ -1,4 +1,4 @@
-package downloader
+package logger
 
 type Logger interface {
 	Print(i ...interface{})

@@ -19,7 +19,7 @@ func (h *Handler) SubmitDownload(c echo.Context) error {
 	if code, err := validateRequest(c, req); err != nil {
 		return c.JSON(code, utils.NewError(err))
 	}
-	if err := download.AddResource(req.Url, req.Name, c.Logger()); err != nil {
+	if err := download.AddTask(req.Url, req.Name, c.Logger()); err != nil {
 		return c.JSON(http.StatusServiceUnavailable, utils.NewError(err))
 	}
 	return c.NoContent(http.StatusAccepted)

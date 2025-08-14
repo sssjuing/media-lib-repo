@@ -21,7 +21,7 @@ var JWTSecret []byte
 func init() {
 	secretKey := config.GetConfig().GetString("server.secret_key")
 	if secretKey == "" {
-		log.Fatalf("secret key is not set")
+		log.Fatal("secret key is not set")
 	}
 	JWTSecret = []byte(secretKey)
 }
@@ -44,7 +44,7 @@ func GetClaims(c echo.Context) *JwtCustomClaims {
 }
 
 func ParseJwtToken(tokenStr string) (*JwtCustomClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenStr, &JwtCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &JwtCustomClaims{}, func(token *jwt.Token) (any, error) {
 		return JWTSecret, nil
 	})
 	if err != nil {

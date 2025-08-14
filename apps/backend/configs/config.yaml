@@ -3,7 +3,7 @@ server:
   video_tags: ["SM", "OL"]
   users:
     - name: user1
-      password: user1password
+      password: user1
   secret_key: gboUV8ZUszxKNqdGMy0J51KLZDDo4uXR
 
 postgres:

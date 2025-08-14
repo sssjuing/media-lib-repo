@@ -23,7 +23,8 @@ func newTokenResponse(u *model.User) *tokenResponse {
 		UserID:   u.ID,
 		Username: u.Username,
 		RegisteredClaims: gojwt.RegisteredClaims{
-			ExpiresAt: gojwt.NewNumericDate(time.Now().Add(time.Hour * 72)),
+			ExpiresAt: gojwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
+			IssuedAt:  gojwt.NewNumericDate(time.Now()),
 		},
 	}
 	token := jwt.GenerateJwtToken(claims)
