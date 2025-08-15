@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { createFileRoute, retainSearchParams } from '@tanstack/react-router';
-import { Card } from 'antd';
+import { Card, message } from 'antd';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { SubmitVideoDTO } from '@repo/service';
 import { services } from '@/services';
@@ -18,6 +18,7 @@ function RouteComponent() {
   const mutation = useMutation({
     mutationFn: services.video.create,
     onSuccess: () => {
+      message.success('创建成功');
       navigate({ to: '..' });
     },
   });

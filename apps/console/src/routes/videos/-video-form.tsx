@@ -1,8 +1,10 @@
 import { FC, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Button, Checkbox, DatePicker, Form, Input, Select, Space } from 'antd';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Button, Checkbox, DatePicker, Divider, Form, Input, Modal, Select, Space, message } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import dayjs from 'dayjs';
-import { SubmitVideoDTO, Video } from '@repo/service';
+import { Actress, SubmitVideoDTO, Video } from '@repo/service';
 import { ImageUpload } from '@/components/image-upload';
 import { services } from '@/services';
 import { useGlobalStore } from '@/store';
@@ -22,14 +24,13 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onB
   const videoTags = useGlobalStore((state) => state.videoTags);
 
   const { data: actressOptions = [] } = useQuery({
-    queryKey: ['/actress-options'],
-    queryFn: async () => {
-      const actressList = await services.actress.list();
-      return actressList?.map(({ id, unique_name, chinese_name }) => ({
+    queryKey: ['/actresses'],
+    queryFn: services.actress.list,
+    select: (actresses) =>
+      actresses.map(({ id, unique_name, chinese_name }) => ({
         value: id,
         label: `${unique_name}[${chinese_name}]`,
-      }));
-    },
+      })),
   });
 
   useEffect(() => {
@@ -88,6 +89,15 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onB
           options={actressOptions}
           mode="multiple"
           filterOption={(input, option) => (option?.label ?? '').includes(input)}
+          popupRender={(menu) => (
+            <>
+              {menu}
+              <Divider style={{ margin: '8px 0' }} />
+              <Button icon={<PlusOutlined />} onClick={() => NiceModal.show(CreateActressFormModal)}>
+                添加演员
+              </Button>
+            </>
+          )}
         />
       </Form.Item>
       <Form.Item label="发行日期" name="release_date" getValueProps={(value) => ({ value: value && dayjs(value) })}>
@@ -122,3 +132,48 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onB
     </Form>
   );
 };
+
+const CreateActressFormModal = NiceModal.create(() => {
+  const modal = useModal();
+  const [form] = Form.useForm();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: services.actress.create,
+    onSuccess: (actress) => {
+      message.success('添加演员成功');
+      queryClient.setQueryData<Actress[]>(['/actresses'], (old) => (old ? [actress, ...old] : [actress]));
+      modal.hide();
+    },
+  });
+
+  return (
+    <Modal
+      title="添加演员"
+      onOk={() => form.submit()}
+      open={modal.visible}
+      okButtonProps={{ loading: mutation.isPending }}
+      onCancel={() => modal.hide()}
+      afterClose={() => modal.remove()}
+    >
+      <Form
+        form={form}
+        wrapperCol={{ span: 15 }}
+        labelCol={{ span: 6 }}
+        onFinish={mutation.mutate}
+        className="pt-4!"
+        requiredMark={false}
+      >
+        <Form.Item label="姓名" name="unique_name" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="中文名字" name="chinese_name" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="英文名字" name="english_name">
+          <Input />
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+});
