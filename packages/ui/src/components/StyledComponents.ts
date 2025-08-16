@@ -11,7 +11,7 @@ export const NowrapBlock = styled.span<{ maxWidth: number; fixed?: boolean }>`
 
 export const AnchorBtn = styled.a<{ danger?: boolean }>`
   font-size: 14px;
-  color: ${({ danger }) => (danger ? '#ff4e4f' : '#000000')} !important;
+  color: ${({ danger }) => (danger ? '#ff4e4f' : '#545454')} !important;
   transition: color 300ms;
   :hover {
     color: ${({ danger }) => (danger ? '#ff7875' : '#1890ff')} !important;

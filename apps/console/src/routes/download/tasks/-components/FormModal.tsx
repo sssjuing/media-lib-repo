@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Form, Input, Modal, message } from 'antd';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { request } from '@/services';
@@ -6,12 +6,14 @@ import { request } from '@/services';
 export const FormModal = NiceModal.create(() => {
   const modal = useModal();
   const [form] = Form.useForm();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (vals) => request({ method: 'POST', url: '/downloads', data: vals }),
+    mutationFn: (vals) => request({ method: 'POST', url: '/download', data: vals }),
     onSuccess: () => {
       message.success('添加成功');
       modal.hide();
+      queryClient.invalidateQueries({ queryKey: ['resources'] });
     },
     onError: (e) => {
       console.error(e);

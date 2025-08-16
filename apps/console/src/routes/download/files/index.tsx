@@ -3,9 +3,9 @@ import { Card, Table } from 'antd';
 import { GridContent } from '@repo/antd-layout';
 import { request } from '@/services';
 
-export const Route = createFileRoute('/downloads/files/')({
+export const Route = createFileRoute('/download/files/')({
   staticData: { name: '下载文件', weight: 2 },
-  loader: () => request<{ path: string; size: number }[]>({ method: 'GET', url: '/downloads/files' }),
+  loader: () => request<{ path: string; size: number }[]>({ method: 'GET', url: '/download/files' }),
   component: RouteComponent,
 });
 

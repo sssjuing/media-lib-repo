@@ -153,7 +153,11 @@ func (d *Downloader) Execute() {
 		}
 
 		d.logger.Info("delete temporary directory")
-		return os.RemoveAll(d.resource.TempDir)
+		if err := os.RemoveAll(d.resource.TempDir); err != nil {
+			return err
+		}
+		d.resource.Success = true
+		return nil
 	}()
 	d.onFinally(d.resource, err)
 }

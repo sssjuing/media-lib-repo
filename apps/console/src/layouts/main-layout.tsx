@@ -30,7 +30,7 @@ export const MainLayout: FC<PropsWithChildren> = ({ children }) => {
     return [{ path: '/', name: '首页', reachable: true, children: getRouteData(routes) }];
   }, [router]);
   return (
-    <div className="min-w-[800px]">
+    <div className="min-w-[900px]">
       <AntdLayout
         rootPath="/"
         theme="dark"
