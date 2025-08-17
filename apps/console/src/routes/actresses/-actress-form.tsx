@@ -70,7 +70,7 @@ export const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submittin
         <Input />
       </Form.Item>
       <Form.Item label="其他名字" name="other_names">
-        <Select mode="tags" placeholder="逗号或顿号分隔不同名字" />
+        <Select mode="tags" placeholder="逗号或顿号分隔不同名字" tokenSeparators={[',', '、']} />
       </Form.Item>
       <Form.Item label="出生日期" name="birth_date" getValueProps={(value) => ({ value: value && dayjs(value) })}>
         <DatePicker />
