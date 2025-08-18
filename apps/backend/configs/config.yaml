@@ -1,10 +1,11 @@
 server:
   log_level: debug # debug | info | warn | error
-  video_tags: ["SM", "OL"]
+  secret_key: gboUV8ZUszxKNqdGMy0J51KLZDDo4uXR
+  work_path: /data
   users:
     - name: user1
       password: user1
-  secret_key: gboUV8ZUszxKNqdGMy0J51KLZDDo4uXR
+  video_tags: ["SM", "OL"]
 
 postgres:
   host: 127.0.0.1

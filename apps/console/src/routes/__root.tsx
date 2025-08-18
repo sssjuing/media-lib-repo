@@ -13,14 +13,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   staticData: { name: '' },
   component: RootComponent,
   notFoundComponent: NotFound,
-  errorComponent: () => (
-    <>
-      <MainLayout>
-        <Exception type={500} title="请求错误" className="mt-20" />
-      </MainLayout>
-      <TanStackRouterDevtools />
-    </>
-  ),
+  errorComponent: () => <Exception type={500} title="请求错误" className="mt-20" />,
 });
 
 function RootComponent() {

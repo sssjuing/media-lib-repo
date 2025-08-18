@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"media-lib/internal/app/server/download"
 	"media-lib/internal/app/server/utils"
+	"media-lib/internal/pkg/config"
 	"media-lib/internal/pkg/downloader"
 	commonUtils "media-lib/internal/pkg/utils"
 	"net/http"
+	"path/filepath"
 
 	"github.com/labstack/echo/v4"
 	"github.com/samber/lo"
@@ -65,7 +67,8 @@ func (h *Handler) SubmitDownload(c echo.Context) error {
 }
 
 func (h *Handler) ListDownloadedFiles(c echo.Context) error {
-	files, err := commonUtils.ListFilesInDir("/data")
+	workPath := config.GetConfig().GetString("server.work_path")
+	files, err := commonUtils.ListFilesInDir(filepath.Join(workPath, "downloads"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}

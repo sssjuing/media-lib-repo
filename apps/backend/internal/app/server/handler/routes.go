@@ -19,6 +19,7 @@ func (h *Handler) Register(g *echo.Group) {
 	files.GET("", h.ListFiles)
 	files.GET("/:folder_name", h.ListFiles)
 	files.POST("/upload-image", h.UploadImage)
+	files.POST("/upload-local-file", h.UploadLocalFile)
 
 	g.GET("/actresses", h.ListActresses)
 	g.POST("/actresses", h.CreateActress)

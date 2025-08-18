@@ -23,10 +23,10 @@ export const FormModal = NiceModal.create(() => {
   return (
     <Modal
       title="添加下载任务"
-      onOk={() => form.submit()}
       open={modal.visible}
+      onOk={() => form.submit()}
       okButtonProps={{ loading: mutation.isPending }}
-      onCancel={() => modal.hide()}
+      onCancel={() => !mutation.isPending && modal.hide()}
       afterClose={() => modal.remove()}
     >
       <Form

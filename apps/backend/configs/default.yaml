@@ -1,5 +1,10 @@
 server:
   log_level: warn # debug | info | warn | error
+  secret_key: gboUV8ZUszxKNqdGMy0J51KLZDDo4uXR
+  work_path: /data
+  users:
+    - name: user1
+      password: user1
   video_tags: ["SM", "OL"]
 
 postgres:

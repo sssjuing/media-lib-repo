@@ -3,6 +3,7 @@ package download
 import (
 	"context"
 	"fmt"
+	"media-lib/internal/pkg/config"
 	"media-lib/internal/pkg/downloader"
 	"media-lib/internal/pkg/logger"
 	"media-lib/pkg/taskqueue"
@@ -37,7 +38,8 @@ func createDownloader(resource *downloader.Resource, logger logger.Logger) *down
 }
 
 func AddTask(url, name string, logger logger.Logger) error {
-	resource := downloader.NewResource(url, name, filepath.Join("/var/tmp/media-lib", name), nil)
+	workPath := config.GetConfig().GetString("server.work_path")
+	resource := downloader.NewResource(url, name, filepath.Join(workPath, "tmp", name), nil)
 	if ok := hashSet.Add(resource.ID); !ok {
 		return fmt.Errorf("task %s is already included in the queue, please do not add it repeatedly", name)
 	}

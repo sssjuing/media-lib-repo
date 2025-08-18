@@ -3,6 +3,7 @@ package downloader
 import (
 	"bufio"
 	"fmt"
+	"media-lib/internal/pkg/config"
 	"media-lib/internal/pkg/logger"
 	"net/http"
 	"os"
@@ -114,6 +115,9 @@ func (d *Downloader) checkSegments() bool {
 }
 
 func (d *Downloader) mergeSegments(targetDir string) error {
+	if err := os.MkdirAll(targetDir, 0755); err != nil {
+		return fmt.Errorf("fail to create target directory: %w", err)
+	}
 	segmentPaths := lo.Map(d.resource.SegmentList, func(sr SegmentRow, _ int) string {
 		return sr.Path
 	})
@@ -148,7 +152,8 @@ func (d *Downloader) Execute() {
 		}
 
 		d.logger.Info("merging segments")
-		if err := d.mergeSegments("/data"); err != nil {
+		targetDir := filepath.Join(config.GetConfig().GetString("server.work_path"), "downloads", d.resource.Filename)
+		if err := d.mergeSegments(targetDir); err != nil {
 			return fmt.Errorf("fail to merging segments: %w", err)
 		}
 
