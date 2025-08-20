@@ -2,16 +2,16 @@ package handler
 
 import (
 	"fmt"
-	"media-lib/internal/app/server/download"
-	"media-lib/internal/app/server/utils"
-	"media-lib/internal/pkg/config"
-	"media-lib/internal/pkg/downloader"
-	commonUtils "media-lib/internal/pkg/utils"
 	"net/http"
 	"path/filepath"
 
 	"github.com/labstack/echo/v4"
 	"github.com/samber/lo"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/download"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/utils"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/downloader"
+	commonUtils "github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/utils"
 )
 
 func (h *Handler) ListResources(c echo.Context) error {

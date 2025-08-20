@@ -3,9 +3,9 @@ package config
 import (
 	"fmt"
 	"log"
-	"media-lib/internal/pkg/utils"
 
 	"github.com/spf13/viper"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/utils"
 )
 
 var config *viper.Viper

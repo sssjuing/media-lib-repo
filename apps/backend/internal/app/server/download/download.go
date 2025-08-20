@@ -3,13 +3,13 @@ package download
 import (
 	"context"
 	"fmt"
-	"media-lib/internal/pkg/config"
-	"media-lib/internal/pkg/downloader"
-	"media-lib/internal/pkg/logger"
-	"media-lib/pkg/taskqueue"
 	"path/filepath"
 
 	mapset "github.com/deckarep/golang-set/v2"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/downloader"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/logger"
+	"github.com/sssjuing/media-lib-repo/apps/backend/pkg/taskqueue"
 )
 
 var hashSet mapset.Set[string]

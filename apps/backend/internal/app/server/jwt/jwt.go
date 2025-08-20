@@ -3,10 +3,10 @@ package jwt
 import (
 	"fmt"
 	"log"
-	"media-lib/internal/pkg/config"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
 type JwtCustomClaims struct {

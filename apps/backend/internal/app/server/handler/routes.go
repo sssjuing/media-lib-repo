@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/middleware"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/middleware"
 )
 
 func (h *Handler) Register(g *echo.Group) {

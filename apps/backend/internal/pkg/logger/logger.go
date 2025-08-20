@@ -1,9 +1,8 @@
 package logger
 
 import (
-	"media-lib/internal/pkg/config"
-
 	"github.com/sirupsen/logrus"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
 var logger *logrus.Logger

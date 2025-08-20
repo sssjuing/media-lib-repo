@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/jwt"
-	"media-lib/internal/app/server/model"
 	"time"
 
 	gojwt "github.com/golang-jwt/jwt/v5"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/jwt"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
 )
 
 type Response[T any] struct {

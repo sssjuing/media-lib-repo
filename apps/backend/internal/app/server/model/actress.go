@@ -2,9 +2,9 @@ package model
 
 import (
 	"encoding/json"
-	"media-lib/internal/app/server/types"
 	"time"
 
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/types"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )

@@ -3,9 +3,8 @@ package download
 // https://grok.com/share/c2hhcmQtMw%3D%3D_6e9aa440-3650-4cee-83bf-43829ea16612
 
 import (
-	"media-lib/internal/pkg/downloader"
-
 	"github.com/samber/lo"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/downloader"
 )
 
 type Cache struct {

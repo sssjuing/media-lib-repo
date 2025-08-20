@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"media-lib/internal/app/server/repository"
-	"media-lib/internal/app/server/utils"
-	commonUtils "media-lib/internal/pkg/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/repository"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/utils"
+	commonUtils "github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/utils"
 )
 
 func ActressChecker(ar repository.ActressRepository) echo.MiddlewareFunc {

@@ -1,9 +1,9 @@
 package setup
 
 import (
-	"media-lib/internal/app/server/db"
-	"media-lib/internal/pkg/config"
-	"media-lib/internal/pkg/logger"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/db"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/logger"
 )
 
 func Run() {

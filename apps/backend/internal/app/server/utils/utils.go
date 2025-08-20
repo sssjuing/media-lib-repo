@@ -2,9 +2,9 @@ package utils
 
 import (
 	"fmt"
-	"media-lib/internal/pkg/config"
 
 	"github.com/labstack/gommon/log"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
 func GetLogLevel() log.Lvl {

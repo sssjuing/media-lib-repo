@@ -1,6 +1,6 @@
-module media-lib
+module github.com/sssjuing/media-lib-repo/apps/backend
 
-go 1.23.2
+go 1.24.3
 
 require (
 	github.com/deckarep/golang-set/v2 v2.8.0

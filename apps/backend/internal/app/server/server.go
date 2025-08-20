@@ -1,15 +1,15 @@
 package server
 
 import (
-	"media-lib/internal/app/server/db"
-	"media-lib/internal/app/server/download"
-	"media-lib/internal/app/server/handler"
-	"media-lib/internal/app/server/repository"
-	"media-lib/internal/app/server/router"
-	"media-lib/internal/pkg/config"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/db"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/download"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/handler"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/repository"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/router"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
 func Run() {

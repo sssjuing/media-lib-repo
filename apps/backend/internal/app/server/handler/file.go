@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/utils"
-	"media-lib/internal/pkg/oss"
 	"net/http"
 	"path/filepath"
 
 	"github.com/labstack/echo/v4"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/utils"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/oss"
 )
 
 func (h *Handler) ListFiles(c echo.Context) error {

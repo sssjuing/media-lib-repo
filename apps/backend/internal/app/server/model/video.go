@@ -2,11 +2,11 @@ package model
 
 import (
 	"encoding/json"
-	"media-lib/internal/app/server/types"
-	"media-lib/internal/pkg/config"
 	"time"
 
 	"github.com/samber/lo"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/types"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )

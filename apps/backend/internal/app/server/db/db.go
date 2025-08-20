@@ -1,8 +1,7 @@
 package db
 
 import (
-	"media-lib/internal/app/server/model"
-
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

@@ -1,14 +1,14 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/model"
-	"media-lib/internal/app/server/repository"
-	"media-lib/internal/app/server/types"
-	"media-lib/internal/app/server/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/samber/lo"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/repository"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/types"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/utils"
 )
 
 // func (h *Handler) ListVideos(c echo.Context) error {

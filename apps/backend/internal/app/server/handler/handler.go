@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"media-lib/internal/app/server/repository"
-	"media-lib/internal/app/server/service"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/repository"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/service"
 )
 
 type Handler struct {

@@ -1,11 +1,10 @@
 package service
 
 import (
-	"media-lib/internal/app/server/model"
-	"media-lib/internal/app/server/repository"
-	"media-lib/internal/app/server/types"
-
 	"github.com/samber/lo"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/repository"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/types"
 	"gorm.io/datatypes"
 )
 

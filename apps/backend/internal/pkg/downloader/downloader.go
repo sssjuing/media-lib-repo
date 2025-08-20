@@ -3,8 +3,6 @@ package downloader
 import (
 	"bufio"
 	"fmt"
-	"media-lib/internal/pkg/config"
-	"media-lib/internal/pkg/logger"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -12,6 +10,8 @@ import (
 
 	"github.com/gammazero/workerpool"
 	"github.com/samber/lo"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/logger"
 )
 
 type Option func(*Downloader)

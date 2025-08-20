@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"media-lib/internal/pkg/config"
 	"mime"
 	"mime/multipart"
 	"path/filepath"
@@ -13,6 +12,7 @@ import (
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
 var minioClient *minio.Client

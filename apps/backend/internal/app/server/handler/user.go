@@ -2,13 +2,13 @@ package handler
 
 import (
 	"fmt"
-	"media-lib/internal/app/server/jwt"
-	"media-lib/internal/app/server/model"
-	"media-lib/internal/app/server/utils"
-	"media-lib/internal/pkg/config"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/jwt"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/utils"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
 func (h *Handler) Login(c echo.Context) error {

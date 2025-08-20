@@ -1,10 +1,9 @@
 package router
 
 import (
-	"media-lib/internal/app/server/utils"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/utils"
 )
 
 func New() *echo.Echo {

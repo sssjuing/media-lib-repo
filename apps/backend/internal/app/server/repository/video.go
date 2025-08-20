@@ -3,8 +3,8 @@ package repository
 import (
 	"encoding/json"
 	"errors"
-	"media-lib/internal/app/server/model"
 
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )

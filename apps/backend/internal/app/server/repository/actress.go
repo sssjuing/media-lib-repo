@@ -2,8 +2,8 @@ package repository
 
 import (
 	"errors"
-	"media-lib/internal/app/server/model"
 
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
