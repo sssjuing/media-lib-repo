@@ -23,12 +23,9 @@ export const UploadModal = NiceModal.create(({ paths = [] }: UploadModalProps) =
       draft.pending = true;
     });
     for (let i = 0; i < paths.length; i++) {
+      const data = { target_dir: state.targetDir, file_path: paths[i] };
       try {
-        await request({
-          method: 'POST',
-          url: '/files/upload-local-file',
-          data: { target_dir: state.targetDir, file_path: paths[i] },
-        });
+        await request({ method: 'POST', url: '/files/upload-local-file', data });
         setState((draft) => {
           draft.status[i] = 1;
         });
