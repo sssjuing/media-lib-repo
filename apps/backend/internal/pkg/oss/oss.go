@@ -4,12 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"mime"
 	"mime/multipart"
-	"path/filepath"
 	"sort"
 	"time"
 
+	"github.com/gabriel-vasile/mimetype"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
@@ -103,8 +102,8 @@ func UploadFile(file *multipart.File, objectPath, contentType string) (*UploadIn
 }
 
 func UploadLocalFile(ctx context.Context, objectPath, filePath string) (*UploadInfo, error) {
-	contentType := mime.TypeByExtension(filepath.Ext(filePath))
-	info, err := minioClient.FPutObject(ctx, bucketName, objectPath, filePath, minio.PutObjectOptions{ContentType: contentType})
+	mt, _ := mimetype.DetectFile(filePath)
+	info, err := minioClient.FPutObject(ctx, bucketName, objectPath, filePath, minio.PutObjectOptions{ContentType: mt.String()})
 	if err != nil {
 		return nil, err
 	}

@@ -3,7 +3,6 @@ package oss
 import (
 	"context"
 	"fmt"
-	"mime"
 	"testing"
 )
 
@@ -12,12 +11,6 @@ func TestGetFiles(t *testing.T) {
 	for _, item := range result {
 		fmt.Println(*item)
 	}
-}
-
-func TestTypeByExtension(t *testing.T) {
-	t.Log(mime.TypeByExtension(".mp4"))
-	t.Log(mime.TypeByExtension(".jpg"))
-	t.Log(mime.TypeByExtension("x.jpg"))
 }
 
 func TestUploadLocalFile(t *testing.T) {
