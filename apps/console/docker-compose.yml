@@ -1,0 +1,8 @@
+services:
+  console:
+    image: media-lib-console
+    build:
+      context: ../..
+      dockerfile: apps/console/Dockerfile
+    ports:
+      - 8080:80
