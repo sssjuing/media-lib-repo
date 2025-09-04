@@ -5,7 +5,7 @@ import NiceModal from '@ebay/nice-modal-react';
 import { GridContent } from '@repo/antd-layout';
 import { Exception } from '@repo/ui';
 import { request } from '@/services';
-import { UploadModal } from './-components';
+import { BatchCopyModal, ConvertModal, UploadModal } from './-components';
 
 export const Route = createFileRoute('/download/files/')({
   staticData: { name: '下载文件', weight: 2 },
@@ -26,13 +26,13 @@ function RouteComponent() {
             message={
               <div className="flex items-center">
                 <div className="mr-auto">
-                  Already select &nbsp;
+                  已选择 &nbsp;
                   <a style={{ fontWeight: 600 }}>{selected.length}</a>
-                  &nbsp; items.&nbsp;&nbsp;
-                  {selected.length > 0 && <a onClick={() => setSelected([])}>Clear</a>}
+                  &nbsp; 个文件。&nbsp;&nbsp;
+                  {selected.length > 0 && <a onClick={() => setSelected([])}>清空</a>}
                 </div>
-                <Button type="link" onClick={() => NiceModal.show(UploadModal, { paths: selected })}>
-                  上传到 MinIO
+                <Button type="link" onClick={() => NiceModal.show(BatchCopyModal, { paths: selected })}>
+                  批量复制
                 </Button>
               </div>
             }
@@ -45,6 +45,18 @@ function RouteComponent() {
           columns={[
             { title: '路径', dataIndex: 'path' },
             { title: '大小', dataIndex: 'size', render: (val) => (val / 1024 / 1024).toFixed(2) + ' MB' },
+            {
+              title: '操作',
+              render: (_, record) => {
+                const { path } = record;
+                const ext = path.slice(path.lastIndexOf('.'));
+                return ext === '.ts' ? (
+                  <a onClick={() => NiceModal.show(ConvertModal, { path })}>转换</a>
+                ) : (
+                  <a onClick={() => NiceModal.show(UploadModal, { path })}>上传</a>
+                );
+              },
+            },
           ]}
           dataSource={data}
           rowSelection={{

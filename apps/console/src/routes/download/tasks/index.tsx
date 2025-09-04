@@ -5,8 +5,7 @@ import NiceModal from '@ebay/nice-modal-react';
 import { GridContent } from '@repo/antd-layout';
 import { AnchorBtn } from '@repo/ui';
 import { request } from '@/services';
-import { DownloadModal } from './-components/DownloadModal';
-import { FormModal } from './-components/FormModal';
+import { DownloadModal, FormModal } from './-components';
 
 export const Route = createFileRoute('/download/tasks/')({
   staticData: { name: '下载任务', weight: 1 },
