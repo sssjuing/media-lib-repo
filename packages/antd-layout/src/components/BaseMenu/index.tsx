@@ -44,7 +44,7 @@ const BaseMenu: FC<BaseMenuProps> = (props) => {
     <Menu
       mode={mode ?? 'inline'}
       theme={theme}
-      items={menuItems}
+      items={menuItems as MenuProps['items']}
       selectedKeys={selectedKeys}
       openKeys={openKeys}
       onOpenChange={handleOpenChange}
