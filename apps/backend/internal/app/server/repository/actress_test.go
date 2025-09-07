@@ -7,15 +7,14 @@ import (
 	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
-var actressRepo ActressRepository
-
-func init() {
+func createActressRepository() ActressRepository {
 	dsn := config.GetPostgresDsn()
 	d := db.NewDB(dsn)
-	actressRepo = NewActressRepositoryImpl(d)
+	return NewActressRepositoryImpl(d)
 }
 
 func TestFindVideos(t *testing.T) {
+	actressRepo := createActressRepository()
 	videos, _ := actressRepo.FindVideos(62)
 	for _, v := range videos {
 		t.Log("\n", v.SerialNumber, v.ReleaseDate)

@@ -7,15 +7,14 @@ import (
 	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
-var videoRepo VideoRepository
-
-func init() {
+func createVideoRepository() VideoRepository {
 	dsn := config.GetPostgresDsn()
 	d := db.NewDB(dsn)
-	videoRepo = NewVideoRepositoryImpl(d)
+	return NewVideoRepositoryImpl(d)
 }
 
 func TestFindAll(t *testing.T) {
+	videoRepo := createVideoRepository()
 	videos, _ := videoRepo.FindAll(VidoesQueryOptions{Tags: []string{"OL"}})
 	t.Log(len(videos))
 	for _, v := range videos {
@@ -29,6 +28,7 @@ func TestFindAll(t *testing.T) {
 }
 
 func TestPaginateAll(t *testing.T) {
+	videoRepo := createVideoRepository()
 	videos, _ := videoRepo.PaginateAll(VidoesQueryOptions{Page: 1, Size: 10, Search: "RO", Tags: []string{"OL"}})
 	for _, v := range videos {
 		title := "-"
@@ -40,6 +40,7 @@ func TestPaginateAll(t *testing.T) {
 }
 
 func TestCount(t *testing.T) {
+	videoRepo := createVideoRepository()
 	count1, _ := videoRepo.Count(VidoesQueryOptions{})
 	t.Log(count1)
 	count2, _ := videoRepo.Count(VidoesQueryOptions{Tags: []string{"OL"}})

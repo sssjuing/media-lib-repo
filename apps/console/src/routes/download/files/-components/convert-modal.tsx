@@ -1,4 +1,4 @@
-import { Alert, Modal } from 'antd';
+import { Alert, Modal, Typography } from 'antd';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { CodeHighlighter } from '@/components/code-highlighter';
 
@@ -29,7 +29,8 @@ linuxserver/ffmpeg:6.1.1 \\
       <div className="my-4">
         <Alert message="将以下命令拷贝到目标主机上执行" type="info" showIcon />
       </div>
-      <div className="flex overflow-auto">
+      <div className="relative flex overflow-auto">
+        <Typography.Paragraph copyable={{ text: cmd }} className="absolute top-5 right-5" />
         <CodeHighlighter code={cmd} lang="bash" className="flex-1 w-0" />
       </div>
     </Modal>
