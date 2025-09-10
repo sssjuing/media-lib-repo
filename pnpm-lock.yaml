@@ -88,6 +88,9 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
+      lucide-react:
+        specifier: ^0.522.0
+        version: 0.522.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -9199,6 +9202,10 @@ snapshots:
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
+
+  lucide-react@0.522.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   lucide-react@0.522.0(react@19.1.1):
     dependencies:
