@@ -5,7 +5,7 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import dayjs from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import { useImmer } from 'use-immer';
+import { useSetState } from 'react-use';
 import { request, services } from '@/services';
 
 dayjs.extend(quarterOfYear);
@@ -20,7 +20,7 @@ export const UploadModal = NiceModal.create(({ path }: UploadModalProps) => {
   const code = filename?.replace(/_\d+p\.mp4$/, '');
 
   const modal = useModal();
-  const [state, setState] = useImmer({
+  const [state, setState] = useSetState({
     // targetDir: `videos/avs/${dayjs().format('YYYYMM')}/`,
     target: `videos/avs/${now.year()}Q${now.quarter()}/`,
     addToVideoUrl: true,
@@ -33,9 +33,7 @@ export const UploadModal = NiceModal.create(({ path }: UploadModalProps) => {
   const video = query.data?.data[0];
 
   useEffect(() => {
-    setState((draft) => {
-      draft.addToVideoUrl = !video?.video_url;
-    });
+    setState({ addToVideoUrl: !video?.video_url });
   }, [setState, video?.video_url]);
 
   const mutation = useMutation({
@@ -70,11 +68,7 @@ export const UploadModal = NiceModal.create(({ path }: UploadModalProps) => {
       <Input
         addonBefore="/media-lib/"
         value={state.target}
-        onChange={(e) =>
-          setState((draft) => {
-            draft.target = e.target.value;
-          })
-        }
+        onChange={(e) => setState({ target: e.target.value })}
         disabled={mutation.isPending}
       />
       {video && (
@@ -82,11 +76,7 @@ export const UploadModal = NiceModal.create(({ path }: UploadModalProps) => {
           <div className="mt-4 mb-2">
             <Checkbox
               checked={state.addToVideoUrl}
-              onChange={(e) =>
-                setState((draft) => {
-                  draft.addToVideoUrl = e.target.checked;
-                })
-              }
+              onChange={(e) => setState({ addToVideoUrl: e.target.checked })}
               disabled={mutation.isPending}
             >
               是否将 Minio 的路径添加到视频的路径中
