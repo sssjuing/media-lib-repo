@@ -104,7 +104,7 @@ function RouteComponent() {
       <List
         rowKey="id"
         dataSource={videos}
-        grid={{ gutter: 12, xxl: 4, xl: 3, lg: 3, md: 3, sm: 3, xs: 3 }}
+        grid={{ gutter: 12, xxl: 4, xl: 3, lg: 2, md: 2, sm: 2, xs: 2 }}
         pagination={{ pageSize: 12 }}
         renderItem={(i) => (
           <List.Item>

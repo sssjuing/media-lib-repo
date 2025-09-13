@@ -9,6 +9,8 @@ server:
 
 postgres:
   host: host.docker.internal
+  replicas:
+    - host.docker.internal
   port: 5432
   username: medialibadmin
   password: medialibpassword

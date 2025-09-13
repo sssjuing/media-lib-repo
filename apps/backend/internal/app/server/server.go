@@ -19,7 +19,8 @@ func Run() {
 	download.Init(r.Logger)
 
 	dsn := config.GetPostgresDsn()
-	d := db.NewDB(dsn)
+	replicas := config.GetPostgresReplicas()
+	d := db.NewDB(dsn, replicas)
 
 	ar := repository.NewActressRepositoryImpl(d)
 	vr := repository.NewVideoRepositoryImpl(d)

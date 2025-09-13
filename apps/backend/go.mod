@@ -19,7 +19,8 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/datatypes v1.2.5
 	gorm.io/driver/postgres v1.5.0
-	gorm.io/gorm v1.25.12
+	gorm.io/gorm v1.26.0
+	gorm.io/plugin/dbresolver v1.6.2
 )
 
 require (
@@ -71,5 +72,5 @@ require (
 	golang.org/x/text v0.25.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
-	gorm.io/driver/mysql v1.5.6 // indirect
+	gorm.io/driver/mysql v1.5.7 // indirect
 )

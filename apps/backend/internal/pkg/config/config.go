@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/samber/lo"
 	"github.com/spf13/viper"
 	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/utils"
 )
@@ -32,15 +33,25 @@ func GetConfig() *viper.Viper {
 	return config
 }
 
-func GetPostgresDsn() string {
-	host := config.GetString("postgres.host")
-	port := config.GetString("postgres.port")
+func makeDsn(host string) string {
 	username := config.GetString("postgres.username")
 	password := config.GetString("postgres.password")
 	dbname := config.GetString("postgres.dbname")
+	port := config.GetString("postgres.port")
 	// host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, username, password, dbname, port)
-	return dsn
+	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, username, password, dbname, port)
+}
+
+func GetPostgresDsn() string {
+	host := config.GetString("postgres.host")
+	return makeDsn(host)
+}
+
+func GetPostgresReplicas() []string {
+	hosts := config.GetStringSlice("postgres.replicas")
+	return lo.Map(hosts, func(host string, index int) string {
+		return makeDsn(host)
+	})
 }
 
 func GetMinioPublicUrl() string {

@@ -1,18 +1,22 @@
 package config
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestGetPostgresDsn(t *testing.T) {
 	dsn := GetPostgresDsn()
-	fmt.Println(dsn)
+	t.Logf("dsn: %s", dsn)
+}
+
+func TestGetPostgresReplicas(t *testing.T) {
+	replicas := GetPostgresReplicas()
+	for _, r := range replicas {
+		t.Logf("replica: %s", r)
+	}
 }
 
 func TestGetMinioPublicUrl(t *testing.T) {
 	url := GetMinioPublicUrl()
-	fmt.Println(url)
+	t.Logf("url: %s", url)
 }
 
 func TestGetUsers(t *testing.T) {

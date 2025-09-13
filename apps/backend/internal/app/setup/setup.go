@@ -9,7 +9,7 @@ import (
 func Run() {
 	logger := logger.GetLogger()
 	dsn := config.GetPostgresDsn()
-	d := db.NewDB(dsn)
+	d := db.NewDB(dsn, config.GetPostgresReplicas())
 	db.AutoMigrate(d)
 	logger.Info("setup successfully")
 }

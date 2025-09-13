@@ -9,6 +9,8 @@ server:
 
 postgres:
   host: 127.0.0.1
+  replicas:
+    - 127.0.0.1
   port: 5432
   username: postgresadmin
   password: postgrespassword

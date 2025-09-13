@@ -46,7 +46,7 @@ export const VideoCard: FC<VideoCardProps> = ({ video }) => {
     <div className="bg-white">
       <Image
         src={video.cover_url || 'https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'}
-        className="object-cover"
+        className="object-contain aspect-[40/27]"
       />
       <div className="p-3">
         <div>

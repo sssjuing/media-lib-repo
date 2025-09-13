@@ -9,7 +9,7 @@ import (
 
 func createVideoRepository() VideoRepository {
 	dsn := config.GetPostgresDsn()
-	d := db.NewDB(dsn)
+	d := db.NewDB(dsn, config.GetPostgresReplicas())
 	return NewVideoRepositoryImpl(d)
 }
 

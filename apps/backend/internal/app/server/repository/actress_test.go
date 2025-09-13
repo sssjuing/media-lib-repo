@@ -9,7 +9,7 @@ import (
 
 func createActressRepository() ActressRepository {
 	dsn := config.GetPostgresDsn()
-	d := db.NewDB(dsn)
+	d := db.NewDB(dsn, config.GetPostgresReplicas())
 	return NewActressRepositoryImpl(d)
 }
 
