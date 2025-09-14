@@ -42,6 +42,8 @@ interface VideoCardProps {
 }
 
 export const VideoCard: FC<VideoCardProps> = ({ video }) => {
+  const title = video.chinese_title || video.title;
+
   return (
     <div className="bg-white">
       <Image
@@ -69,7 +71,9 @@ export const VideoCard: FC<VideoCardProps> = ({ video }) => {
         <div>
           <div className="flex mr-3 mb-1">
             <div className="mr-2 after:content-[':'] after:ml-0.5">片名{video.chinese_title && '(中)'}</div>
-            <div className="flex-1 truncate">{video.chinese_title || video.title}</div>
+            <div className="flex-1 truncate" title={title}>
+              {title}
+            </div>
           </div>
           <div className="flex mr-3 mb-1">
             <div className="mr-2 after:content-[':'] after:ml-0.5">演员</div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Alert, Button, Card, Table } from 'antd';
+import { Alert, Button, Card, Divider, Modal, Table } from 'antd';
 import NiceModal from '@ebay/nice-modal-react';
 import { GridContent } from '@repo/antd-layout';
 import { Exception } from '@repo/ui';
@@ -31,9 +31,40 @@ function RouteComponent() {
                   &nbsp; 个文件。&nbsp;&nbsp;
                   {selected.length > 0 && <a onClick={() => setSelected([])}>清空</a>}
                 </div>
-                <Button type="link" onClick={() => NiceModal.show(BatchCopyModal, { paths: selected })}>
-                  批量复制
-                </Button>
+                <div>
+                  <Button
+                    type="link"
+                    disabled={selected.length === 0}
+                    onClick={() => NiceModal.show(BatchCopyModal, { paths: selected })}
+                    className="p-0! h-5.5!"
+                  >
+                    批量复制
+                  </Button>
+                  <Divider type="vertical" />
+                  <Button
+                    type="link"
+                    danger
+                    disabled={selected.length === 0}
+                    onClick={() =>
+                      Modal.confirm({
+                        title: '确认删除以下文件吗？',
+                        content: (
+                          <ul>
+                            {selected.map((path) => (
+                              <li key={path}>{path}</li>
+                            ))}
+                          </ul>
+                        ),
+                        okText: '删除',
+                        okButtonProps: { danger: true },
+                        maskClosable: true,
+                      })
+                    }
+                    className="p-0! h-5.5!"
+                  >
+                    批量删除
+                  </Button>
+                </div>
               </div>
             }
             type="info"
@@ -64,6 +95,7 @@ function RouteComponent() {
             selectedRowKeys: selected,
             onChange: (keys) => setSelected(keys as string[]),
           }}
+          pagination={{ showSizeChanger: true, showTotal: (total) => `共 ${total} 条` }}
         />
       </Card>
     </GridContent>
