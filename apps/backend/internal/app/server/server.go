@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/db"
@@ -30,7 +31,15 @@ func Run() {
 	h.Register(v1)
 
 	r.GET("/", func(c echo.Context) error {
-		return c.Redirect(http.StatusSeeOther, "/h5")
+		ua := strings.ToLower(c.Request().UserAgent())
+		isMobile := strings.Contains(ua, "mobile") ||
+			strings.Contains(ua, "android") ||
+			strings.Contains(ua, "iphone") ||
+			strings.Contains(ua, "ipad")
+		if isMobile {
+			return c.Redirect(http.StatusSeeOther, "/h5")
+		}
+		return c.Redirect(http.StatusSeeOther, "/console")
 	})
 
 	r.Logger.Fatal(r.Start(":1323"))
