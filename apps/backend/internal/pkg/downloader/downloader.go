@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/gammazero/workerpool"
 	"github.com/samber/lo"
@@ -152,7 +153,7 @@ func (d *Downloader) Execute() {
 		}
 
 		d.logger.Info("merging segments")
-		targetDir := filepath.Join(config.GetConfig().GetString("server.work_path"), "downloads", d.resource.Filename)
+		targetDir := filepath.Join(config.GetConfig().GetString("server.work_path"), "downloads", time.Now().Format("20060102"))
 		if err := d.mergeSegments(targetDir); err != nil {
 			return fmt.Errorf("fail to merging segments: %w", err)
 		}
