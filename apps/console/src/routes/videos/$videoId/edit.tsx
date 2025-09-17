@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { createFileRoute, retainSearchParams } from '@tanstack/react-router';
-import { Button, Card, Popconfirm, message } from 'antd';
+import { Button, Card, Popconfirm, Tag, message } from 'antd';
+import { useSetState } from 'react-use';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
-import { SubmitVideoDTO } from '@repo/service';
+import { SubmitVideoDTO, Video } from '@repo/service';
 import { services } from '@/services';
 import { VideoForm } from '../-video-form';
 
@@ -17,12 +18,13 @@ function RouteComponent() {
   const { videoId } = Route.useParams();
   const navigate = Route.useNavigate();
   const data = Route.useLoaderData();
+  const [state, setState] = useSetState<{ changed: boolean; video?: Video }>({ changed: false });
 
   const updateMutation = useMutation({
     mutationFn: (values: SubmitVideoDTO) => services.video.update(Number(videoId), values),
-    onSuccess: () => {
+    onSuccess: (video) => {
       message.success('更新成功');
-      navigate({ to: '../..', search: (prev) => prev });
+      setState({ changed: false, video });
     },
   });
 
@@ -30,18 +32,16 @@ function RouteComponent() {
     mutationFn: services.video.delete,
     onSuccess: () => {
       message.success('删除成功');
-      navigate({ to: '../..', search: (prev) => prev });
+      setTimeout(() => {
+        navigate({ to: '../..', search: (prev) => prev });
+      }, 1000);
     },
   });
 
   const cardTitle = (
-    <div>
-      编辑视频
-      {data.video_url && (
-        <a href={data.video_url} target="_blank" rel="noreferrer" className="ml-4 text-xs">
-          预览
-        </a>
-      )}
+    <div className="flex items-center space-x-2">
+      <h3>编辑视频</h3>
+      {state.changed && <Tag color="warning">修改未保存</Tag>}
     </div>
   );
 
@@ -63,7 +63,8 @@ function RouteComponent() {
       <Card title={cardTitle} extra={cardExtra}>
         <VideoForm
           key={videoId}
-          video={data}
+          video={state.video || data}
+          onChange={() => setState({ changed: true })}
           onSubmit={updateMutation.mutate}
           submitting={updateMutation.isPending}
           onBack={() => navigate({ to: '../..', search: (prev) => prev })}

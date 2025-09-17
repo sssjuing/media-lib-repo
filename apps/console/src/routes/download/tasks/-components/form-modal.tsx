@@ -37,7 +37,7 @@ export const FormModal = NiceModal.create(() => {
         className="pt-4!"
         requiredMark={false}
       >
-        <Form.Item label="文件名称" name="name" rules={[{ required: true }]}>
+        <Form.Item label="文件名称" name="name" rules={[{ required: true }]} normalize={(val) => val.trim()}>
           <Input />
         </Form.Item>
         <Form.Item label="URL" name="url" rules={[{ required: true }, { type: 'url', warningOnly: true }]}>

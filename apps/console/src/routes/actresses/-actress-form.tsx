@@ -35,12 +35,13 @@ const MeasurementsInput: FC<{
 
 interface ActressFormProps {
   actress?: Actress;
+  onChange?: (values: SubmitActressDTO) => void;
   onSubmit?: (values: SubmitActressDTO) => void;
   submitting?: boolean;
   onBack?: () => void;
 }
 
-export const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submitting, onBack }) => {
+export const ActressForm: FC<ActressFormProps> = ({ actress, onChange, onSubmit, submitting, onBack }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -57,6 +58,7 @@ export const ActressForm: FC<ActressFormProps> = ({ actress, onSubmit, submittin
       form={form}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 12 }}
+      onValuesChange={(_, values) => onChange?.(values)}
       onFinish={onSubmit}
       initialValues={{ Mosaic: true }}
     >

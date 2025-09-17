@@ -14,12 +14,13 @@ type FormStore = Overwrite<SubmitVideoDTO, { actresses?: number[] }>;
 
 interface VideoFormProps {
   video?: Video;
+  onChange?: (values: FormStore) => void;
   onSubmit?: (values: SubmitVideoDTO) => void;
   submitting?: boolean;
   onBack?: () => void;
 }
 
-export const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onBack }) => {
+export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submitting, onBack }) => {
   const [form] = Form.useForm();
   const videoTags = useGlobalStore((state) => state.videoTags);
 
@@ -62,8 +63,10 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onB
       form={form}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 12 }}
+      onValuesChange={(_, values) => onChange?.(values)}
       onFinish={handleFinish}
       initialValues={{ Mosaic: true }}
+      style={{ maxWidth: 1600 }}
     >
       <Form.Item label="Serial Number" required>
         <Space size="large">
@@ -103,12 +106,23 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onSubmit, submitting, onB
       <Form.Item label="发行日期" name="release_date" getValueProps={(value) => ({ value: value && dayjs(value) })}>
         <DatePicker />
       </Form.Item>
-      <Form.Item
-        label="资源路径"
-        name="video_path"
-        // rules={[{ type: 'url' }]}
-      >
-        <Input />
+      <Form.Item label="资源路径">
+        <div className="flex items-center">
+          <Form.Item
+            name="video_path"
+            noStyle
+            // rules={[{ type: 'url' }]}
+          >
+            <Input />
+          </Form.Item>
+          {video?.video_url && (
+            <div className="w-10 text-right">
+              <a href={video.video_url} target="_blank" rel="noreferrer">
+                预览
+              </a>
+            </div>
+          )}
+        </div>
       </Form.Item>
       <Form.Item label="Tags" name="tags">
         <Select

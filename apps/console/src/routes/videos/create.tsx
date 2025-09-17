@@ -19,7 +19,9 @@ function RouteComponent() {
     mutationFn: services.video.create,
     onSuccess: () => {
       message.success('创建成功');
-      navigate({ to: '..' });
+      setTimeout(() => {
+        navigate({ to: '..' });
+      }, 1000);
     },
   });
 
