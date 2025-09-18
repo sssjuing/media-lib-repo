@@ -74,7 +74,12 @@ function RouteComponent() {
         <Table
           rowKey="path"
           columns={[
-            { title: '路径', dataIndex: 'path' },
+            {
+              title: '路径',
+              dataIndex: 'path',
+              sorter: (a, b) => a.path.localeCompare(b.path),
+              defaultSortOrder: 'descend',
+            },
             { title: '大小', dataIndex: 'size', render: (val) => (val / 1024 / 1024).toFixed(2) + ' MB' },
             {
               title: '操作',
