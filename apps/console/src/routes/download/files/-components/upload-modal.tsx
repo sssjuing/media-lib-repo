@@ -44,7 +44,7 @@ export const UploadModal = NiceModal.create(({ path }: UploadModalProps) => {
         data: { target_dir: state.target, file_path: path },
       });
       if (state.addToVideoUrl && video) {
-        services.video.update(video.id, { video_path: `${state.target}${filename}` });
+        services.video.update(video.id, { ...video, video_path: `${state.target}${filename}` });
       }
     },
     onSuccess: () => {
