@@ -19,12 +19,12 @@ type Option func(*Downloader)
 
 type Downloader struct {
 	resource        *Resource
-	onSegmentFinish func(r *SegmentRow)    // 片段下载完成时的回调函数
-	onFinally       func(*Resource, error) // 当任务结束时的回调, 无论成功/失败
+	onSegmentFinish func(r *SegmentRow, index int) // 片段下载完成时的回调函数
+	onFinally       func(*Resource, error)         // 当任务结束时的回调, 无论成功/失败
 	logger          logger.Logger
 }
 
-func WithSegmentFinish(fn func(r *SegmentRow)) Option {
+func WithSegmentFinish(fn func(r *SegmentRow, index int)) Option {
 	return func(d *Downloader) { d.onSegmentFinish = fn }
 }
 
@@ -39,7 +39,7 @@ func WithLogger(logger logger.Logger) Option {
 func New(resource *Resource, opts ...Option) *Downloader {
 	d := &Downloader{
 		resource:        resource,
-		onSegmentFinish: func(r *SegmentRow) {}, // 片段下载完成时的回调函数
+		onSegmentFinish: func(r *SegmentRow, index int) {}, // 片段下载完成时的回调函数
 		logger:          logger.GetLogger(),
 	}
 	for _, opt := range opts {
@@ -89,7 +89,7 @@ func (d *Downloader) makeTempDir() error {
 	return nil
 }
 
-func (d *Downloader) downloadSegments(onFinish func(sr *SegmentRow)) {
+func (d *Downloader) downloadSegments(onFinish func(sr *SegmentRow, index int)) {
 	wp := workerpool.New(6)
 	for idx := range d.resource.SegmentList {
 		segment := &d.resource.SegmentList[idx]
@@ -102,7 +102,7 @@ func (d *Downloader) downloadSegments(onFinish func(sr *SegmentRow)) {
 			} else {
 				segment.Status = 1
 			}
-			onFinish(segment)
+			onFinish(segment, idx)
 		})
 	}
 	wp.StopWait()

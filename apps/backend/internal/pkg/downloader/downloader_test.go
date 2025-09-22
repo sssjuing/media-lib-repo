@@ -8,8 +8,8 @@ func createDownloader(t *testing.T) *Downloader {
 	name := "tears-of-steel"
 
 	r := NewResource(url, name, "tmp", nil)
-	sf := WithSegmentFinish(func(sr *SegmentRow) {
-		t.Logf("download segment %s finished, status: %d", sr.Path, sr.Status)
+	sf := WithSegmentFinish(func(sr *SegmentRow, index int) {
+		t.Logf("download %d segment %s finished, status: %d", index, sr.Path, sr.Status)
 	})
 	tf := WithFinally(func(r *Resource, err error) {
 		if err != nil {
@@ -34,8 +34,8 @@ func TestDownloadSegments(t *testing.T) {
 	d.resource.SegmentList[2].Status = 1
 
 	d.makeTempDir()
-	d.downloadSegments(func(sr *SegmentRow) {
-		t.Log(sr.Path)
+	d.downloadSegments(func(sr *SegmentRow, index int) {
+		t.Log(index, sr.Path)
 	})
 	for idx, sr := range d.resource.SegmentList {
 		t.Log(idx, sr.Path, sr.Status)
@@ -48,7 +48,7 @@ func TestMergeSegments(t *testing.T) {
 	d.resource.SegmentList = d.resource.SegmentList[:5]
 
 	d.makeTempDir()
-	d.downloadSegments(func(sr *SegmentRow) {
+	d.downloadSegments(func(sr *SegmentRow, index int) {
 		t.Log(sr.Path)
 	})
 	d.mergeSegments("tmp")

@@ -15,8 +15,8 @@ import (
 )
 
 func (h *Handler) ListResources(c echo.Context) error {
-	cache := download.GetCache()
-	resources := cache.FindAll()
+	store := download.GetStore()
+	resources := store.FindAll()
 	list := lo.Map(resources, func(r *downloader.Resource, _ int) downloader.ResourceDTO {
 		return r.DTO()
 	})
@@ -25,8 +25,8 @@ func (h *Handler) ListResources(c echo.Context) error {
 
 func (h *Handler) ListSegments(c echo.Context) error {
 	resourceId := c.Param("resource_id")
-	cache := download.GetCache()
-	resource := cache.FindByID(resourceId)
+	store := download.GetStore()
+	resource := store.FindByID(resourceId)
 	if resource == nil {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
@@ -35,8 +35,8 @@ func (h *Handler) ListSegments(c echo.Context) error {
 
 func (h *Handler) DownloadResource(c echo.Context) error {
 	resourceId := c.Param("resource_id")
-	cache := download.GetCache()
-	resource := cache.FindByID(resourceId)
+	store := download.GetStore()
+	resource := store.FindByID(resourceId)
 	if resource == nil {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
@@ -56,8 +56,8 @@ func (h *Handler) SubmitDownload(c echo.Context) error {
 	if code, err := validateRequest(c, req); err != nil {
 		return c.JSON(code, utils.NewError(err))
 	}
-	cache := download.GetCache()
-	if r := cache.FindByName(req.Name); r != nil {
+	store := download.GetStore()
+	if r := store.FindByName(req.Name); r != nil {
 		return c.JSON(http.StatusConflict, utils.NewError(fmt.Errorf("resource name already exist")))
 	}
 	if err := download.AddTask(req.Url, req.Name, c.Logger()); err != nil {

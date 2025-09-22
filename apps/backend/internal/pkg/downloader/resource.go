@@ -8,7 +8,7 @@ import (
 type SegmentRow struct {
 	Url    string `json:"u"` // ts 片段的 URL
 	Path   string `json:"p"` // 下载的 ts 片段的存储位置
-	Status int    `json:"s"` // 下载 ts 片段的状态 -1-失败 0-未开始 1-成功
+	Status int8   `json:"s"` // 下载 ts 片段的状态 -1-失败 0-未开始 1-成功
 }
 
 type Resource struct {
