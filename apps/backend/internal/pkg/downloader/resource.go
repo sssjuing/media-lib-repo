@@ -3,6 +3,7 @@ package downloader
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"time"
 )
 
 type SegmentRow struct {
@@ -19,16 +20,19 @@ type Resource struct {
 	SegmentList []SegmentRow // 切片数组
 	Downloading bool         // 是否正在下载中
 	Success     bool         // 全部切片是否下载完成, 并且已经合并
+	CreatedAt   *time.Time
 }
 
 func NewResource(url, name, tempDir string, segments []SegmentRow) *Resource {
 	sum := md5.Sum([]byte(url + name))
+	now := time.Now()
 	r := &Resource{
 		// ID:    fmt.Sprintf("%x", md5.Sum([]byte(url+name))),
-		ID:       hex.EncodeToString(sum[:]),
-		M3u8URL:  url,
-		Filename: name,
-		TempDir:  tempDir,
+		ID:        hex.EncodeToString(sum[:]),
+		M3u8URL:   url,
+		Filename:  name,
+		TempDir:   tempDir,
+		CreatedAt: &now,
 	}
 	if segments != nil {
 		r.SegmentList = segments
@@ -37,11 +41,12 @@ func NewResource(url, name, tempDir string, segments []SegmentRow) *Resource {
 }
 
 type ResourceDTO struct {
-	ID          string `json:"id"`          // m3u8 + name 的 md5 字符串
-	URL         string `json:"url"`         // m3u8 url
-	Name        string `json:"name"`        // 文件名, 不含后缀
-	Downloading bool   `json:"downloading"` // 是否正在下载中
-	Success     bool   `json:"success"`     // 全部切片是否下载完成, 并且已经合并
+	ID          string     `json:"id"`          // m3u8 + name 的 md5 字符串
+	URL         string     `json:"url"`         // m3u8 url
+	Name        string     `json:"name"`        // 文件名, 不含后缀
+	Downloading bool       `json:"downloading"` // 是否正在下载中
+	Success     bool       `json:"success"`     // 全部切片是否下载完成, 并且已经合并
+	CreatedAt   *time.Time `json:"created_at"`
 }
 
 func (r *Resource) DTO() ResourceDTO {
@@ -51,6 +56,7 @@ func (r *Resource) DTO() ResourceDTO {
 		Name:        r.Filename,
 		Downloading: r.Downloading,
 		Success:     r.Success,
+		CreatedAt:   r.CreatedAt,
 	}
 	// dto.Success = lo.EveryBy(r.SegmentList, func(sr SegmentRow) bool {
 	// 	return sr.Status == 1

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Card, Table, Tag } from 'antd';
 import NiceModal from '@ebay/nice-modal-react';
+import dayjs from 'dayjs';
 import { GridContent } from '@repo/antd-layout';
 import { AnchorBtn } from '@repo/ui';
 import { request } from '@/services';
@@ -16,6 +17,12 @@ function RouteComponent() {
   const query = useQuery({
     queryKey: ['resources'],
     queryFn: () => request<ResourceDTO[]>({ method: 'GET', url: '/resources' }),
+    select: (data) =>
+      data.sort((a, b) => {
+        const da = a.created_at ? new Date(a.created_at).getTime() : -Infinity;
+        const db = b.created_at ? new Date(b.created_at).getTime() : -Infinity;
+        return db - da;
+      }),
     refetchInterval: 10000,
   });
 
@@ -31,6 +38,12 @@ function RouteComponent() {
             // { title: 'ID', dataIndex: 'id' },
             { title: 'Name', dataIndex: 'name' },
             { title: 'Url', dataIndex: 'url' },
+            {
+              title: '创建时间',
+              dataIndex: 'created_at',
+              width: 180,
+              render: (val) => (val ? dayjs(val).format('YYYY-MM-DD HH:mm:ss') : '-'),
+            },
             {
               title: 'Status',
               render: (_, { downloading, success }) => {

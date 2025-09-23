@@ -4,6 +4,7 @@ interface ResourceDTO {
   url: string;
   downloading: boolean;
   success: boolean;
+  created_at: string | null;
 }
 
 interface SegmentDTO {

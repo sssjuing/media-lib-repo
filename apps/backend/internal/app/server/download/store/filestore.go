@@ -308,7 +308,7 @@ func (s *FileStore) saveResource(resourceID string) error {
 
 // persister 异步持久化
 func (s *FileStore) persister() {
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(time.Second * 10)
 	defer ticker.Stop()
 
 	count := 0
