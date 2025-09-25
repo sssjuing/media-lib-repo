@@ -8,12 +8,12 @@ export const ConvertModal = NiceModal.create(({ path }: { path?: string }) => {
   const cmd = `sudo ffmpeg \\
 -hwaccel cuda \\
 -hwaccel_output_format cuda \\
--i ${path} \\
+-i ${path?.slice(1)} \\
 -vf scale_cuda=640:360 \\
 -c:v h264_nvenc \\
 -b:v 512K \\
 -max_muxing_queue_size 1024 \\
--y ${path?.slice(0, path.lastIndexOf('.'))}_360p.mp4`;
+-y ${path?.slice(1, path.lastIndexOf('.'))}_360p.mp4`;
 
   const dockerCmd = `docker run --rm -it \\
 --runtime=nvidia \\
