@@ -38,6 +38,7 @@ func (h *Handler) Register(g *echo.Group) {
 	video.DELETE("", h.RemoveVideo)
 
 	g.GET("/resources", h.ListResources)
+	g.DELETE("/resources/:resource_id", h.DeleteResource)
 	g.GET("/resources/:resource_id/segments", h.ListSegments)
 	g.POST("/resources/:resource_id/download", h.DownloadResource)
 	g.POST("/download", h.SubmitDownload)

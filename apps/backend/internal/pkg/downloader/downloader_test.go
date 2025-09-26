@@ -3,7 +3,6 @@ package downloader
 import "testing"
 
 func createDownloader(t *testing.T) *Downloader {
-	// url := "https://surrit.com/964d8939-b398-4c98-9ea5-e58b9a6164bb/1280x720/video.m3u8"
 	url := "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/tears-of-steel-audio_eng=64008-video_eng=401000.m3u8"
 	name := "tears-of-steel"
 

@@ -11,8 +11,8 @@ type Store interface {
 	FindAll() []*downloader.Resource
 	FindByID(id string) *downloader.Resource
 	FindByName(name string) *downloader.Resource
-	Add(r *downloader.Resource)
-	Delete(id string)
+	Add(r *downloader.Resource) error
+	Delete(id string) error
 	UpdateStatus(id string, index int, status int8) error
 }
 

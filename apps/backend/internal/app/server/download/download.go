@@ -13,7 +13,7 @@ import (
 	"github.com/sssjuing/media-lib-repo/apps/backend/pkg/taskqueue"
 )
 
-var hashSet mapset.Set[string]
+var hashSet mapset.Set[string] // 任务队列中的资源 id 集合
 var tq *taskqueue.TaskQueue
 var store downloadstore.Store
 
@@ -71,6 +71,12 @@ func RetryTask(r *downloader.Resource, logger logger.Logger) error {
 	return nil
 }
 
+// GetHashSet
+func GetHashSet() mapset.Set[string] {
+	return hashSet
+}
+
+// GetStore
 func GetStore() downloadstore.Store {
 	return store
 }

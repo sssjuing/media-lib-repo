@@ -2,8 +2,7 @@ interface ResourceDTO {
   id: string;
   name: string;
   url: string;
-  downloading: boolean;
-  success: boolean;
+  status: 'waiting' | 'downloading' | 'unfinished' | 'success';
   created_at: string | null;
 }
 

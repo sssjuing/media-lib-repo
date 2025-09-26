@@ -192,7 +192,7 @@ func (s *FileStore) FindByName(name string) *downloader.Resource {
 }
 
 // Add 添加或更新 Resource
-func (s *FileStore) Add(r *downloader.Resource) {
+func (s *FileStore) Add(r *downloader.Resource) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -202,23 +202,30 @@ func (s *FileStore) Add(r *downloader.Resource) {
 
 	// 写入文件
 	s.saveResource(r.ID)
+	return nil
 }
 
 // Delete 删除 Resource
-func (s *FileStore) Delete(id string) {
+func (s *FileStore) Delete(id string) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	// 删除内存缓存
 	res, ok := s.resources.LoadAndDelete(id)
-	if ok {
-		r := res.(*downloader.Resource)
-		s.nameIndex.Delete(r.Filename)
+	if !ok {
+		return fmt.Errorf("resource %s not exist", id)
 	}
+	r := res.(*downloader.Resource)
+	s.nameIndex.Delete(r.Filename)
+
+	// 删除切片存放目录
+	os.RemoveAll(r.TempDir)
 
 	// 删除文件
 	path := filepath.Join(s.dir, id)
 	os.Remove(path) // 忽略错误（如文件不存在）
+
+	return nil
 }
 
 // UpdateStatus 更新 SegmentRow 的 Status
