@@ -1,0 +1,4 @@
+beautifulsoup4==4.14.2
+cloudscraper==1.2.71
+fastapi==0.118.0
+pydantic==2.11.9
