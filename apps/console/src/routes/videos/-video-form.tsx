@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Checkbox, DatePicker, Divider, Form, Input, Modal, Select, Space, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -9,6 +9,7 @@ import { ImageUpload } from '@/components/image-upload';
 import { services } from '@/services';
 import { useGlobalStore } from '@/store';
 import { getSubstringAfter } from '@/utils/utils';
+import { FetchVideoInfoModal, FetchVideoInfoModalProps } from './-fetch-video-info-modal';
 
 type FormStore = Overwrite<SubmitVideoDTO, { actresses?: number[] }>;
 
@@ -24,15 +25,16 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
   const [form] = Form.useForm();
   const videoTags = useGlobalStore((state) => state.videoTags);
 
-  const { data: actressOptions = [] } = useQuery({
+  const { data: actresses = [] } = useQuery({
     queryKey: ['/actresses'],
     queryFn: services.actress.list,
-    select: (actresses) =>
-      actresses.map(({ id, unique_name, chinese_name }) => ({
-        value: id,
-        label: `${unique_name}[${chinese_name}]`,
-      })),
   });
+
+  const actressOptions = useMemo(
+    () =>
+      actresses.map(({ id, unique_name, chinese_name }) => ({ value: id, label: `${unique_name}[${chinese_name}]` })),
+    [actresses],
+  );
 
   useEffect(() => {
     if (video) {
@@ -47,6 +49,17 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
       form.resetFields();
     };
   }, [form, video]);
+
+  const handleFetchVideoInfoSubmit: FetchVideoInfoModalProps['onSubmit'] = (vals) => {
+    const actressIds = vals.actress_names.reduce((prev, curr) => {
+      const target = actresses.find((a) => curr.indexOf(a.unique_name) > -1);
+      if (target) {
+        prev.push(target.id);
+      }
+      return prev;
+    }, [] as number[]);
+    form.setFieldsValue({ ...vals, actresses: actressIds });
+  };
 
   const handleFinish = (values: FormStore) => {
     onSubmit?.({
@@ -68,6 +81,11 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
       initialValues={{ Mosaic: true }}
       style={{ maxWidth: 1600 }}
     >
+      <Form.Item wrapperCol={{ offset: 6 }}>
+        <Button onClick={() => NiceModal.show(FetchVideoInfoModal, { onSubmit: handleFetchVideoInfoSubmit })}>
+          从网站抓取信息
+        </Button>
+      </Form.Item>
       <Form.Item label="Serial Number" required>
         <Space size="large">
           <Form.Item noStyle name="serial_number" rules={[{ required: true }]}>
