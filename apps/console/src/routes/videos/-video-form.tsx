@@ -58,7 +58,8 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
       }
       return prev;
     }, [] as number[]);
-    form.setFieldsValue({ ...vals, actresses: actressIds });
+    const originalIds: number[] = form.getFieldValue('actresses') ?? [];
+    form.setFieldsValue({ ...vals, actresses: [...new Set([...originalIds, ...actressIds])] });
   };
 
   const handleFinish = (values: FormStore) => {
