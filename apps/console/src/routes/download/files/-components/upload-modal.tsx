@@ -4,25 +4,20 @@ import { Checkbox, Input, Modal, Tag, message } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
 import { useSetState } from 'react-use';
 import { request, services } from '@/services';
-
-dayjs.extend(quarterOfYear);
 
 export interface UploadModalProps {
   path?: string;
 }
 
 export const UploadModal = NiceModal.create(({ path }: UploadModalProps) => {
-  const now = dayjs();
   const filename = path?.split('/').pop();
   const code = filename?.replace(/_\d+p\.mp4$/, '');
 
   const modal = useModal();
   const [state, setState] = useSetState({
-    // targetDir: `videos/avs/${dayjs().format('YYYYMM')}/`,
-    target: `videos/avs/${now.year()}Q${now.quarter()}/`,
+    target: `videos/avs/${dayjs().format('YYYYMM')}/`,
     addToVideoUrl: true,
   });
 
