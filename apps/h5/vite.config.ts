@@ -20,6 +20,10 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           // rewrite: (path) => path.replace(/^\/api/, '')
         },
+        '/login': {
+          target: 'http://localhost:1323',
+          changeOrigin: true,
+        },
       },
     },
   };

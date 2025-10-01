@@ -51,12 +51,20 @@ export default function VideosIndexPage() {
         video={selected}
         tags={tagsQuery.data}
         onSuccess={(v) => {
-          const videos = queryClient.getQueryData(['/videos', tag]) as Video[];
-          const targetIdx = videos.findIndex((item) => item.id == v.id);
-          if (targetIdx !== -1) {
-            videos[targetIdx] = v;
-            queryClient.setQueryData(['/videos', tag], [...videos]);
-          }
+          queryClient.setQueryData(
+            ['/videos/paginate', tag],
+            ({ pageParams, pages }: { pageParams: number[]; pages: Video[][] }) => {
+              outerloop: for (let i = 0; i < pages.length; i++) {
+                for (let j = 0; j < pages[i].length; j++) {
+                  if (pages[i][j].id === v.id) {
+                    pages[i][j] = v;
+                    break outerloop;
+                  }
+                }
+              }
+              return { pageParams, pages };
+            },
+          );
           setSelected(undefined);
         }}
         onCancel={() => setSelected(undefined)}

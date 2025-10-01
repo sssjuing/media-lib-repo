@@ -7,6 +7,7 @@ import (
 	"github.com/sssjuing/media-lib-repo/apps/backend/internal/app/server/model"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"gorm.io/plugin/dbresolver"
 )
 
 type VidoesQueryOptions struct {
@@ -111,7 +112,7 @@ func (r *VideoRepositoryImpl) Update(v *model.Video) error {
 	if err := r.db.Model(v).Updates(v).Error; err != nil {
 		return err
 	}
-	return r.db.Preload("Actresses").First(&v, v.ID).Error
+	return r.db.Clauses(dbresolver.Write).Preload("Actresses").First(&v, v.ID).Error
 }
 
 func (r *VideoRepositoryImpl) Delete(v *model.Video) error {
