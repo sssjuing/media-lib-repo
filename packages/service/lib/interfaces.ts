@@ -31,6 +31,7 @@ export interface Video {
   video_url?: string;
   mosaic?: boolean;
   tags?: string[];
+  m3u8_url?: string;
   synopsis?: string;
   created_at: string;
   updated_at: string;

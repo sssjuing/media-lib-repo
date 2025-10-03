@@ -42,12 +42,15 @@ func (svc *VideoServiceImpl) Create(cvd *types.CreateVideoDTO) (*types.VideoDTO,
 		Title:        cvd.Title,
 		ChineseTitle: cvd.ChineseTitle,
 		Actresses: lo.Map(cvd.Actresses, func(ad *types.ActressDTO, _ int) *model.Actress {
-			return &model.Actress{ID: ad.ID}
+			actress := &model.Actress{}
+			actress.ID = ad.ID
+			return actress
 		}),
 		ReleaseDate: cvd.ReleaseDate,
 		VideoPath:   cvd.VideoPath,
 		Mosaic:      cvd.Mosaic,
 		Tags:        (*datatypes.JSON)(cvd.Tags),
+		M3U8URL:     cvd.M3U8Url,
 		Synopsis:    cvd.Synopsis,
 	}
 	if err := svc.videoRepo.Create(&v); err != nil {
@@ -62,12 +65,15 @@ func (svc *VideoServiceImpl) Update(v *model.Video, uvd *types.UpdateVideoDTO) (
 	v.Title = uvd.Title
 	v.ChineseTitle = uvd.ChineseTitle
 	v.Actresses = lo.Map(uvd.Actresses, func(ad *types.ActressDTO, _ int) *model.Actress {
-		return &model.Actress{ID: ad.ID}
+		actress := &model.Actress{}
+		actress.ID = ad.ID
+		return actress
 	})
 	v.ReleaseDate = uvd.ReleaseDate
 	v.VideoPath = uvd.VideoPath
 	v.Mosaic = uvd.Mosaic
 	v.Tags = (*datatypes.JSON)(uvd.Tags)
+	v.M3U8URL = uvd.M3U8Url
 	v.Synopsis = uvd.Synopsis
 	if err := svc.videoRepo.Update(v); err != nil {
 		return nil, err

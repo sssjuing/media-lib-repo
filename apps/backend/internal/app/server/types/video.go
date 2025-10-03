@@ -8,41 +8,34 @@ import (
 type VideoDTO struct {
 	ID           uint             `json:"id"`
 	SerialNumber string           `json:"serial_number"`
-	CoverUrl     string           `json:"cover_url"`
+	CoverUrl     string           `json:"cover_url"` // 封面完整 URL
 	Title        *string          `json:"title"`
 	ChineseTitle *string          `json:"chinese_title"`
 	Actresses    []*ActressDTO    `json:"actresses"`
-	ReleaseDate  *time.Time       `json:"release_date"` // 发行日期
-	VideoUrl     *string          `json:"video_url"`
+	ReleaseDate  *time.Time       `json:"release_date"`
+	VideoUrl     *string          `json:"video_url"` // 视频完整 URL
 	Mosaic       *bool            `json:"mosaic"`
 	Tags         *json.RawMessage `json:"tags"`
-	Synopsis     *string          `json:"synopsis"` // 概要
-	CreatedAt    *time.Time       `json:"created_at"`
-	UpdatedAt    *time.Time       `json:"updated_at"`
+	M3U8Url      *string          `json:"m3u8_url"`
+	Synopsis     *string          `json:"synopsis"`
+	CreatedAt    time.Time        `json:"created_at"`
+	UpdatedAt    time.Time        `json:"updated_at"`
 }
 
 type CreateVideoDTO struct {
 	SerialNumber string           `json:"serial_number" validate:"required"`
-	CoverPath    string           `json:"cover_path" validate:"required"` // 封面在对象存储中桶内的路径
+	CoverPath    string           `json:"cover_path" validate:"required"`
 	Title        *string          `json:"title"`
 	ChineseTitle *string          `json:"chinese_title"`
 	Actresses    []*ActressDTO    `json:"actresses"`
-	ReleaseDate  *time.Time       `json:"release_date"` // 发行日期
-	VideoPath    *string          `json:"video_path"`   // 视频在对象存储中桶内的路径
+	ReleaseDate  *time.Time       `json:"release_date"`
+	VideoPath    *string          `json:"video_path"`
 	Mosaic       *bool            `json:"mosaic"`
 	Tags         *json.RawMessage `json:"tags"`
-	Synopsis     *string          `json:"synopsis"` // 概要
+	M3U8Url      *string          `json:"m3u8_url"`
+	Synopsis     *string          `json:"synopsis"`
 }
 
 type UpdateVideoDTO struct {
-	SerialNumber string           `json:"serial_number"`
-	CoverPath    string           `json:"cover_path"` // 封面在对象存储中桶内的路径
-	Title        *string          `json:"title"`
-	ChineseTitle *string          `json:"chinese_title"`
-	Actresses    []*ActressDTO    `json:"actresses"`
-	ReleaseDate  *time.Time       `json:"release_date"` // 发行日期
-	VideoPath    *string          `json:"video_path"`   // 视频在对象存储中桶内的路径
-	Mosaic       *bool            `json:"mosaic"`
-	Tags         *json.RawMessage `json:"tags"`
-	Synopsis     *string          `json:"synopsis"` // 概要
+	CreateVideoDTO
 }

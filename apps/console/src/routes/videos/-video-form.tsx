@@ -127,11 +127,7 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
       </Form.Item>
       <Form.Item label="资源路径">
         <div className="flex items-center">
-          <Form.Item
-            name="video_path"
-            noStyle
-            // rules={[{ type: 'url' }]}
-          >
+          <Form.Item name="video_path" noStyle>
             <Input />
           </Form.Item>
           {video?.video_url && (
@@ -150,6 +146,9 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
           allowClear
           options={videoTags.map((t) => ({ label: t, value: t }))}
         />
+      </Form.Item>
+      <Form.Item name="m3u8_url" label="m3u8 地址" rules={[{ type: 'url' }]}>
+        <Input />
       </Form.Item>
       <Form.Item label="概要" name="synopsis">
         <Input.TextArea rows={5} />

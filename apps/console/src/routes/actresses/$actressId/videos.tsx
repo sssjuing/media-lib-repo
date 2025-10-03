@@ -67,27 +67,11 @@ function RouteComponent() {
             size="small"
             column={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4, xxl: 5 }}
             items={[
-              {
-                label: '中文名',
-                children: actress.chinese_name,
-              },
-              {
-                label: '年龄',
-                children: getAge(actress.birth_date),
-              },
-              {
-                label: '出道日期',
-                children: actress.debut_date && dayjs(actress.debut_date).format('YYYY年MM月'),
-              },
-
-              {
-                label: '身高',
-                children: actress.height && actress.height + ' CM',
-              },
-              {
-                label: '三围',
-                children: measurementsRenderer(actress),
-              },
+              { label: '中文名', children: actress.chinese_name },
+              { label: '年龄', children: getAge(actress.birth_date) },
+              { label: '出道日期', children: actress.debut_date && dayjs(actress.debut_date).format('YYYY年MM月') },
+              { label: '身高', children: actress.height && actress.height + ' CM' },
+              { label: '三围', children: measurementsRenderer(actress) },
             ]}
             className="mt-2"
           />

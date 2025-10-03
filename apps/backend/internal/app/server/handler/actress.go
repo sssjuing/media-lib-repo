@@ -19,30 +19,33 @@ func (h *Handler) ListActresses(c echo.Context) error {
 }
 
 func (h *Handler) CreateActress(c echo.Context) error {
-	var a model.Actress
-	if err := c.Bind(&a); err != nil {
+	var cad types.CreateActressDTO
+	if err := c.Bind(&cad); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	if err := h.actressRepo.Create(&a); err != nil {
+	ad, err := h.actressSvc.Create(&cad)
+	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	return c.JSON(http.StatusCreated, a)
+	return c.JSON(http.StatusCreated, ad)
 }
 
 func (h *Handler) GetActressById(c echo.Context) error {
 	a := c.Get("actress").(*model.Actress)
-	return c.JSON(http.StatusOK, a)
+	return c.JSON(http.StatusOK, a.DTO())
 }
 
 func (h *Handler) UpdateActress(c echo.Context) error {
 	a := c.Get("actress").(*model.Actress)
-	if err := c.Bind(&a); err != nil {
+	var uad types.UpdateActressDTO
+	if err := c.Bind(&uad); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	if err := h.actressRepo.Update(a); err != nil {
+	ad, err := h.actressSvc.Update(a, &uad)
+	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	return c.JSON(http.StatusOK, a)
+	return c.JSON(http.StatusOK, ad)
 }
 
 func (h *Handler) RemoveActress(c echo.Context) error {

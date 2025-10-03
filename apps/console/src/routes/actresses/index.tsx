@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { Button, Card, Input, Popconfirm, Table, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -9,7 +9,6 @@ import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { Actress, getAge } from '@repo/service';
 import { AnchorBtn } from '@repo/ui';
 import configs from '@/configs';
-import { useRefresh } from '@/hooks';
 import { services } from '@/services';
 
 const { CUP_TYPE } = configs;
@@ -27,7 +26,7 @@ export const Route = createFileRoute('/actresses/')({
 function RouteComponent() {
   const { page, size, searchStr } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const refresh = useRefresh(Route.id);
+  const queryClient = useQueryClient();
 
   const query = useQuery({ queryKey: ['/actresses'], queryFn: services.actress.list });
 
@@ -35,7 +34,9 @@ function RouteComponent() {
     mutationFn: services.actress.delete,
     onSuccess: () => {
       message.success('删除成功');
-      refresh();
+      queryClient.setQueryData<Actress[]>(['/actresses'], (oldData) => {
+        return oldData?.filter((i: Actress) => i.id !== deleteMutation.variables);
+      });
     },
   });
 
@@ -98,6 +99,7 @@ function RouteComponent() {
             },
             {
               title: '操作',
+              width: 100,
               render: (a: Actress) => (
                 <div className="space-x-2">
                   <Link to="/actresses/$actressId/edit" params={{ actressId: a.id.toString() }}>

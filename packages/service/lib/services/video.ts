@@ -23,6 +23,7 @@ export class VideoService {
       video_url: dto.video_url ?? undefined,
       mosaic: dto.mosaic ?? undefined,
       tags: dto.tags ?? undefined,
+      m3u8_url: dto.m3u8_url ?? undefined,
       synopsis: dto.synopsis ?? undefined,
       created_at: dto.created_at,
       updated_at: dto.updated_at,

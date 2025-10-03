@@ -51,6 +51,7 @@ export interface VideoDTO {
   video_url: string | null;
   mosaic: boolean | null;
   tags: string[] | null;
+  m3u8_url: string | null;
   synopsis: string | null;
   created_at: string;
   updated_at: string;
@@ -66,5 +67,6 @@ export interface SubmitVideoDTO {
   video_path?: string;
   mosaic?: boolean;
   tags?: string[];
+  m3u8_url?: string;
   synopsis?: string;
 }
