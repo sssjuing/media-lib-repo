@@ -39,14 +39,17 @@ export const UploadModal = NiceModal.create(({ path }: UploadModalProps) => {
         data: { target_dir: state.target, file_path: path },
       });
       if (state.addToVideoUrl && video) {
-        services.video.update(video.id, { ...video, video_path: `${state.target}${filename}` });
+        await services.video.update(video.id, { video_path: `${state.target}${filename}` });
       }
     },
     onSuccess: () => {
       message.success('上传成功');
       modal.hide();
     },
-    onError: (err) => message.error(err.message),
+    onError: (err) => {
+      console.error(err);
+      message.error('上传失败');
+    },
   });
 
   return (

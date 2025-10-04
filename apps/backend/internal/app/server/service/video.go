@@ -60,15 +60,21 @@ func (svc *VideoServiceImpl) Create(cvd *types.CreateVideoDTO) (*types.VideoDTO,
 }
 
 func (svc *VideoServiceImpl) Update(v *model.Video, uvd *types.UpdateVideoDTO) (*types.VideoDTO, error) {
-	v.SerialNumber = uvd.SerialNumber
-	v.CoverPath = uvd.CoverPath
+	if uvd.SerialNumber != "" {
+		v.SerialNumber = uvd.SerialNumber
+	}
+	if uvd.CoverPath != "" {
+		v.CoverPath = uvd.CoverPath
+	}
 	v.Title = uvd.Title
 	v.ChineseTitle = uvd.ChineseTitle
-	v.Actresses = lo.Map(uvd.Actresses, func(ad *types.ActressDTO, _ int) *model.Actress {
-		actress := &model.Actress{}
-		actress.ID = ad.ID
-		return actress
-	})
+	if uvd.Actresses != nil {
+		v.Actresses = lo.Map(uvd.Actresses, func(ad *types.ActressDTO, _ int) *model.Actress {
+			actress := &model.Actress{}
+			actress.ID = ad.ID
+			return actress
+		})
+	}
 	v.ReleaseDate = uvd.ReleaseDate
 	v.VideoPath = uvd.VideoPath
 	v.Mosaic = uvd.Mosaic
