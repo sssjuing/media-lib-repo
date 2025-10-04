@@ -1,12 +1,14 @@
 import { FC, Fragment } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Link, useParams } from '@tanstack/react-router';
-import { Badge, Button, Empty, Image, Modal, Tag } from 'antd';
-import { EditOutlined, VideoCameraTwoTone } from '@ant-design/icons';
+import { Badge, Button, Empty, Image, Modal, Popconfirm, Tag, message } from 'antd';
+import { DownloadOutlined, EditOutlined, VideoCameraTwoTone } from '@ant-design/icons';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import dayjs from 'dayjs';
 import { Calendar, Tags, Users } from 'lucide-react';
 import { Actress, Video, getAge } from '@repo/service';
 import { AnchorBtn } from '@repo/ui';
+import { request } from '@/services';
 
 function getAgeColor(age: number) {
   if (age >= 45) return '#ff3141';
@@ -44,6 +46,17 @@ const ActressTag: FC<ActressTagProps> = ({ actress, video }) => {
 const DetailModal = NiceModal.create(({ video }: { video?: Video }) => {
   const modal = useModal();
 
+  const mutation = useMutation({
+    mutationFn: () =>
+      request({ method: 'POST', url: '/download', data: { name: video?.serial_number, url: video?.m3u8_url } }),
+    onSuccess: () => {
+      message.success('添加成功');
+    },
+    onError: (e) => {
+      console.error(e);
+    },
+  });
+
   return (
     <Modal open={modal.visible} width={900} onCancel={modal.hide} afterClose={() => modal.remove()} footer={null}>
       {video ? (
@@ -61,8 +74,18 @@ const DetailModal = NiceModal.create(({ video }: { video?: Video }) => {
             <div className="absolute top-3 left-3">
               <Tag className="bg-neutral-50/75!">{video.serial_number}</Tag>
             </div>
+            {!video.video_url && video.m3u8_url && (
+              <div className="mt-4">
+                <Popconfirm
+                  title="添加下载任务"
+                  description={`确认添加下载 ${video.serial_number} 的 ts 文件到下载任务队列吗？`}
+                  onConfirm={() => mutation.mutateAsync()}
+                >
+                  <Button icon={<DownloadOutlined />} type="text" />
+                </Popconfirm>
+              </div>
+            )}
           </div>
-
           {/* 电影信息 */}
           <div className="flex-1 p-6 space-y-4">
             {/* 标题区域 */}
