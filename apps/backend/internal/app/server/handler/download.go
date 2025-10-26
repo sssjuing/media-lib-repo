@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"path/filepath"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/samber/lo"
@@ -65,6 +66,38 @@ func (h *Handler) ListSegments(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
 	return c.JSON(http.StatusOK, resource.SegmentList)
+}
+
+func (h *Handler) StreamDemo(c echo.Context) error {
+	c.Response().Header().Set("Content-Type", "text/plain")
+	c.Response().WriteHeader(http.StatusOK)
+
+	flusher, ok := c.Response().Writer.(http.Flusher)
+	if !ok {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Streaming not supported")
+	}
+
+	for i := 1; i <= 10; i++ {
+		msg := fmt.Sprintf("Message %d at %s\n", i, time.Now().Format(time.RFC3339))
+		_, err := c.Response().Writer.Write([]byte(msg))
+		if err != nil {
+			return err
+		}
+		flusher.Flush()
+		time.Sleep(1 * time.Second)
+	}
+	return nil
+}
+
+// WatchSegments 用 Streamable HTTP 方式实时获取下载状态
+func (h *Handler) WatchSegments(c echo.Context) error {
+	resourceId := c.Param("resource_id")
+	store := download.GetStore()
+	resource := store.FindByID(resourceId)
+	if resource == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	return nil
 }
 
 // DownloadResource 将资源重新加入到下载队列

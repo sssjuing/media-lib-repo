@@ -9,6 +9,7 @@ import (
 
 func (h *Handler) Register(g *echo.Group) {
 	g.POST("/user/login", h.Login)
+	g.GET("/stream/demo", h.StreamDemo)
 
 	g.Use(middleware.JWT())
 	g.GET("/user/whoami", h.CurrentUser)
@@ -40,6 +41,7 @@ func (h *Handler) Register(g *echo.Group) {
 	g.GET("/resources", h.ListResources)
 	g.DELETE("/resources/:resource_id", h.DeleteResource)
 	g.GET("/resources/:resource_id/segments", h.ListSegments)
+	g.GET("/resources/:resource_id/segments/watch", h.WatchSegments)
 	g.POST("/resources/:resource_id/download", h.DownloadResource)
 	g.POST("/download", h.SubmitDownload)
 	g.GET("/download/files", h.ListDownloadedFiles)
