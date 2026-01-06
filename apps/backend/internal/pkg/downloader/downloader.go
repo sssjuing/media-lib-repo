@@ -90,14 +90,22 @@ func (d *Downloader) makeTempDir() error {
 }
 
 func (d *Downloader) downloadSegments(onFinish func(sr *SegmentRow, index int)) {
-	wp := workerpool.New(6)
+	concurrency := config.GetConfig().GetInt("server.download_concurrency")
+	if concurrency <= 0 {
+		concurrency = 6 // default value
+	}
+	timeout := config.GetConfig().GetInt("server.download_timeout")
+	if timeout <= 0 {
+		timeout = 60 // default value in seconds
+	}
+	wp := workerpool.New(concurrency)
 	for idx := range d.resource.SegmentList {
 		segment := &d.resource.SegmentList[idx]
 		wp.Submit(func() {
 			if segment.Status == 1 { // 跳过已经成功下载的 segment
 				return
 			}
-			if err := downloadFile(segment.Url, segment.Path); err != nil {
+			if err := downloadFileWithTimeout(segment.Url, segment.Path, time.Duration(timeout)*time.Second); err != nil {
 				segment.Status = -1
 			} else {
 				segment.Status = 1

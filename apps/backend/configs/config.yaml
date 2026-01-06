@@ -2,6 +2,8 @@ server:
   log_level: debug # debug | info | warn | error
   secret_key: gboUV8ZUszxKNqdGMy0J51KLZDDo4uXR
   work_path: /data
+  download_concurrency: 6
+  download_timeout: 60
   users:
     - name: user1
       password: user1

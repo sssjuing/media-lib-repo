@@ -1,14 +1,25 @@
 package downloader
 
 import (
+	"context"
 	"io"
 	"net/http"
 	"os"
+	"time"
 )
 
-// 下载单个文件
-func downloadFile(url, filepath string) error {
-	resp, err := http.Get(url)
+// 使用超时下载单个文件
+func downloadFileWithTimeout(url, filepath string, timeout time.Duration) error {
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return err
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
