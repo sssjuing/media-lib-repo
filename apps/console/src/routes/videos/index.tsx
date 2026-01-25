@@ -1,6 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
 import { Link, createFileRoute } from '@tanstack/react-router';
-import { Button, Input, List, Tag } from 'antd';
-import { DeleteOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { Button, Input, List, Select } from 'antd';
+import { VideoCameraOutlined } from '@ant-design/icons';
 import { z } from 'zod';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { VideoCard } from '@/components/video-card';
@@ -15,16 +16,20 @@ export const Route = createFileRoute('/videos/')({
     searchStr: z.string().default('').catch(''),
     tags: z.array(z.string()).default([]).catch([]),
   }),
-  loaderDeps: ({ search }) => search,
-  loader: ({ deps: { searchStr, ...restDeps } }) => services.video.paginate({ ...restDeps, search: searchStr }),
+  // loaderDeps: ({ search }) => search,
+  // loader: ({ deps: { searchStr, ...restDeps } }) => services.video.paginate({ ...restDeps, search: searchStr }),
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const { page, size, searchStr, tags } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const { data, total } = Route.useLoaderData();
   const videoTags = useGlobalStore((state) => state.videoTags);
+
+  const query = useQuery({
+    queryKey: ['fetchVideos', page, size, tags, searchStr],
+    queryFn: () => services.video.paginate({ page, size, tags, search: searchStr }),
+  });
 
   return (
     <PageHeaderWrapper
@@ -33,7 +38,16 @@ function RouteComponent() {
       content={
         <div className="flex">
           <div className="grow-0 shrink-0 w-10 mt-1">Tags :</div>
-          <div className="flex-grow flex-wrap">
+          <Select
+            value={tags}
+            onChange={(val) => navigate({ search: { size, searchStr, tags: val } })}
+            mode="multiple"
+            allowClear
+            maxTagCount={6}
+            style={{ minWidth: 280, marginLeft: 10 }}
+            options={videoTags.map((tag) => ({ label: tag, value: tag }))}
+          />
+          {/* <div className="flex-grow flex-wrap">
             {videoTags.map<React.ReactNode>((tag) => (
               <Tag.CheckableTag
                 key={tag}
@@ -54,7 +68,7 @@ function RouteComponent() {
               onClick={() => navigate({ search: { size, searchStr, tags: [] } })}
               className="text-zinc-400!"
             />
-          </div>
+          </div> */}
         </div>
       }
       extra={
@@ -74,16 +88,17 @@ function RouteComponent() {
     >
       <List
         rowKey="id"
-        dataSource={data}
+        dataSource={query.data?.data}
         grid={{ gutter: 12, xxl: 6, xl: 4, lg: 3, md: 3, sm: 2, xs: 2 }}
         pagination={{
           pageSizeOptions: [12, 24, 48, 72, 96],
           pageSize: size,
           current: page,
-          total,
+          total: query.data?.total,
           onChange: (page, pageSize) => navigate({ search: { page, size: pageSize, searchStr, tags } }),
         }}
         renderItem={(i) => <List.Item>{<VideoCard video={i} />}</List.Item>}
+        loading={query.isPending}
       />
     </PageHeaderWrapper>
   );
