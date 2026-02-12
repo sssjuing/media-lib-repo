@@ -98,7 +98,7 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
         </Space>
       </Form.Item>
       <Form.Item label="封面" name="cover_path" rules={[{ required: true }]}>
-        <ImageUpload />
+        <ImageUpload getFileName={() => form.getFieldValue('serial_number')} />
       </Form.Item>
       <Form.Item label="标题" name="title">
         <Input />

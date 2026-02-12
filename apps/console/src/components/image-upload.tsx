@@ -15,9 +15,10 @@ const uploadProps: UploadProps = {
 interface ImageUploadProps {
   value?: string;
   onChange?: (value: string) => void;
+  getFileName?: () => string;
 }
 
-export const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChange }) => {
+export const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChange, getFileName }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
 
@@ -36,6 +37,14 @@ export const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChang
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
       message.error('图片文件不能超过 2MB!');
+    }
+    if ((file.name === 'image.png' || file.name.startsWith('blob')) && getFileName) {
+      const ext = file.type.split('/')[1] || 'png';
+      const renamedFile = new File([file], `${getFileName()}.${ext}`, {
+        type: file.type,
+        lastModified: file.lastModified,
+      });
+      return renamedFile;
     }
     return isJpgOrPng && isLt2M;
     // if (isJpgOrPng && isLt2M) {
@@ -65,6 +74,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({ value: enteredValue, onChang
       {...uploadProps}
       beforeUpload={beforeUpload}
       onChange={handleChange}
+      pastable
       className={css`
         div.ant-upload {
           width: 332px !important;

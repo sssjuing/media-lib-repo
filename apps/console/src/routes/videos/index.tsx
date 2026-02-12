@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link, createFileRoute } from '@tanstack/react-router';
-import { Button, Input, List, Select } from 'antd';
-import { VideoCameraOutlined } from '@ant-design/icons';
+import { cx } from '@emotion/css';
+import { Button, Input, List, Tag } from 'antd';
+import { DeleteOutlined, DownOutlined, UpOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { useSetState } from 'react-use';
 import { z } from 'zod';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { VideoCard } from '@/components/video-card';
@@ -25,6 +27,9 @@ function RouteComponent() {
   const { page, size, searchStr, tags } = Route.useSearch();
   const navigate = Route.useNavigate();
   const videoTags = useGlobalStore((state) => state.videoTags);
+  const [state, setState] = useSetState({
+    expanded: false,
+  });
 
   const query = useQuery({
     queryKey: ['fetchVideos', page, size, tags, searchStr],
@@ -37,17 +42,13 @@ function RouteComponent() {
       breadcrumb={<Breadcrumb onClick={(key) => navigate({ to: key })} />}
       content={
         <div className="flex">
-          <div className="grow-0 shrink-0 w-10 mt-1">Tags :</div>
-          <Select
-            value={tags}
-            onChange={(val) => navigate({ search: { size, searchStr, tags: val } })}
-            mode="multiple"
-            allowClear
-            maxTagCount={6}
-            style={{ minWidth: 280, marginLeft: 10 }}
-            options={videoTags.map((tag) => ({ label: tag, value: tag }))}
-          />
-          {/* <div className="flex-grow flex-wrap">
+          <div className="grow-0 shrink-0 w-10 mt-2">Tags :</div>
+          <div
+            className={cx(
+              'flex-grow flex-wrap overflow-hidden transition-all duration-300 ease-in-out',
+              state.expanded ? 'max-h-25' : 'max-h-8',
+            )}
+          >
             {videoTags.map<React.ReactNode>((tag) => (
               <Tag.CheckableTag
                 key={tag}
@@ -56,19 +57,32 @@ function RouteComponent() {
                   const nextTags = checked ? [...tags, tag] : tags.filter((i) => i !== tag);
                   navigate({ search: { size, searchStr, tags: nextTags } });
                 }}
-                className="mr-1! mt-1!"
+                className="mr-1! mt-2!"
               >
                 {tag}
               </Tag.CheckableTag>
             ))}
+          </div>
+          <div className="mt-1.5 flex">
             <Button
               size="small"
               icon={<DeleteOutlined />}
               type="text"
               onClick={() => navigate({ search: { size, searchStr, tags: [] } })}
               className="text-zinc-400!"
+              title="清除所有标签"
             />
-          </div> */}
+            <Button
+              type="link"
+              size="small"
+              icon={state.expanded ? <UpOutlined /> : <DownOutlined />}
+              onClick={() => setState({ expanded: !state.expanded })}
+              iconPosition="end"
+              styles={{ icon: { marginLeft: -6 } }}
+            >
+              {state.expanded ? '收起' : '展开'}
+            </Button>
+          </div>
         </div>
       }
       extra={

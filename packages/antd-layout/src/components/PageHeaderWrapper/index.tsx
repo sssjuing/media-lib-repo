@@ -24,7 +24,7 @@ const PageHeaderWrapper: FC<PageHeaderWrapperProps> = (props) => {
 
   const headerContent =
     content || extra ? (
-      <div className="flex w-full items-center">
+      <div className="flex w-full">
         {content && <div className="grow basis-0">{content}</div>}
         {extra && (
           <div className={cx('min-w-32 ml-6 text-right', { 'grow basis-0 mt-[-32px]': !content })}>{extra}</div>
