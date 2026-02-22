@@ -33,5 +33,6 @@ func AutoMigrate(db *gorm.DB) {
 	db.AutoMigrate(
 		&model.Actress{},
 		&model.Video{},
+		&model.VideoTag{},
 	)
 }

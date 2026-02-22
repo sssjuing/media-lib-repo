@@ -13,7 +13,10 @@ func (h *Handler) Register(g *echo.Group) {
 	g.Use(middleware.JWT())
 	g.GET("/user/whoami", h.CurrentUser)
 
-	g.GET("/configs/video-tags", h.GetVideoTags)
+	g.GET("/video-tags", h.ListVideoTags)
+	g.POST("/video-tags", h.CreateVideoTag)
+	g.PUT("/video-tags/:tag_id", h.UpdateVideoTag)
+	g.DELETE("/video-tags/:tag_id", h.DeleteVideoTag)
 
 	files := g.Group("/files")
 	files.GET("", h.ListFiles)

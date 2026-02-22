@@ -12,9 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VideosIndexRouteImport } from './routes/videos/index'
+import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as DownloadIndexRouteImport } from './routes/download/index'
 import { Route as ActressesIndexRouteImport } from './routes/actresses/index'
 import { Route as VideosCreateRouteImport } from './routes/videos/create'
+import { Route as SettingsTagsRouteImport } from './routes/settings/tags'
 import { Route as ActressesCreateRouteImport } from './routes/actresses/create'
 import { Route as DownloadTasksIndexRouteImport } from './routes/download/tasks/index'
 import { Route as DownloadFilesIndexRouteImport } from './routes/download/files/index'
@@ -37,6 +39,11 @@ const VideosIndexRoute = VideosIndexRouteImport.update({
   path: '/videos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsIndexRoute = SettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DownloadIndexRoute = DownloadIndexRouteImport.update({
   id: '/download/',
   path: '/download/',
@@ -50,6 +57,11 @@ const ActressesIndexRoute = ActressesIndexRouteImport.update({
 const VideosCreateRoute = VideosCreateRouteImport.update({
   id: '/videos/create',
   path: '/videos/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsTagsRoute = SettingsTagsRouteImport.update({
+  id: '/settings/tags',
+  path: '/settings/tags',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActressesCreateRoute = ActressesCreateRouteImport.update({
@@ -88,9 +100,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/actresses/create': typeof ActressesCreateRoute
+  '/settings/tags': typeof SettingsTagsRoute
   '/videos/create': typeof VideosCreateRoute
   '/actresses': typeof ActressesIndexRoute
   '/download': typeof DownloadIndexRoute
+  '/settings': typeof SettingsIndexRoute
   '/videos': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
@@ -102,9 +116,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/actresses/create': typeof ActressesCreateRoute
+  '/settings/tags': typeof SettingsTagsRoute
   '/videos/create': typeof VideosCreateRoute
   '/actresses': typeof ActressesIndexRoute
   '/download': typeof DownloadIndexRoute
+  '/settings': typeof SettingsIndexRoute
   '/videos': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
@@ -117,9 +133,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/actresses/create': typeof ActressesCreateRoute
+  '/settings/tags': typeof SettingsTagsRoute
   '/videos/create': typeof VideosCreateRoute
   '/actresses/': typeof ActressesIndexRoute
   '/download/': typeof DownloadIndexRoute
+  '/settings/': typeof SettingsIndexRoute
   '/videos/': typeof VideosIndexRoute
   '/actresses/$actressId/edit': typeof ActressesActressIdEditRoute
   '/actresses/$actressId/videos': typeof ActressesActressIdVideosRoute
@@ -133,9 +151,11 @@ export interface FileRouteTypes {
     | '/'
     | '/home'
     | '/actresses/create'
+    | '/settings/tags'
     | '/videos/create'
     | '/actresses'
     | '/download'
+    | '/settings'
     | '/videos'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
@@ -147,9 +167,11 @@ export interface FileRouteTypes {
     | '/'
     | '/home'
     | '/actresses/create'
+    | '/settings/tags'
     | '/videos/create'
     | '/actresses'
     | '/download'
+    | '/settings'
     | '/videos'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
@@ -161,9 +183,11 @@ export interface FileRouteTypes {
     | '/'
     | '/home'
     | '/actresses/create'
+    | '/settings/tags'
     | '/videos/create'
     | '/actresses/'
     | '/download/'
+    | '/settings/'
     | '/videos/'
     | '/actresses/$actressId/edit'
     | '/actresses/$actressId/videos'
@@ -176,9 +200,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
   ActressesCreateRoute: typeof ActressesCreateRoute
+  SettingsTagsRoute: typeof SettingsTagsRoute
   VideosCreateRoute: typeof VideosCreateRoute
   ActressesIndexRoute: typeof ActressesIndexRoute
   DownloadIndexRoute: typeof DownloadIndexRoute
+  SettingsIndexRoute: typeof SettingsIndexRoute
   VideosIndexRoute: typeof VideosIndexRoute
   ActressesActressIdEditRoute: typeof ActressesActressIdEditRoute
   ActressesActressIdVideosRoute: typeof ActressesActressIdVideosRoute
@@ -210,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/download/': {
       id: '/download/'
       path: '/download'
@@ -229,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/videos/create'
       fullPath: '/videos/create'
       preLoaderRoute: typeof VideosCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/tags': {
+      id: '/settings/tags'
+      path: '/settings/tags'
+      fullPath: '/settings/tags'
+      preLoaderRoute: typeof SettingsTagsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/actresses/create': {
@@ -280,9 +320,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
   ActressesCreateRoute: ActressesCreateRoute,
+  SettingsTagsRoute: SettingsTagsRoute,
   VideosCreateRoute: VideosCreateRoute,
   ActressesIndexRoute: ActressesIndexRoute,
   DownloadIndexRoute: DownloadIndexRoute,
+  SettingsIndexRoute: SettingsIndexRoute,
   VideosIndexRoute: VideosIndexRoute,
   ActressesActressIdEditRoute: ActressesActressIdEditRoute,
   ActressesActressIdVideosRoute: ActressesActressIdVideosRoute,

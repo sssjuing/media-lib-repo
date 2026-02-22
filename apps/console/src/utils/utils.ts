@@ -13,3 +13,9 @@ export function getAgeColor(age: number) {
   if (age >= 18) return 'purple';
   return '';
 }
+
+export function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

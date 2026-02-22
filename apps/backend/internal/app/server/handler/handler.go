@@ -6,19 +6,21 @@ import (
 )
 
 type Handler struct {
-	actressRepo repository.ActressRepository
-	actressSvc  service.ActressService
-	videoRepo   repository.VideoRepository
-	videoSvc    service.VideoService
+	actressRepo  repository.ActressRepository
+	actressSvc   service.ActressService
+	videoRepo    repository.VideoRepository
+	videoSvc     service.VideoService
+	videoTagRepo repository.VideoTagRepository
 }
 
-func NewHandler(ar repository.ActressRepository, vr repository.VideoRepository) *Handler {
+func NewHandler(ar repository.ActressRepository, vr repository.VideoRepository, vtr repository.VideoTagRepository) *Handler {
 	as := service.NewActressService(ar)
 	vs := service.NewVideoService(vr)
 	return &Handler{
-		actressRepo: ar,
-		actressSvc:  as,
-		videoRepo:   vr,
-		videoSvc:    vs,
+		actressRepo:  ar,
+		actressSvc:   as,
+		videoRepo:    vr,
+		videoSvc:     vs,
+		videoTagRepo: vtr,
 	}
 }

@@ -36,3 +36,9 @@ export interface Video {
   created_at: string;
   updated_at: string;
 }
+
+export interface VideoTag {
+  id: number;
+  name: string;
+  rank: number;
+}

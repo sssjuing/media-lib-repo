@@ -8,7 +8,6 @@ import { z } from 'zod';
 import { Breadcrumb, PageHeaderWrapper } from '@repo/antd-layout';
 import { VideoCard } from '@/components/video-card';
 import { services } from '@/services';
-import { useGlobalStore } from '@/store';
 
 export const Route = createFileRoute('/videos/')({
   staticData: { name: '视频列表', weight: 2, icon: <VideoCameraOutlined />, hideChildrenInMenu: true },
@@ -26,7 +25,6 @@ export const Route = createFileRoute('/videos/')({
 function RouteComponent() {
   const { page, size, searchStr, tags } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const videoTags = useGlobalStore((state) => state.videoTags);
   const [state, setState] = useSetState({
     expanded: false,
   });
@@ -34,6 +32,13 @@ function RouteComponent() {
   const query = useQuery({
     queryKey: ['fetchVideos', page, size, tags, searchStr],
     queryFn: () => services.video.paginate({ page, size, tags, search: searchStr }),
+  });
+
+  const { data: videoTags = [] } = useQuery({
+    queryKey: ['/video-tags'],
+    queryFn: services.videoTag.list,
+    select: (data) => data.map((i) => i.name),
+    staleTime: 1000 * 60,
   });
 
   return (

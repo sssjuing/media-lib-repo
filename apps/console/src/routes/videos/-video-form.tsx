@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query';
 import { Button, Checkbox, DatePicker, Divider, Form, Input, Modal, Select, Space, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import { Actress, SubmitVideoDTO, Video } from '@repo/service';
 import { ImageUpload } from '@/components/image-upload';
 import { services } from '@/services';
-import { useGlobalStore } from '@/store';
 import { getSubstringAfter } from '@/utils/utils';
 import { FetchVideoInfoModal, FetchVideoInfoModalProps } from './-fetch-video-info-modal';
 
@@ -23,11 +22,12 @@ interface VideoFormProps {
 
 export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submitting, onBack }) => {
   const [form] = Form.useForm();
-  const videoTags = useGlobalStore((state) => state.videoTags);
 
-  const { data: actresses = [] } = useQuery({
-    queryKey: ['/actresses'],
-    queryFn: services.actress.list,
+  const [{ data: actresses = [] }, { data: videoTags = [] }] = useQueries({
+    queries: [
+      { queryKey: ['/actresses'], queryFn: services.actress.list },
+      { queryKey: ['/video-tags'], queryFn: services.videoTag.list, staleTime: 1000 * 60 },
+    ],
   });
 
   const actressOptions = useMemo(
@@ -144,7 +144,7 @@ export const VideoForm: FC<VideoFormProps> = ({ video, onChange, onSubmit, submi
           mode="multiple"
           tokenSeparators={[',']}
           allowClear
-          options={videoTags.map((t) => ({ label: t, value: t }))}
+          options={videoTags.map((t) => ({ label: t.name, value: t.name }))}
         />
       </Form.Item>
       <Form.Item name="m3u8_url" label="m3u8 地址" rules={[{ type: 'url' }]}>

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useQueries, useQueryClient } from '@tanstack/react-query';
 import { Button } from 'antd-mobile';
 import { MdEdit } from 'react-icons/md';
-import { Video } from '@repo/service';
+import { Video, VideoTag } from '@repo/service';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import VideoCard from '@/components/VideoCard';
 import { services } from '@/services';
@@ -21,7 +21,11 @@ export default function ActressVideosPage() {
     queries: [
       { queryKey: [`/actresses/${actress_id}`], queryFn: () => services.actress.getById(Number(actress_id)) },
       { queryKey: [`/actresses/${actress_id}/videos`], queryFn: () => services.actress.listVideos(Number(actress_id)) },
-      { queryKey: ['/configs/video-tags'], queryFn: services.config.tags },
+      {
+        queryKey: ['/video-tags'],
+        queryFn: services.videoTag.list,
+        select: (tags: VideoTag[]) => tags.map((i) => i.name),
+      },
     ],
   });
 

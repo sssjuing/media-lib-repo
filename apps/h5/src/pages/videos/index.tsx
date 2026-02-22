@@ -18,7 +18,11 @@ export default function VideosIndexPage() {
 
   const [selected, setSelected] = useState<Video>();
 
-  const tagsQuery = useQuery({ queryKey: ['/configs/video-tags'], queryFn: services.config.tags });
+  const tagsQuery = useQuery({
+    queryKey: ['/video-tags'],
+    queryFn: services.videoTag.list,
+    select: (tags) => tags.map((i) => i.name),
+  });
 
   const { fetchNextPage, hasNextPage, data } = useInfiniteQuery({
     queryKey: ['/videos/paginate', tag],

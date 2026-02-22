@@ -9,11 +9,9 @@ import zhCN from 'antd/locale/zh_CN';
 import { HelmetProvider } from 'react-helmet-async';
 import { RouteMeta } from '@repo/antd-layout';
 import { routeTree } from './routeTree.gen';
-import { useGlobalStore } from './store';
 import './index.css';
 
 const queryClient = new QueryClient();
-useGlobalStore.getState().fetchVideoTags();
 
 // Create a new router instance
 const router = createRouter({

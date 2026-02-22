@@ -7,7 +7,6 @@ server:
   users:
     - name: user1
       password: user1
-  video_tags: ["SM", "OL"]
 
 postgres:
   host: host.docker.internal
