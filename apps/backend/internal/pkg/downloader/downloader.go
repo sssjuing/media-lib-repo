@@ -50,8 +50,16 @@ func New(resource *Resource, opts ...Option) *Downloader {
 
 func (d *Downloader) makeSegmentList() error {
 	r := d.resource
+	referer := config.GetConfig().GetString("server.referer")
 	// 下载 m3u8 文件内容
-	resp, err := http.Get(r.M3u8URL)
+	req, err := http.NewRequest("GET", r.M3u8URL, nil)
+	if err != nil {
+		return fmt.Errorf("fail to create request: %w", err)
+	}
+	req.Header.Set("Referer", referer)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		return fmt.Errorf("fail to download m3u8 file: %w", err)
 	}

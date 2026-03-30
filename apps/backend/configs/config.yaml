@@ -4,6 +4,7 @@ server:
   work_path: /data
   download_concurrency: 6
   download_timeout: 60
+  referer: https://example.com
   users:
     - name: user1
       password: user1

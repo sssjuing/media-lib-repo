@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/sssjuing/media-lib-repo/apps/backend/internal/pkg/config"
 )
 
 // 使用超时下载单个文件
@@ -17,6 +19,8 @@ func downloadFileWithTimeout(url, filepath string, timeout time.Duration) error 
 	if err != nil {
 		return err
 	}
+	referer := config.GetConfig().GetString("server.referer")
+	req.Header.Set("Referer", referer)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
