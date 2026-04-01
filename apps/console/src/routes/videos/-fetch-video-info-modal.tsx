@@ -5,7 +5,7 @@ import axios, { AxiosError } from 'axios';
 import { useSetState } from 'react-use';
 import { z } from 'zod';
 
-const BASE_URL = 'https://website-parser-zeta.vercel.app/api/parse';
+const BASE_URL = 'https://html-parser-nine.vercel.app/api/parse';
 const urlSchema = z.url({ message: '请输入合法的 URL' });
 
 type Response = {
@@ -18,6 +18,7 @@ type Response = {
     actress_names: string[];
     cover_url: string;
     m3u8_url: string;
+    m3u8_urls: Record<string, string>;
   };
 };
 
@@ -35,7 +36,10 @@ export const FetchVideoInfoModal = NiceModal.create(({ onSubmit }: FetchVideoInf
       return data;
     },
     onSuccess: (data) => {
-      setState({ info: data.result, step: 2 });
+      const info = data.result;
+      const urls = Object.values(info.m3u8_urls);
+      info.m3u8_url = urls.find((u) => u.indexOf('720') > -1) || urls[urls.length - 1];
+      setState({ info, step: 2 });
     },
     onError: (err: AxiosError<{ detail: { msg: string }[] }>) => {
       console.error(err);
@@ -130,8 +134,10 @@ export const FetchVideoInfoModal = NiceModal.create(({ onSubmit }: FetchVideoInf
                             下载
                           </a>
                         </div>
+                      ) : key === 'm3u8_urls' ? (
+                        <pre className="whitespace-pre-wrap">{JSON.stringify(val, null, 2)}</pre>
                       ) : (
-                        val
+                        (val as string)
                       )}
                     </dd>
                   </div>
